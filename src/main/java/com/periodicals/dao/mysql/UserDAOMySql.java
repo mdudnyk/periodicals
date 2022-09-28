@@ -11,14 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAOMySql implements UserDAO {
-    Connection connection;
-
-    public UserDAOMySql(Connection connection) {
-        this.connection = connection;
-    }
 
     @Override
-    public void create(final User entity) throws DAOException {
+    public void create(final User entity, Connection connection) throws DAOException {
         try(PreparedStatement ps = connection.prepareStatement(Queries.CREATE_USER, Statement.RETURN_GENERATED_KEYS)) {
             fillPreparedStatement(ps, entity);
             if (ps.executeUpdate() > 0) {
@@ -34,7 +29,7 @@ public class UserDAOMySql implements UserDAO {
     }
 
     @Override
-    public List<User> getAll() throws DAOException {
+    public List<User> getAll(Connection connection) throws DAOException {
         List<User> users = new ArrayList<>();
 
         try (PreparedStatement ps = connection.prepareStatement(Queries.GET_ALL_USERS);
@@ -50,7 +45,7 @@ public class UserDAOMySql implements UserDAO {
     }
 
     @Override
-    public User getEntityById(final Integer id) throws DAOException {
+    public User getEntityById(final Integer id, Connection connection) throws DAOException {
         User user;
 
         try (PreparedStatement ps = connection.prepareStatement(Queries.GET_USER_BY_ID)) {
@@ -72,7 +67,7 @@ public class UserDAOMySql implements UserDAO {
     }
 
     @Override
-    public User getUserByEmail(final String email) throws DAOException {
+    public User getUserByEmail(final String email, Connection connection) throws DAOException {
         User user;
 
         try (PreparedStatement ps = connection.prepareStatement(Queries.GET_USER_BY_EMAIL)) {
@@ -93,7 +88,7 @@ public class UserDAOMySql implements UserDAO {
     }
 
     @Override
-    public void update(final User entity) throws DAOException {
+    public void update(final User entity, Connection connection) throws DAOException {
         try (PreparedStatement ps = connection.prepareStatement(Queries.UPDATE_USER)) {
             fillPreparedStatement(ps, entity);
             ps.setInt(9, entity.getId());
@@ -106,7 +101,7 @@ public class UserDAOMySql implements UserDAO {
     }
 
     @Override
-    public void delete(final Integer id) throws DAOException {
+    public void delete(final Integer id, Connection connection) throws DAOException {
         try (PreparedStatement ps = connection.prepareStatement(Queries.DELETE_USER)) {
             ps.setInt(1, id);
             if (ps.executeUpdate() < 1) {
@@ -118,7 +113,7 @@ public class UserDAOMySql implements UserDAO {
     }
 
     private void fillPreparedStatement(PreparedStatement ps, User entity) throws SQLException {
-        ps.setInt(1, entity.getLocaleId());
+        ps.setString(1, entity.getLocaleId());
         ps.setString(2, entity.getFirstname());
         ps.setString(3, entity.getLastname());
         ps.setString(4, entity.getPassword());
@@ -130,7 +125,7 @@ public class UserDAOMySql implements UserDAO {
 
     private User fillEntityFromResultSet(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt(1);
-        int localeId = resultSet.getInt(2);
+        String localeId = resultSet.getString(2);
         String firstName = resultSet.getString(3);
         String lastName = resultSet.getString(4);
         String password = resultSet.getString(5);

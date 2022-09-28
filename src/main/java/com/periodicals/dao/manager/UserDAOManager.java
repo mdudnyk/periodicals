@@ -11,58 +11,52 @@ import java.util.List;
 
 public class UserDAOManager {
     private ConnectionManager conManager;
+    private UserDAO userDAO;
 
-    private UserDAOManager() {}
+    private UserDAOManager() {
+    }
 
     public UserDAOManager(ConnectionManager connectionManager) {
         this.conManager = connectionManager;
+        userDAO = new UserDAOMySql();
     }
 
     public void createUser(User user) throws DAOException {
         Connection connection = conManager.getConnection();
-        UserDAO userDAO = new UserDAOMySql(connection);
-
-        userDAO.create(user);
-
+        userDAO.create(user, connection);
         conManager.close(connection);
     }
 
     public List<User> getAllUsersList() throws DAOException {
         Connection connection = conManager.getConnection();
-        UserDAO userDAO = new UserDAOMySql(connection);
-
-        List<User> users = userDAO.getAll();
-
+        List<User> users = userDAO.getAll(connection);
         conManager.close(connection);
-
         return users;
     }
 
     public User getUserById(int id) throws DAOException {
         Connection connection = conManager.getConnection();
-        UserDAO userDAO = new UserDAOMySql(connection);
-
-        return userDAO.getEntityById(id);
+        User user = userDAO.getEntityById(id, connection);
+        conManager.close(connection);
+        return user;
     }
 
     public User getUserByEmail(String email) throws DAOException {
         Connection connection = conManager.getConnection();
-        UserDAO userDAO = new UserDAOMySql(connection);
-
-        return userDAO.getUserByEmail(email);
+        User user = userDAO.getUserByEmail(email, connection);
+        conManager.close(connection);
+        return user;
     }
 
     public void updateUser(User user) throws DAOException {
         Connection connection = conManager.getConnection();
-        UserDAO userDAO = new UserDAOMySql(connection);
-
-        userDAO.update(user);
+        userDAO.update(user, connection);
+        conManager.close(connection);
     }
 
     public void deleteUser(int id) throws DAOException {
         Connection connection = conManager.getConnection();
-        UserDAO userDAO = new UserDAOMySql(connection);
-
-        userDAO.delete(id);
+        userDAO.delete(id, connection);
+        conManager.close(connection);
     }
 }

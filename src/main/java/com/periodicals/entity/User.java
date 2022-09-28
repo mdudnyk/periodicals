@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class User implements Serializable {
     private int id;
-    private int localeId;
+    private String localeId;
     private String firstname;
     private String lastname;
     private String password;
@@ -18,7 +18,7 @@ public class User implements Serializable {
     private BlockingStatus blockingStatus;
     private Address address;
 
-    public User(final int id, final int localeId, final String firstname, final String lastname,
+    public User(final int id, final String localeId, final String firstname, final String lastname,
                 final String password, final String email, final Role role, final int balance,
                 final BlockingStatus blockingStatus) {
         this.id = id;
@@ -41,11 +41,11 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public int getLocaleId() {
+    public String getLocaleId() {
         return localeId;
     }
 
-    public void setLocaleId(final int localeId) {
+    public void setLocaleId(final String localeId) {
         this.localeId = localeId;
     }
 
@@ -118,7 +118,7 @@ public class User implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         final User user = (User) o;
-        return id == user.id && localeId == user.localeId && balance == user.balance
+        return id == user.id && localeId.equals(user.localeId) && balance == user.balance
                 && firstname.equals(user.firstname) && lastname.equals(user.lastname)
                 && password.equals(user.password) && email.equals(user.email)
                 && role == user.role && blockingStatus == user.blockingStatus
@@ -134,7 +134,7 @@ public class User implements Serializable {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", localeId=" + localeId +
+                ", localeId='" + localeId + '\'' +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", password='" + password + '\'' +

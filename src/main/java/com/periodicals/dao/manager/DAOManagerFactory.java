@@ -3,26 +3,32 @@ package com.periodicals.dao.manager;
 import com.periodicals.dao.ConnectionManager;
 import com.periodicals.dao.HikariConnectionPool;
 
-public class DAOManagerFabric {
-    private static DAOManagerFabric instance;
+public class DAOManagerFactory {
+    private static DAOManagerFactory instance;
     private final ConnectionManager connectionManager;
 
     private final UserDAOManager userDAOManager;
+    private final LocaleDAOManager localeDAOManager;
 
-    private DAOManagerFabric() {
+    private DAOManagerFactory() {
         connectionManager = HikariConnectionPool.getInstance();
         userDAOManager = new UserDAOManager(connectionManager);
+        localeDAOManager = new LocaleDAOManager(connectionManager);
     }
 
-    public static synchronized DAOManagerFabric getInstance() {
+    public static synchronized DAOManagerFactory getInstance() {
         if (instance == null) {
-            instance = new DAOManagerFabric();
+            instance = new DAOManagerFactory();
         }
         return instance;
     }
 
     public UserDAOManager getUserDAOManager() {
         return userDAOManager;
+    }
+
+    public LocaleDAOManager getLocaleDAOManager() {
+        return localeDAOManager;
     }
 
     public void closeDAO() {

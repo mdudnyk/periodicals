@@ -20,7 +20,7 @@ public class HikariConnectionPool implements ConnectionManager {
                     .getResource(propertiesFilename);
 
             if (url == null) {
-                throw new IllegalArgumentException(propertiesFilename + " is not found. ");
+                throw new IllegalArgumentException(propertiesFilename + " not found. ");
             }
 
             HikariConfig config = new HikariConfig(url.getPath());
