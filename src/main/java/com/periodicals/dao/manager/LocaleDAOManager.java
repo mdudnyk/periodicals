@@ -34,7 +34,7 @@ public class LocaleDAOManager {
         return locales;
     }
 
-    public LocaleCustom getLocaleById(int id) throws DAOException {
+    public LocaleCustom getLocaleById(String id) throws DAOException {
         Connection connection = conManager.getConnection();
         LocaleCustom locale = localeDAO.getEntityById(id, connection);
         conManager.close(connection);
@@ -47,7 +47,7 @@ public class LocaleDAOManager {
         conManager.close(connection);
     }
 
-    public void deleteLocale(int id) throws DAOException {
+    public void deleteLocale(String id) throws DAOException {
         Connection connection = conManager.getConnection();
         localeDAO.delete(id, connection);
         conManager.close(connection);

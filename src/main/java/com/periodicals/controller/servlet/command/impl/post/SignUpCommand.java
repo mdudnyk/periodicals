@@ -20,7 +20,7 @@ public class SignUpCommand implements FrontCommand {
         String lastname = request.getParameter("lastname");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        User user = new User(1, 1, firstname, lastname, password, email, Role.CUSTOMER, 0, BlockingStatus.NOT_BLOCKED);
+        User user = new User(1, "ua", firstname, lastname, password, email, Role.CUSTOMER, 0, BlockingStatus.NOT_BLOCKED);
 
         UserService service = new UserService();
 

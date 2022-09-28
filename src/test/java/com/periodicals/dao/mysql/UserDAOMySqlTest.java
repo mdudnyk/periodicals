@@ -36,7 +36,7 @@ class UserDAOMySqlTest {
 
     @Test
     void create() throws DAOException {
-        User user = new User(1, 1, "Myroslav", "Dudnyk", "yamahar1",
+        User user = new User(1, "ua", "Myroslav", "Dudnyk", "yamahar1",
                 "mad0013@mail.ru", Role.CUSTOMER, 100, BlockingStatus.NOT_BLOCKED);
         new UserDAOMySql().create(user, connection);
     }
