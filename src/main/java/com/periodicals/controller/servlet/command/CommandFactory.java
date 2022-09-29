@@ -15,7 +15,6 @@ public final class CommandFactory {
             try {
                 frontCommand = CommandEnum.valueOf(commandFromRequest).getCommand();
             } catch (IllegalArgumentException e) {
-                e.printStackTrace();
                 frontCommand = CommandEnum.ERROR_PAGE.getCommand();
             }
         } else {

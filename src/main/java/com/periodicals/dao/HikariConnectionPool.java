@@ -12,23 +12,25 @@ public class HikariConnectionPool implements ConnectionManager {
     private static HikariConnectionPool instance;
     private static HikariDataSource dataSource;
 
-    private HikariConnectionPool() {
+    private HikariConnectionPool() throws DAOException {
         if (dataSource == null) {
             String propertiesFilename = "hikari.properties";
             URL url = this.getClass()
                     .getClassLoader()
                     .getResource(propertiesFilename);
-
             if (url == null) {
-                throw new IllegalArgumentException(propertiesFilename + " not found. ");
+                throw new IllegalArgumentException("Database initialization problems. File <" + propertiesFilename + "> not found. ");
             }
-
-            HikariConfig config = new HikariConfig(url.getPath());
-            dataSource = new HikariDataSource(config);
+            try {
+                HikariConfig config = new HikariConfig(url.getPath());
+                dataSource = new HikariDataSource(config);
+            } catch (Exception e) {
+                throw new DAOException(e);
+            }
         }
     }
 
-    public static synchronized HikariConnectionPool getInstance() {
+    public static synchronized HikariConnectionPool getInstance() throws DAOException {
         if (instance == null) {
             instance = new HikariConnectionPool();
         }

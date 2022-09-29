@@ -1,5 +1,4 @@
 <%@ page import="com.periodicals.entity.User" %>
-<%@ page import="java.util.Locale" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <fmt:setLocale value = "${sessionScope.lang == null ? 'en' : sessionScope.lang}"/>
@@ -13,7 +12,7 @@
         </div>
         <div class="management_block">
             <div class="search_block">
-                <form action="/controller">
+                <form action="${pageContext.request.contextPath}/controller">
                     <input type="hidden" name="cmd" value="SEARCH_BY_TITLE">
                     <input type="text" name="search_string" placeholder="<fmt:message key="header.search_by_title"/>" required>
                     <button class="search_btn" type="submit">

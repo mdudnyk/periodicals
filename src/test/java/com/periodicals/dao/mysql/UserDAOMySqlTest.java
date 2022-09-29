@@ -27,7 +27,7 @@ class UserDAOMySqlTest {
     @BeforeEach
     void setUp() throws SQLException {
         Statement statement = connection.createStatement();
-        statement.execute("DELETE FROM user");
+//        statement.execute("DELETE FROM user");
     }
 
     @AfterEach

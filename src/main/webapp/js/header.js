@@ -78,22 +78,27 @@ async function tryToSignIn() {
 
     if(checkSignInInput()) {
         si_alert_block.style.display = 'none';
-        let response = await fetch('controller?cmd=SIGN_IN', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: 'email=' +  sign_in_email.value + '&password=' +  sign_in_password.value,
-        });
-        if (response.status === 200) {
-            history.go(0);
-        } else {
-            si_alert_block.style.display = 'flex';
-            if (response.status === 460) {
-                si_wrong_email_password.style.display = 'block';
+        try {
+            let response = await fetch('controller?cmd=SIGN_IN', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'email=' +  sign_in_email.value + '&password=' +  sign_in_password.value,
+            });
+            if (response.status === 200) {
+                history.go(0);
             } else {
-                si_try_later.style.display = 'block';
+                si_alert_block.style.display = 'flex';
+                if (response.status === 460) {
+                    si_wrong_email_password.style.display = 'block';
+                } else {
+                    si_try_later.style.display = 'block';
+                }
             }
+        } catch (e) {
+            si_try_later.style.display = 'block';
+            si_alert_block.style.display = 'flex';
         }
     } else {
         si_alert_block.style.display = 'flex';
@@ -164,19 +169,24 @@ async function tryToSignUp() {
 
     if(checkSignUpInput()) {
         su_alert_block.style.display = 'none';
-        let response = await fetch('controller?cmd=SIGN_UP', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: 'email=' +  sign_up_email.value + '&password=' +  sign_up_password_1.value + 
-            '&firstname=' + sign_up_firstname.value + '&lastname=' + sign_up_lastname.value,
-        });
-        if (response.status === 200) {
-            history.go(0);
-        } else {
-            su_alert_block.style.display = 'flex';
-            su_try_later.style.display = 'block';
+        try {
+            let response = await fetch('controller?cmd=SIGN_UP', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'email=' +  sign_up_email.value + '&password=' +  sign_up_password_1.value +
+                '&firstname=' + sign_up_firstname.value + '&lastname=' + sign_up_lastname.value,
+            });
+            if (response.status === 200) {
+                history.go(0);
+            } else {
+                su_alert_block.style.display = 'flex';
+                su_try_later.style.display = 'block';
+            }
+        } catch (e) {
+            si_try_later.style.display = 'block';
+            si_alert_block.style.display = 'flex';
         }
     } else {
         su_alert_block.style.display = 'flex';
