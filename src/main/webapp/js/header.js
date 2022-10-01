@@ -90,7 +90,7 @@ async function tryToSignIn() {
                 history.go(0);
             } else {
                 si_alert_block.style.display = 'flex';
-                if (response.status === 460) {
+                if (response.status === 560) {
                     si_wrong_email_password.style.display = 'block';
                 } else {
                     si_try_later.style.display = 'block';
@@ -135,6 +135,7 @@ const sign_up_password_1 = document.getElementById('sign_up_password_1');
 const sign_up_password_2 = document.getElementById('sign_up_password_2');
 //alerts
 const su_alert_block = document.getElementById('su_alert_block');
+const su_success_block = document.getElementById('su_success_block');
 const su_fill_all = document.getElementById('su_fill_all');
 const su_firstname_not_valid = document.getElementById('su_firstname_not_valid');
 const su_lastname_not_valid = document.getElementById('su_lastname_not_valid');
@@ -143,6 +144,8 @@ const su_password_not_valid = document.getElementById('su_password_not_valid');
 const su_pass_identical = document.getElementById('su_pass_identical');
 const su_user_exists = document.getElementById('su_user_exists');
 const su_try_later = document.getElementById('su_try_later');
+const su_please_login = document.getElementById('su_please_login');
+
 
 function clearSignUpInput() {
     sign_up_firstname.value = '';
@@ -154,6 +157,7 @@ function clearSignUpInput() {
 
 function clearSignUpModalAlerts() {
     su_alert_block.style.display = 'none';
+    su_success_block.style.display = 'none';
     su_fill_all.style.display = 'none';
     su_firstname_not_valid.style.display = 'none';
     su_lastname_not_valid.style.display = 'none';
@@ -162,6 +166,7 @@ function clearSignUpModalAlerts() {
     su_pass_identical.style.display = 'none';
     su_user_exists.style.display = 'none';
     su_try_later.style.display = 'none';
+    su_please_login.style.display = 'none';
 }
 
 async function tryToSignUp() {
@@ -179,10 +184,16 @@ async function tryToSignUp() {
                 '&firstname=' + sign_up_firstname.value + '&lastname=' + sign_up_lastname.value,
             });
             if (response.status === 200) {
-                history.go(0);
+                su_please_login.style.display = 'block';
+                su_success_block.style.display = 'flex';
+                clearSignUpInput();
             } else {
                 su_alert_block.style.display = 'flex';
-                su_try_later.style.display = 'block';
+                if (response.status === 561) {
+                    su_user_exists.style.display = 'block';
+                } else {
+                    su_try_later.style.display = 'block';
+                }
             }
         } catch (e) {
             si_try_later.style.display = 'block';

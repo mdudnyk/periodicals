@@ -20,11 +20,8 @@
     </error-page>
 
     <context-param>
-        <param-name>jakarta.servlet.jsp.jstl.fmt.locale</param-name>
-        <param-value>ua</param-value>
-    </context-param>
-    <context-param>
         <param-name>defaultLocale</param-name>
         <param-value>ua</param-value>
     </context-param>
+
 </web-app>

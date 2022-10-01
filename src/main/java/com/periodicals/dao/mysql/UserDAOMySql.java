@@ -46,7 +46,7 @@ public class UserDAOMySql implements UserDAO {
 
     @Override
     public User getEntityById(final Integer id, Connection connection) throws DAOException {
-        User user;
+        User user = null;
 
         try (PreparedStatement ps = connection.prepareStatement(Queries.GET_USER_BY_ID)) {
             ps.setInt(1, id);
@@ -56,8 +56,6 @@ public class UserDAOMySql implements UserDAO {
                 rs.next();
                 user = fillEntityFromResultSet(rs);
                 rs.close();
-            } else {
-                throw new DAOException("We don`t have such user. ");
             }
         } catch (SQLException e) {
             throw new DAOException("Error while trying to get user by it`s ID=" + id + ". " + e.getMessage());
@@ -68,7 +66,7 @@ public class UserDAOMySql implements UserDAO {
 
     @Override
     public User getUserByEmail(final String email, Connection connection) throws DAOException {
-        User user;
+        User user = null;
 
         try (PreparedStatement ps = connection.prepareStatement(Queries.GET_USER_BY_EMAIL)) {
             ps.setString(1, email);
@@ -77,8 +75,6 @@ public class UserDAOMySql implements UserDAO {
                 rs.next();
                 user = fillEntityFromResultSet(rs);
                 rs.close();
-            } else {
-                throw new DAOException("We don`t have such user in our database. ");
             }
         } catch (SQLException e) {
             throw new DAOException("Error while trying to get user by it`s email: " + email + ". " + e.getMessage());

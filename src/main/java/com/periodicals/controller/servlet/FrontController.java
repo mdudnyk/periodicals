@@ -1,6 +1,7 @@
 package com.periodicals.controller.servlet;
 
 import com.periodicals.controller.servlet.command.CommandFactory;
+import com.periodicals.dao.manager.DAOManagerFactory;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -22,7 +23,11 @@ public class FrontController extends HttpServlet {
 
     private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         try {
-            CommandFactory.getCommand(request).execute(request, response);
+            DAOManagerFactory daoFactory =
+                    (DAOManagerFactory) request
+                    .getServletContext()
+                    .getAttribute("DAOManagerFactory");
+            CommandFactory.getCommand(request).execute(request, response, daoFactory);
         } catch (Exception e) {
             //TODO logging
             throw new ServletException(e);

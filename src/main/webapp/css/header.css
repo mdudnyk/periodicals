@@ -338,16 +338,22 @@ header button:active {
     max-width: 90%;
 }
 
+.modal_success_block {
+    background-color: rgba(0, 255, 13, 0.15);
+    border: 2px solid rgba(92, 205, 128, 0.45);
+    padding: 5px 15px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    max-width: 90%;
+}
+
 .modal_alert_msgs {
     display: flex;
     flex-direction: column;
     margin-left: 10px;
-}
-
-.modal_alert_msg {
-    margin: 5px;
-    color: rgb(134, 134, 134);
-    font-weight: 400;
 }
 
 .modal_content form {

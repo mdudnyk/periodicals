@@ -2,6 +2,7 @@ package com.periodicals.controller.servlet.command.impl.get;
 
 import com.periodicals.controller.servlet.command.FrontCommand;
 import com.periodicals.dao.exception.DAOException;
+import com.periodicals.dao.manager.DAOManagerFactory;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,14 +10,13 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-
 public class SignOutCommand implements FrontCommand {
     @Override
-    public void execute(final HttpServletRequest request, final HttpServletResponse response) throws DAOException, ServletException, IOException {
+    public void execute(final HttpServletRequest request, final HttpServletResponse response,
+                        final DAOManagerFactory daoManager) throws DAOException, ServletException, IOException {
 
         Cookie[] cookies = request.getCookies();
         String cookieName = "name";
-
         if  (cookies != null) {
             for (Cookie c: cookies) {
                 if (cookieName.equals(c.getName())) {
@@ -27,9 +27,7 @@ public class SignOutCommand implements FrontCommand {
                 }
             }
         }
-
         request.getSession().invalidate();
-//        request.getRequestDispatcher("WEB-INF/views/HomePage.jsp").forward(request, response);
         response.sendRedirect("/periodicals");
     }
 }

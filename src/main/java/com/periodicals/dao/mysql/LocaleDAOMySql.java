@@ -38,18 +38,15 @@ public class LocaleDAOMySql implements LocaleDAO {
 
     @Override
     public LocaleCustom getEntityById(final String id, final Connection connection) throws DAOException {
-        LocaleCustom locale;
+        LocaleCustom locale = null;
 
         try (PreparedStatement ps = connection.prepareStatement(Queries.GET_LOCALE_BY_ID)) {
             ps.setString(1, id);
             ResultSet rs = ps.executeQuery();
-
             if (rs.isBeforeFirst()) {
                 rs.next();
                 locale = fillEntityFromResultSet(rs);
                 rs.close();
-            } else {
-                throw new DAOException("We don`t have such locale. ");
             }
         } catch (SQLException e) {
             throw new DAOException("Error while trying to get locale by it`s ID=" + id + ". " + e.getMessage());
