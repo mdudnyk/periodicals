@@ -18,16 +18,25 @@ img{vertical-align: top;}
 h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: inherit;}
 
 body {
-  font-family:'Roboto', sans-serif;
-  font-size: 14px;
-  background-color: whitesmoke;
-  color:  #444c54;
+    padding-top: 95px;
+    font-family:'Roboto', sans-serif;
+    font-size: 14px;
+    background-color: whitesmoke;
+    color:  #444c54;
 }
 
 header {
+    z-index: 1;
+    top: 0;
+    position: fixed;
+    width: 100%;
     padding: 0 25px;
     background-color: white;
     box-shadow: 0 2px 5px 0 rgba(0,0,0,0.05);
+}
+
+a {
+    color:  #444c54;
 }
 
 header .container {
@@ -96,7 +105,7 @@ header button:active {
 }
 
 .profile_block {
-    z-index: 5;
+    z-index: 2;
     cursor: pointer;
     background-color: #27c18a;
     height: 50px;
@@ -128,7 +137,6 @@ header button:active {
 }
 
 .locale_manage_block {
-    z-index: 1;
     cursor: pointer;
     display: flex;
     border: 1px solid rgba(0, 0, 0, 0.15);
@@ -137,17 +145,13 @@ header button:active {
     margin-left: -33px;
 }
 
-.flag_img {
-    z-index: 1;
-}
 
 .lang_modal {
-    z-index: 2;
     display: none;
     box-shadow: 0 2px 5px 1px rgba(0,0,0,0.04);
     border: 1px solid rgba(0, 0, 0, 0.15);
     border-top: none;
-    
+
     border-radius: 0 0 5px 5px;
     background-color: white;
     color:  #444c54;
@@ -173,11 +177,11 @@ header button:active {
 }
 
 .profile_modal {
-    z-index: 2;
+    z-index: 1;
     display: none;
     box-shadow: 0 2px 5px 1px rgba(0,0,0,0.04);
     border: 1px solid rgba(0, 0, 0, 0.15);
-    
+
     border-radius: 5px;
     background-color: white;
     color:  #444c54;
@@ -260,10 +264,10 @@ header button:active {
 }
 
 .enter_modal {
+    z-index: 3;
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 5;
     height: 100%;
     width: 100%;
     background-color: #0000003f;
@@ -372,21 +376,21 @@ header button:active {
     padding: 20px 15px;
     width: 100%;
     background-color: white;
-} 
+}
 
 .modal_content input:first-child {
     border-radius: 10px 10px 0 0;
     border-top: 1px solid rgba(0, 0, 0, 0.15);
-} 
+}
 
 .modal_content input:last-child {
     border-radius: 0 0 10px 10px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-} 
+}
 
 .modal_content input::placeholder {
     opacity: 60%;
-} 
+}
 
 .input_text_block {
     border-radius: 10px;

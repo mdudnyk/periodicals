@@ -6,6 +6,6 @@
 </head>
 <body>
 <h1>Something went wrong</h1>
-<h2>This resource in unavailable</h2>
+<h2>This resource is unavailable</h2>
 <p>You will be redirected to a home page in 5 seconds</p>
 </body>
