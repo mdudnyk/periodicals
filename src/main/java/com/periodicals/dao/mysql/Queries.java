@@ -17,4 +17,15 @@ class Queries {
             "email=?, role=?, balance=?, blocking_status=? WHERE id=?";
     public static final String DELETE_USER = "DELETE FROM user WHERE id=?";
 
+    //TOPIC
+    public static final String CREATE_TOPIC = "INSERT INTO topic values (DEFAULT)";
+    public static final String GET_ALL_TOPICS = "SELECT * FROM topic";
+    public static final String DELETE_TOPIC = "DELETE FROM topic WHERE id=?";
+
+    //TOPIC_TRANSLATE
+    public static final String CREATE_TOPIC_TRANSLATE = "INSERT INTO topic_translate values (?, ?, ?)";
+    public static final String GET_ALL_TOPIC_TRANSLATES = "SELECT * FROM topic_translate WHERE topic_id=?";
+    public static final String GET_TOPIC_TRANSLATE_BY_LOCALE = "SELECT * FROM topic_translate WHERE topic_id=? AND locale_id=?";
+    public static final String UPDATE_TOPIC_TRANSLATE = "UPDATE topic_translate SET name=? WHERE topic_id=? AND locale_id=?";
+    public static final String DELETE_TOPIC_TRANSLATE = "DELETE FROM user WHERE topic_id=? AND locale_id=?";
 }

@@ -10,11 +10,14 @@ public class DAOManagerFactory {
 
     private final UserDAOManager userDAOManager;
     private final LocaleDAOManager localeDAOManager;
+    private final TopicDAOManager topicDAOManager;
+
 
     private DAOManagerFactory() throws DAOException {
         connectionManager = HikariConnectionPool.getInstance();
         userDAOManager = new UserDAOManager(connectionManager);
         localeDAOManager = new LocaleDAOManager(connectionManager);
+        topicDAOManager = new TopicDAOManager(connectionManager);
     }
 
     public static synchronized DAOManagerFactory getInstance() throws DAOException {
@@ -30,6 +33,10 @@ public class DAOManagerFactory {
 
     public LocaleDAOManager getLocaleDAOManager() {
         return localeDAOManager;
+    }
+
+    public TopicDAOManager getTopicDAOManager() {
+        return topicDAOManager;
     }
 
     public void closeDAO() {
