@@ -36,7 +36,7 @@ public class TopicsPageCommand implements FrontCommand {
         pageNumber = setPageNumber(request);
         int amountOnPage = setAmountOnPage(request);
         String sortByName = setNameSorting(request);
-        checkPageNumberAccordingToTotalTopicsAmount(amountOnPage, topicsTotal);
+        checkPageNumberAccordingToTotalTopicsAmount(amountOnPage, topicsTotal, request);
         int positionsToSkip = pageNumber * amountOnPage - amountOnPage;
 
         List<Topic> topics = null;
@@ -48,11 +48,11 @@ public class TopicsPageCommand implements FrontCommand {
         request.setAttribute("topicsTotal", topicsTotal);
         request.getSession().setAttribute("topicPageNumber", pageNumber);
         request.setAttribute("topics", topics);
-        request.getRequestDispatcher("WEB-INF/jsp/TopicsPage.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/TopicsPage.jsp").forward(request, response);
     }
 
     private void checkPageNumberAccordingToTotalTopicsAmount(
-            final int amountOnPage, final int topicsTotal) {
+            final int amountOnPage, final int topicsTotal, final HttpServletRequest request) {
         int totalPagesExists = topicsTotal / amountOnPage + 1;
         if (topicsTotal % amountOnPage == 0) {
             totalPagesExists--;
@@ -60,6 +60,7 @@ public class TopicsPageCommand implements FrontCommand {
         if (pageNumber > totalPagesExists) {
             pageNumber = totalPagesExists;
         }
+        request.setAttribute("totalPages", totalPagesExists);
     }
 
     private String setNameSorting(final HttpServletRequest request) {
@@ -84,7 +85,7 @@ public class TopicsPageCommand implements FrontCommand {
     }
 
     private int setAmountOnPage(final HttpServletRequest request) {
-        int amount = 10;
+        int amount = 5;
         String amountString = request.getParameter("amount");
         if (amountString != null) {
             try {
@@ -92,8 +93,8 @@ public class TopicsPageCommand implements FrontCommand {
             } catch (NumberFormatException e) {
                 //TODO LOGGING
             }
-            if (amount > 25) {
-                amount = 25;
+            if (amount > 15) {
+                amount = 15;
             }
             pageNumber = 1;
             request.getSession().setAttribute("topicAmountOnPage", amount);

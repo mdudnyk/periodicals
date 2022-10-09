@@ -55,15 +55,16 @@ public class Main {
 //        System.out.println(topicService.getAllTopicsByLocale("en", "ua"));
 //
 //        managerFactory.closeDAO();
-        checkPageNumberAccordingToTotalTopicsAmount(1, 10, 1);
-    }
-    private static void checkPageNumberAccordingToTotalTopicsAmount(int pageNumber, final int amountOnPage, final int topicsTotal) {
-        int totalPagesExists = topicsTotal / amountOnPage + 1;
-        if (topicsTotal % amountOnPage == 0) {
-            totalPagesExists--;
+
+
+        for (int i = 1; i < 22; i++) {
+            int startPage = i - (i - 1) % 5;
+
+            System.out.println("for page: " + i + " \tstart page: " + startPage + "\t");
         }
-        if (pageNumber > totalPagesExists) {
-            pageNumber = totalPagesExists;
-        };
+
+//        int page = 9;
+//        int result = (page - (page % 5) + 1);
+//        System.out.println("for page: " + page +  "\tstart page: " + result);
     }
 }

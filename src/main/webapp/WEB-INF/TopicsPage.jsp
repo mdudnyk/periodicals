@@ -1,6 +1,8 @@
 <%@ page import="com.periodicals.entity.Topic" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="ct" tagdir="/WEB-INF/tags" %>
 
 <html lang="${sessionScope.locale.getShortNameId()}">
 <head>
@@ -44,6 +46,13 @@
                     <ul>
                         <%
                             int amount = (Integer) session.getAttribute("topicAmountOnPage");
+                            if (amount != 5) {
+                        %>
+                        <a href="${pageContext.request.contextPath}/controller?cmd=TOPICS_PAGE&amount=5">
+                            <li>5</li>
+                        </a>
+                        <%
+                            }
                             if (amount != 10) {
                         %>
                         <a href="${pageContext.request.contextPath}/controller?cmd=TOPICS_PAGE&amount=10">
@@ -55,13 +64,6 @@
                         %>
                         <a href="${pageContext.request.contextPath}/controller?cmd=TOPICS_PAGE&amount=15">
                             <li>15</li>
-                        </a>
-                        <%
-                            }
-                            if (amount != 25) {
-                        %>
-                        <a href="${pageContext.request.contextPath}/controller?cmd=TOPICS_PAGE&amount=25">
-                            <li>25</li>
                         </a>
                         <%
                             }
@@ -132,20 +134,8 @@
             </tbody>
         </table>
         <div class="under_table_block">
-            <ul class="pagination">
-                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-                <li><a href="#!">1</a></li>
-                <li><a href="#!">2</a></li>
-                <li class="active green"><a href="#!">3</a></li>
-                <li><a href="#!">4</a></li>
-                <li><a href="#!">5</a></li>
-                <li><a href="#!">6</a></li>
-                <li><a href="#!">7</a></li>
-                <li><a href="#!">8</a></li>
-                <li class="disabled"><a href="#!">...</a></li>
-                <li><a href="#!">22</a></li>
-                <li><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-            </ul>
+            <ct:paginationBar page="${sessionScope.topicPageNumber}"
+                              total="${requestScope.totalPages}"/>
         </div>
         <%
             } else {

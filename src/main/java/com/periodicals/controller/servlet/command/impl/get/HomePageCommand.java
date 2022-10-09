@@ -30,6 +30,6 @@ public class HomePageCommand implements FrontCommand {
         List<Topic> topics = topicService.getAllTopicsByLocale(currentLocale, defaultLocale);
         request.setAttribute("topics", topics);
 
-        request.getRequestDispatcher("WEB-INF/jsp/HomePage.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/HomePage.jsp").forward(request, response);
     }
 }

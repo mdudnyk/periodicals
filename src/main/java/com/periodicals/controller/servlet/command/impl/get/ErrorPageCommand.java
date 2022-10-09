@@ -13,6 +13,6 @@ public class ErrorPageCommand implements FrontCommand {
     public void execute(final HttpServletRequest request, final HttpServletResponse response,
                         final DAOManagerFactory daoManager) throws ServletException, IOException {
 
-        request.getRequestDispatcher("WEB-INF/views/ErrorPage.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/error/ErrorPage.jsp").forward(request, response);
     }
 }
