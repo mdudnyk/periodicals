@@ -85,7 +85,7 @@ public class TopicsPageCommand implements FrontCommand {
     }
 
     private int setAmountOnPage(final HttpServletRequest request) {
-        int amount = 5;
+        int amount = 10;
         String amountString = request.getParameter("amount");
         if (amountString != null) {
             try {

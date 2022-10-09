@@ -35,9 +35,6 @@
         </div>
     </div>
     <div class="content_main">
-        <%
-            if (topics != null && topics.size() > 0) {
-        %>
         <div class="above_table_block">
             <div class="amount_manage_block" onclick="open_amount_modal()">
                 <div class="amount_number">${sessionScope.topicAmountOnPage}</div>
@@ -84,7 +81,7 @@
         <table class="centered">
             <thead class="table_head">
             <tr style="border: none">
-                <th style="width: 20px; padding-left: 10px;"><fmt:message key="topics.number"/></th>
+                <th style="min-width: 40px; padding-left: 10px;"><fmt:message key="topics.number"/></th>
                 <th>
                     <div class="sortable_column"><fmt:message key="topics.topic_name"/>
                         <div class="sorting_block">
@@ -117,6 +114,9 @@
             </tr>
             </thead>
             <tbody>
+            <%
+                if (topics != null && topics.size() > 0) {
+            %>
             <c:set var = "number" scope="page" value = "${sessionScope.topicPageNumber * sessionScope.topicAmountOnPage - sessionScope.topicAmountOnPage}"/>
             <c:forEach var="topic" items="${requestScope.topics}">
                 <c:set var = "number" scope="page" value = "${number + 1}"/>
@@ -140,7 +140,9 @@
         <%
             } else {
         %>
-            <span class="no_topics_to_select"><fmt:message key="topics.no_publications"/></span>
+            </tbody>
+        </table>
+            <span class="no_topics_to_show"><fmt:message key="home.no_topics_to_show"/></span>
         <%
             }
         %>
