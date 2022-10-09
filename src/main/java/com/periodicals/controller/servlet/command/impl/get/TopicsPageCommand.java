@@ -5,6 +5,7 @@ import com.periodicals.dao.exception.DAOException;
 import com.periodicals.dao.manager.DAOManagerFactory;
 import com.periodicals.entity.LocaleCustom;
 import com.periodicals.entity.Topic;
+import com.periodicals.entity.TopicTranslate;
 import com.periodicals.service.ServiceException;
 import com.periodicals.service.TopicService;
 import com.periodicals.service.impl.TopicServiceImpl;
@@ -13,6 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -37,18 +39,66 @@ public class TopicsPageCommand implements FrontCommand {
         int amountOnPage = setAmountOnPage(request);
         String sortByName = setNameSorting(request);
         checkPageNumberAccordingToTotalTopicsAmount(amountOnPage, topicsTotal, request);
+        String searchMode = setSearchMode(request);
         int positionsToSkip = pageNumber * amountOnPage - amountOnPage;
 
         List<Topic> topics = null;
         if (topicsTotal != 0) {
-            topics = topicService.getTopicsByLocalePagination(currentLocale, defaultLocaleName,
-                    positionsToSkip, amountOnPage, sortByName);
+            if (searchMode.equals("off")) {
+                topics = topicService.getTopicsByLocalePagination(currentLocale, defaultLocaleName,
+                        positionsToSkip, amountOnPage, sortByName);
+            } else {
+                topics = new ArrayList<>();
+//                topics.add(new Topic(1, new TopicTranslate(1, "en", "Sport")));
+            }
         }
 
         request.setAttribute("topicsTotal", topicsTotal);
         request.getSession().setAttribute("topicPageNumber", pageNumber);
         request.setAttribute("topics", topics);
         request.getRequestDispatcher("WEB-INF/TopicsPage.jsp").forward(request, response);
+    }
+
+    private String setSearchMode(final HttpServletRequest request) {
+        String searchMode = request.getParameter("searchMode");
+        String searchString = request.getParameter("searchString");
+
+        if (searchMode != null && searchMode.equals("off")) {
+            searchMode = configureSearchParameters(request, "off" , "");
+        } else {
+            if (searchString != null && searchString.length() > 0) {
+                searchMode = configureSearchParameters(request, "on" , searchString);
+            } else {
+                searchMode = configureSearchParameters(request, "off" , "");
+            }
+        }
+
+        return searchMode;
+//        String defaultSearchMode = "off";
+//        String searchMode = request.getParameter("searchMode");
+//        if (searchMode == null) {
+//            String mode = (String) request.getSession().getAttribute("topicSearchMode");
+//            if (mode == null) {
+//                request.getSession().setAttribute("topicSearchMode", "off");
+//                searchMode = defaultSearchMode;
+//            } else {
+//                searchMode = mode;
+//            }
+//        } else if (!searchMode.equals("on")) {
+//            request.getSession().setAttribute("topicSearchMode", "off");
+//            searchMode = defaultSearchMode;
+//            } else {
+//                pageNumber = 1;
+//                request.getSession().setAttribute("topicSearchMode", "on");
+//            }
+//        System.out.println("2 search mode: " + searchMode);
+//        return searchMode;
+    }
+
+    private String configureSearchParameters(HttpServletRequest request, String mode, String query) {
+        request.getSession().setAttribute("topicSearchMode", mode);
+        request.setAttribute("searchString", query);
+        return mode;
     }
 
     private void checkPageNumberAccordingToTotalTopicsAmount(

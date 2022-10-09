@@ -68,10 +68,19 @@
                     </ul>
                 </div>
             </div>
+            <div class="close_search_block">
+                <c:if test="${sessionScope.topicSearchMode.equals('on')}">
+                    <form style="z-index: 1;" action="${pageContext.request.contextPath}/controller">
+                        <input type="hidden" name="cmd" value="TOPICS_PAGE">
+                        <input type="hidden" name="searchMode" value="off">
+                        <button type="submit" class="close_search_btn">End search</button>
+                    </form>
+                </c:if>
+            </div>
             <div class="search_block_topic">
                 <form action="${pageContext.request.contextPath}/controller">
-                    <input type="hidden" name="cmd" value="SEARCH_TOPIC">
-                    <input type="text" name="search_string" placeholder="<fmt:message key="topics.search_topic"/>">
+                    <input type="hidden" name="cmd" value="TOPICS_PAGE">
+                    <input type="text" name="searchString" value="${requestScope.searchString}" placeholder="<fmt:message key="topics.search_topic"/>">
                     <button class="search_btn" type="submit">
                         <i class="material-icons search">search</i>
                     </button>
@@ -81,7 +90,7 @@
         <table class="centered">
             <thead class="table_head">
             <tr style="border: none">
-                <th style="min-width: 40px; padding-left: 10px;"><fmt:message key="topics.number"/></th>
+                <th style="width: 70px;"><fmt:message key="topics.number"/></th>
                 <th>
                     <div class="sortable_column"><fmt:message key="topics.topic_name"/>
                         <div class="sorting_block">
@@ -117,7 +126,9 @@
             <%
                 if (topics != null && topics.size() > 0) {
             %>
-            <c:set var = "number" scope="page" value = "${sessionScope.topicPageNumber * sessionScope.topicAmountOnPage - sessionScope.topicAmountOnPage}"/>
+            <c:set var = "number" scope="page" value = "${sessionScope.topicPageNumber *
+                                                        sessionScope.topicAmountOnPage -
+                                                        sessionScope.topicAmountOnPage}"/>
             <c:forEach var="topic" items="${requestScope.topics}">
                 <c:set var = "number" scope="page" value = "${number + 1}"/>
                 <tr>
@@ -135,7 +146,9 @@
         </table>
         <div class="under_table_block">
             <ct:paginationBar page="${sessionScope.topicPageNumber}"
-                              total="${requestScope.totalPages}"/>
+                              total="${sessionScope.topicSearchMode.equals('on')
+                                       ? requestScope.topics.size()
+                                       : requestScope.totalPages}"/>
         </div>
         <%
             } else {
@@ -148,7 +161,6 @@
         %>
     </div>
 </div>
-
 <script src="${pageContext.request.contextPath}/js/topics.js"></script>
 </body>
 </html>

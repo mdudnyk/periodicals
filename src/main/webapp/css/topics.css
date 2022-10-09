@@ -48,6 +48,10 @@ h1 {
     box-shadow: 0 2px 5px 1px rgba(0,0,0,0.15);
 }
 
+.add_topic_btn:enabled {
+    background-color: #27c18be5;
+}
+
 .add_btn_box {
     text-transform: capitalize;
     display: flex;
@@ -120,6 +124,7 @@ table {
 }
 
 .material-icons.sort.disabled {
+    cursor: default;
     height: 16px;
     width: 20px;
     margin-left: 0;
@@ -154,10 +159,6 @@ table {
     background-color: #27c18a !important;
 }
 
-.disabled {
-    cursor: default;
-}
-
 .topic_name_row {
     text-align: left !important;
     padding-left: 60px;
@@ -167,7 +168,6 @@ table {
     font-size: 12pt;
     padding: 15px 3px;
     display: flex;
-    justify-content: space-between;
     width: 100%;
 }
 
@@ -230,6 +230,35 @@ table {
     position: absolute;
     margin-top: -55px;
     margin-left: 5px;
+}
+
+.close_search_block {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.close_search_btn {
+    box-shadow: none;
+    font-weight: 500;
+    font-size: 12pt;
+    border-radius: 5px 0 0 5px;
+    border: none;
+    color: rgb(236, 236, 236);
+    background-color: rgb(255, 117, 117);
+    height: 35px;
+    width: 120px;
+    padding: 0px;
+    margin-right: -3px;
+}
+
+.close_search_btn:hover {
+    background-color: rgba(255, 0, 0, 0.6);
+}
+
+.close_search_btn:enabled {
+    background-color: rgba(255, 0, 0, 0.6);
 }
 
 .search_block_topic {
