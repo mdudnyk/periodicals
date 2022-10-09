@@ -1,6 +1,8 @@
+<%@ page import="java.util.List" %>
+<%@ page import="com.periodicals.entity.Topic" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<html lang="${cookie.lang.value}">
+<html lang="${sessionScope.locale.getShortNameId()}">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,27 +15,50 @@
 </head>
 <body>
 <%@ include file="fragment/Header.jspf" %>
-
+<%
+    List<Topic> topics = (List<Topic>) request.getAttribute("topics");
+%>
     <div class="body_container">
         <div class="home_top_block">
             <div>
                 <h1 class="home_topic_select_text"><fmt:message key="home.topics"/></h1>
                 <div class="show_all_topics_field" onclick="open_topic_modal()">
-<%--                    <span id="no_topics_to_select"><fmt:message key="home.no_topics_to_show"/></span>--%>
+                    <%
+                        if (topics != null && topics.size() > 0) {
+                    %>
                     <span id="show_all_topics_text"><fmt:message key="home.show_all"/></span>
                     <span id="select_one_topic_text" style="display: none;"><fmt:message key="home.choose_one"/></span>
+                    <%
+                        } else {
+                    %>
+                    <span id="no_topics_to_select"><fmt:message key="home.no_topics_to_show"/></span>
+                    <%
+                        }
+                    %>
                     <i class="material-icons topic" id="topic_modal_icon">expand_more</i>
                 </div>
+                <%
+                    if (topics != null && topics.size() > 0) {
+                %>
                 <div class="topic_modal" id="topic_modal">
                     <ul>
-                        <a href="${pageContext.request.contextPath}/controller?cmd=SHOW_TOPIC&id=1">
-                            <li>Найпопулярніші видання</li>
+                        <a href="${pageContext.request.contextPath}/controller?cmd=SHOW_PUBLICATIONS&topicID=featured">
+                            <li>
+                                <fmt:message key="home.most_populars"/>
+                            </li>
                         </a>
-                        <a href="${pageContext.request.contextPath}/controller?cmd=SHOW_TOPIC&id=2">
-                            <li>Газети</li>
-                        </a>
+                        <c:forEach var="topic" items="${requestScope.topics}">
+                            <a href="${pageContext.request.contextPath}/controller?cmd=SHOW_PUBLICATIONS&topicID=${topic.getId()}">
+                                <li>
+                                    <c:out value="${topic.getAllTranslates().values().iterator().next().getName()}" />
+                                </li>
+                            </a>
+                        </c:forEach>
                     </ul>
                 </div>
+                <%
+                    }
+                %>
             </div>
             <div>
                 <span class="home_top_block_stat"><fmt:message key="home.total_publications"/>:
@@ -43,8 +68,11 @@
                 </span>
             </div>
         </div>
+        <%
+            if (topics != null && topics.size() > 0) {
+        %>
         <div class="topic_row">
-            <a href="#">
+            <a href="${pageContext.request.contextPath}/controller?cmd=SHOW_PUBLICATIONS&topicID=featured">
                 <h1><fmt:message key="home.most_populars"/></h1>
             </a>
             <div class="periodical_row">
@@ -78,9 +106,11 @@
                 </div>
             </div>
         </div>
+
+        <c:forEach var="topic" items="${requestScope.topics}">
         <div class="topic_row">
-            <a href="#">
-                <h1>Газети</h1>
+            <a href="${pageContext.request.contextPath}/controller?cmd=SHOW_PUBLICATIONS&topicID=${topic.getId()}">
+                <h1><c:out value="${topic.getAllTranslates().values().iterator().next().getName()}"/></h1>
             </a>
             <div class="periodical_row">
                 <div class="periodical_container">
@@ -113,6 +143,15 @@
                 </div>
             </div>
         </div>
+        </c:forEach>
+        <%
+            } else {
+        %>
+            <br><br>
+            <h1><fmt:message key="home.dont_have_publications"/></h1>
+        <%
+            }
+        %>
     </div>
     <script src="${pageContext.request.contextPath}/js/home.js"></script>
 </body>

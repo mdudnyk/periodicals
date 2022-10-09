@@ -21,7 +21,7 @@
 
     <context-param>
         <param-name>defaultLocale</param-name>
-        <param-value>ua</param-value>
+        <param-value>en</param-value>
     </context-param>
 
 </web-app>

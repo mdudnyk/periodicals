@@ -76,6 +76,7 @@ public class TopicTranslateDAOMySql implements TopicTranslateDAO {
         return topicTranslate;
     }
 
+
     @Override
     public void update(final TopicTranslate entity, final Connection connection) throws DAOException {
         try (PreparedStatement ps = connection.prepareStatement(Queries.UPDATE_TOPIC_TRANSLATE)) {

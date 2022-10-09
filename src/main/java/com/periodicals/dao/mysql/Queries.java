@@ -20,7 +20,53 @@ class Queries {
     //TOPIC
     public static final String CREATE_TOPIC = "INSERT INTO topic values (DEFAULT)";
     public static final String GET_ALL_TOPICS = "SELECT * FROM topic";
+    public static final String GET_TOPICS_WITH_TRANSLATES_BY_LOCALE = """
+        SELECT id, COALESCE(
+                    (SELECT name
+                    FROM topic_translate
+                    WHERE topic_id=id AND locale_id=?),
+                    (SELECT name
+                    FROM topic_translate
+                    WHERE topic_id=id AND locale_id=?)
+                ) AS name
+            FROM topic
+                     JOIN topic_translate ON id = topic_id
+            GROUP BY id
+            ORDER BY name ASC;
+            """;
+    public static final String GET_TOPICS_WITH_TRANSLATES_BY_LOCALE_PAGINATION_ASC = """
+            SELECT id, COALESCE(
+                        (SELECT name
+                        FROM topic_translate
+                        WHERE topic_id=id AND locale_id=?),
+                        (SELECT name
+                        FROM topic_translate
+                        WHERE topic_id=id AND locale_id=?)
+                    ) AS name
+                FROM topic
+                         JOIN topic_translate ON id = topic_id
+                GROUP BY id
+                ORDER BY name ASC
+                LIMIT ? OFFSET ?;
+                """;
+    public static final String GET_TOPICS_WITH_TRANSLATES_BY_LOCALE_PAGINATION_DESC = """
+            SELECT id, COALESCE(
+                        (SELECT name
+                        FROM topic_translate
+                        WHERE topic_id=id AND locale_id=?),
+                        (SELECT name
+                        FROM topic_translate
+                        WHERE topic_id=id AND locale_id=?)
+                    ) AS name
+                FROM topic
+                         JOIN topic_translate ON id = topic_id
+                GROUP BY id
+                ORDER BY name DESC
+                LIMIT ? OFFSET ?;
+                """;
+    public static final String GET_TOPIC_BY_ID = "SELECT * FROM topic WHERE id=?";
     public static final String DELETE_TOPIC = "DELETE FROM topic WHERE id=?";
+    public static final String GET_TOPICS_COUNT = "SELECT COUNT(*) FROM topic";
 
     //TOPIC_TRANSLATE
     public static final String CREATE_TOPIC_TRANSLATE = "INSERT INTO topic_translate values (?, ?, ?)";

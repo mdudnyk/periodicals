@@ -50,6 +50,7 @@ h1 {
 }
 
 .topic_modal {
+    z-index: 1;
     display: none;
     margin-left: 10px;
     margin-top: -3px;

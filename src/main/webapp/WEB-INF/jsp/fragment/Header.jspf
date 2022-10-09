@@ -27,7 +27,9 @@
                     </button>
                 </form>
             </div>
-        <% if (user == null) { %>
+        <%
+            if (user == null) {
+        %>
             <button class="sign_in_btn" onclick="open_sign_in_modal()"><fmt:message key="header.sign_in"/></button>
             <div class="enter_modal" id="sign_in_modal">
                 <div class="modal_block">
@@ -60,8 +62,10 @@
                         </div>
                         <form>
                             <div class="input_text_block">
-                                <input type="text" autocomplete="email" id="sign_in_email" placeholder="Email">
-                                <input type="password" autocomplete="off" id="sign_in_password" placeholder="Password">
+                                <input type="text" autocomplete="email" id="sign_in_email"
+                                       placeholder="<fmt:message key="header.placeholder.email"/>">
+                                <input type="password" autocomplete="off" id="sign_in_password"
+                                       placeholder="<fmt:message key="header.placeholder.password"/>">
                             </div>
                             <button class="modal_btn" type="button" onclick="tryToSignIn()">
                                 <fmt:message key="header.sign_in"/>
@@ -126,11 +130,16 @@
                         </div>
                         <form>
                             <div class="input_text_block">
-                                <input  type="text" id="sign_up_firstname" placeholder="Firstname">
-                                <input type="text" id="sign_up_lastname" placeholder="Lastname">
-                                <input type="text" autocomplete="email" id="sign_up_email" placeholder="Email">
-                                <input type="password" id="sign_up_password_1" placeholder="Password">
-                                <input type="password" id="sign_up_password_2" placeholder="Confirm password">
+                                <input  type="text" id="sign_up_firstname"
+                                        placeholder="<fmt:message key="header.placeholder.firstname"/>">
+                                <input type="text" id="sign_up_lastname"
+                                       placeholder="<fmt:message key="header.placeholder.lastname"/>">
+                                <input type="text" autocomplete="email" id="sign_up_email"
+                                       placeholder="<fmt:message key="header.placeholder.email"/>">
+                                <input type="password" id="sign_up_password_1"
+                                       placeholder="<fmt:message key="header.placeholder.password"/>">
+                                <input type="password" id="sign_up_password_2"
+                                       placeholder="<fmt:message key="header.placeholder.confirm_password"/>">
                             </div>
                             <button class="modal_btn" type="button" onclick="tryToSignUp()">
                                 <fmt:message key="header.sign_up"/>
@@ -146,7 +155,9 @@
                     </div>
                 </div>
             </div>
-            <% } else { %>
+            <%
+                } else {
+            %>
             <span class="balance_block">
                     <i class="material-icons profile">account_balance_wallet</i>
                     <span class="balance_amount">
@@ -155,16 +166,24 @@
                     </span>
                 </span>
             <div class="profile_block" onclick="open_profile_modal()">
-                <% if(user.getRole().name().equals("ADMIN")) { %>
+                <%
+                    if(user.getRole().name().equals("ADMIN")) {
+                %>
                 <span class="profile_name_adm">ADMIN</span>
-                <% } else {
-                    String initials = "" + user.getFirstname().charAt(0) + user.getLastname().charAt(0); %>
-                <span class="profile_name"><%=initials%></span>
-                <% }; %>
+                <%
+                    } else {
+                    String initials = "" + user.getFirstname().charAt(0) + user.getLastname().charAt(0);
+                %>
+                    <span class="profile_name"><%=initials%></span>
+                <%
+                    };
+                %>
             </div>
             <div class="profile_modal" id="profile_modal">
                 <ul>
-                    <% if(!user.getRole().name().equals("ADMIN")) { %>
+                    <%
+                        if(!user.getRole().name().equals("ADMIN")) {
+                    %>
                     <a href="#">
                         <li>
                             <i class="material-icons profile">library_books</i>
@@ -177,11 +196,19 @@
                             <span><fmt:message key="header.link.top_up_wallet"/></span>
                         </li>
                     </a>
-                    <% } else { %>
+                    <%
+                        } else {
+                    %>
                     <a href="#">
                         <li>
                             <i class="material-icons profile">poll</i>
                             <span><fmt:message key="header.link.statistics"/></span>
+                        </li>
+                    </a>
+                    <a href="${pageContext.request.contextPath}/controller?cmd=TOPICS_PAGE&pageNumber=1">
+                        <li>
+                            <i class="material-icons profile">format_list_bulleted</i>
+                            <span><fmt:message key="header.link.topics"/></span>
                         </li>
                     </a>
                     <a href="#">
@@ -196,7 +223,9 @@
                             <span><fmt:message key="header.link.customers"/></span>
                         </li>
                     </a>
-                    <% }; %>
+                    <%
+                        };
+                    %>
                     <a href="#">
                         <li>
                             <i class="material-icons profile">settings</i>
@@ -211,7 +240,9 @@
                     </a>
                 </ul>
             </div>
-        <%  }; %>
+        <%
+            };
+        %>
         </div>
         <img class="flag_img" src="${pageContext.request.contextPath}${sessionScope.locale.getFlagIconURL()}"
              alt="${sessionScope.locale.getShortNameId()}" height="30px">

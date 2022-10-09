@@ -1,8 +1,6 @@
 package com.periodicals.entity;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class Topic {
     private int id;
@@ -66,5 +64,30 @@ public class Topic {
                 "id=" + id +
                 ", " + translate +
                 '}';
+    }
+
+    public static void sortByName(List<Topic> source, String currentLocaleId, String defaultLocaleId) {
+        Collections.sort(source, new Comparator<Topic>() {
+            @Override
+            public int compare(final Topic o1, final Topic o2) {
+                TopicTranslate ts1 = o1.getTranslate(currentLocaleId);
+                if (ts1 == null) {
+                    ts1 = o1.getTranslate(defaultLocaleId);
+                }
+                String name1 = ts1.getName();
+
+                TopicTranslate ts2 = o2.getTranslate(currentLocaleId);
+                if (ts2 == null) {
+                    ts2 = o2.getTranslate(defaultLocaleId);
+                }
+                String name2 = ts2.getName();
+
+                int result = 0;
+                if (name1 != null && name2 != null) {
+                    result = name1.compareTo(name2);
+                }
+                return result;
+            }
+        });
     }
 }
