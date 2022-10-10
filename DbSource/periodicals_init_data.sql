@@ -74,3 +74,8 @@ FROM topic
 GROUP BY id
 ORDER BY name ASC
 LIMIT 10 OFFSET 10;
+
+SELECT id
+FROM topic
+        JOIN topic_translate on topic_id = id
+WHERE name = 'АвтоМобішлі'

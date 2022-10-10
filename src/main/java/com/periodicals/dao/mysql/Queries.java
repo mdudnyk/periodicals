@@ -65,6 +65,12 @@ class Queries {
                 LIMIT ? OFFSET ?;
                 """;
     public static final String GET_TOPIC_BY_ID = "SELECT * FROM topic WHERE id=?";
+    public static final String GET_TOPIC_BY_NAME = """
+            SELECT id
+            FROM topic
+                    JOIN topic_translate on topic_id=id
+            WHERE name=?
+            """;
     public static final String DELETE_TOPIC = "DELETE FROM topic WHERE id=?";
     public static final String GET_TOPICS_COUNT = "SELECT COUNT(*) FROM topic";
 

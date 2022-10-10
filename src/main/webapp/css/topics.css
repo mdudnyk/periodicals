@@ -15,6 +15,7 @@ h1 {
 }
 
 .content_topper {
+    cursor: default;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -40,7 +41,7 @@ h1 {
     background-color: #27c18a;
     border: none;
     color: white;
-    margin-bottom: -8px;
+    margin-bottom: -5px;
 }
 
 .add_topic_btn:hover {
@@ -249,7 +250,7 @@ table {
     background-color: rgb(255, 117, 117);
     height: 35px;
     width: 120px;
-    padding: 0px;
+    padding: 0;
     margin-right: -3px;
 }
 

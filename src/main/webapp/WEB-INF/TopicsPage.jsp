@@ -26,12 +26,14 @@
         <div class="content_topper_title"><fmt:message key="topics.topics"/></div>
         <div style="display: flex; align-items: flex-end">
             <div class="content_topper_qty"><fmt:message key="topics.total"/>: ${requestScope.topicsTotal}</div>
-            <button class="add_topic_btn">
-                <div class="add_btn_box">
-                    <i class="material-icons add_topic">add</i>
-                    <fmt:message key="topics.new_topic"/>
-                </div>
-            </button>
+            <a href="${pageContext.request.contextPath}/controller?cmd=NEW_TOPIC_PAGE" style="margin-bottom: -4px;">
+                <button class="add_topic_btn" type="submit" >
+                    <div class="add_btn_box">
+                        <i class="material-icons add_topic">add</i>
+                        <fmt:message key="topics.new_topic"/>
+                    </div>
+                </button>
+            </a>
         </div>
     </div>
     <div class="content_main">

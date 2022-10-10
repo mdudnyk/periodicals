@@ -111,6 +111,25 @@ public class TopicDAOMySql implements TopicDAO {
     }
 
     @Override
+    public Topic getTopicByName(final String s, final Connection connection) throws DAOException {
+        Topic topic = null;
+
+        try (PreparedStatement ps = connection.prepareStatement(Queries.GET_TOPIC_BY_NAME)) {
+            ps.setString(1, s);
+            ResultSet rs = ps.executeQuery();
+            if (rs.isBeforeFirst()) {
+                rs.next();
+                topic = new Topic(rs.getInt(1));
+                rs.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return topic;
+    }
+
+    @Override
     public void update(final Topic entity, final Connection connection) throws DAOException {
         throw new UnsupportedOperationException();
     }

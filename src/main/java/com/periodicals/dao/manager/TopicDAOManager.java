@@ -134,4 +134,17 @@ public class TopicDAOManager {
             throw new DAOException("Something went wrong while trying to rollback. " + ex.getMessage());
         }
     }
+
+    public Topic getTopicByName(final List<String> strings) throws DAOException {
+        Connection connection = conManager.getConnection();
+        Topic topic = null;
+        for (String s : strings) {
+            topic = topicDAO.getTopicByName(s, connection);
+            if (topic != null) {
+                break;
+            }
+        }
+        conManager.close(connection);
+        return topic;
+    }
 }

@@ -4,9 +4,12 @@ import com.periodicals.dao.exception.DAOException;
 import com.periodicals.dao.manager.DAOManagerFactory;
 import com.periodicals.dao.manager.TopicDAOManager;
 import com.periodicals.entity.Topic;
+import com.periodicals.entity.TopicTranslate;
+import com.periodicals.service.ServiceException;
 import com.periodicals.service.TopicService;
 
 import java.util.List;
+import java.util.Map;
 
 public class TopicServiceImpl implements TopicService {
     private final DAOManagerFactory daoManger;
@@ -43,5 +46,21 @@ public class TopicServiceImpl implements TopicService {
     public int getTopicsTotal() throws DAOException {
         TopicDAOManager tdm = daoManger.getTopicDAOManager();
         return tdm.getTopicsAmount();
+    }
+
+    @Override
+    public void createNewTopic(final Map<String, String> translations) throws ServiceException, DAOException {
+        TopicDAOManager tdm = daoManger.getTopicDAOManager();
+
+        if (tdm.getTopicByName(translations.values().stream().toList()) != null) {
+            throw new ServiceException("Topic with this name already exists");
+        } else {
+            Topic newTopic = new Topic(1);
+            translations.forEach((key, value) -> {
+                TopicTranslate tt = new TopicTranslate(1, key, value);
+                newTopic.addTranslate(tt);
+            });
+            tdm.createTopic(newTopic);
+        }
     }
 }

@@ -1,0 +1,107 @@
+.content {
+    width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.content_topper {
+    cursor: default;
+    height: 70px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    letter-spacing: 0.02em;
+    font-size: 20pt;
+    font-weight: 300;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.content_main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+    background-color: white;
+    border-radius: 10px;
+    width: 700px;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.07);
+}
+
+.content_main_top_text {
+    cursor: default;
+    width: 100%;
+    height: 70px;
+    color: white;
+    border-radius: 10px 10px 0 0 ;
+    background-color: rgb(142, 141, 146);
+    font-size: 26px;
+    padding-top: 22px;
+    text-align: center;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.topics_page_link {
+    opacity: 80%;
+}
+
+.topics_page_link:hover {
+    scale: 103%;
+    opacity: 100%;
+}
+
+.msg_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    width: 100%;
+}
+
+.common_msq_block {
+    color: rgb(119, 119, 119);
+    padding: 5px 15px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 90%;
+}
+
+.alert {
+    display: none;
+    background-color: rgba(255, 0, 0, 0.15);
+    border: 2px solid rgba(205, 92, 92, 0.45);
+}
+
+.success {
+    display: none;
+    background-color: rgba(0, 255, 13, 0.15);
+    border: 2px solid rgba(92, 205, 128, 0.45);
+}
+
+.new_topic_alerts {
+    display: none;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.create_topic_button {
+    font-size: 13pt;
+    color: white;
+    border: none;
+    background-color:  #27c18a;
+    width: 220px;
+    margin-bottom: 55px;
+}
+
+.create_topic_button:hover {
+    background-color:  #27c18bee;
+}
+
+.create_topic_button:focus {
+    background-color:  #19a775;
+}

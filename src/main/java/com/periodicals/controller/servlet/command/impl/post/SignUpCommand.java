@@ -32,7 +32,6 @@ public class SignUpCommand implements FrontCommand {
             service.signUpUser(user);
         } catch (ServiceException e) {
             response.setStatus(561);
-            response.setContentType("text/plain");
         }
     }
 }
