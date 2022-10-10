@@ -46,21 +46,6 @@ INSERT INTO periodicals_db.topic_translate values (12, 'en', 'Traveling');
 INSERT INTO periodicals_db.topic_translate values (12, 'ua', 'Подорожі');
 
 
-
-SELECT id, COALESCE(
-        (SELECT name
-        FROM topic_translate
-        WHERE topic_id=id AND locale_id='en'),
-        (SELECT name
-        FROM topic_translate
-        WHERE topic_id=id AND locale_id='en')
-    ) AS name
-FROM topic
-         JOIN topic_translate ON id = topic_id
-GROUP BY id
-ORDER BY name ASC
-LIMIT 15 OFFSET 0;
-
 SELECT id, COALESCE(
         (SELECT name
          FROM topic_translate
@@ -71,11 +56,12 @@ SELECT id, COALESCE(
     ) AS name
 FROM topic
          JOIN topic_translate ON id = topic_id
+WHERE name LIKE CONCAT( '%',?,'%')
 GROUP BY id
 ORDER BY name ASC
-LIMIT 10 OFFSET 10;
+LIMIT 10 OFFSET 0;
 
-SELECT id
+SELECT id, name
 FROM topic
         JOIN topic_translate on topic_id = id
-WHERE name = 'АвтоМобішлі'
+WHERE name LIKE ?;

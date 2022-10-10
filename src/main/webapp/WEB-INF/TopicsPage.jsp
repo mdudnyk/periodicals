@@ -1,6 +1,6 @@
 <%@ page import="com.periodicals.entity.Topic" %>
 <%@ page import="java.util.List" %>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ct" tagdir="/WEB-INF/tags" %>
 
@@ -27,7 +27,7 @@
         <div style="display: flex; align-items: flex-end">
             <div class="content_topper_qty"><fmt:message key="topics.total"/>: ${requestScope.topicsTotal}</div>
             <a href="${pageContext.request.contextPath}/controller?cmd=NEW_TOPIC_PAGE" style="margin-bottom: -4px;">
-                <button class="add_topic_btn" type="submit" >
+                <button class="add_topic_btn" type="submit">
                     <div class="add_btn_box">
                         <i class="material-icons add_topic">add</i>
                         <fmt:message key="topics.new_topic"/>
@@ -71,10 +71,10 @@
                 </div>
             </div>
             <div class="close_search_block">
-                <c:if test="${sessionScope.topicSearchMode.equals('on')}">
+                <c:if test="${sessionScope.topicSearchString.length() > 0}">
                     <form style="z-index: 1;" action="${pageContext.request.contextPath}/controller">
                         <input type="hidden" name="cmd" value="TOPICS_PAGE">
-                        <input type="hidden" name="searchMode" value="off">
+                        <input type="hidden" name="searchString" value="">
                         <button type="submit" class="close_search_btn">End search</button>
                     </form>
                 </c:if>
@@ -82,7 +82,8 @@
             <div class="search_block_topic">
                 <form action="${pageContext.request.contextPath}/controller">
                     <input type="hidden" name="cmd" value="TOPICS_PAGE">
-                    <input type="text" name="searchString" value="${requestScope.searchString}" placeholder="<fmt:message key="topics.search_topic"/>">
+                    <input type="text" name="searchString" value="${sessionScope.topicSearchString}"
+                           placeholder="<fmt:message key="topics.search_topic"/>" autocomplete="off">
                     <button class="search_btn" type="submit">
                         <i class="material-icons search">search</i>
                     </button>
@@ -106,7 +107,7 @@
                                 <i class="material-icons sort disabled">arrow_drop_down</i>
                             </a>
                             <%
-                                } else if (session.getAttribute("sorting").equals("DESC")) {
+                            } else if (session.getAttribute("sorting").equals("DESC")) {
                             %>
                             <a href="">
                                 <i class="material-icons sort disabled">arrow_drop_up</i>
@@ -128,20 +129,22 @@
             <%
                 if (topics != null && topics.size() > 0) {
             %>
-            <c:set var = "number" scope="page" value = "${sessionScope.topicPageNumber *
+            <c:set var="number" scope="page" value="${sessionScope.topicPageNumber *
                                                         sessionScope.topicAmountOnPage -
                                                         sessionScope.topicAmountOnPage}"/>
             <c:forEach var="topic" items="${requestScope.topics}">
-                <c:set var = "number" scope="page" value = "${number + 1}"/>
+                <c:set var="number" scope="page" value="${number + 1}"/>
                 <tr>
                     <td><c:out value="${number}"/></td>
-                    <td class="topic_name_row"><c:out value="${topic.getAllTranslates().values().iterator().next().getName()}"/></td>
+                    <td class="topic_name_row"><c:out
+                            value="${topic.getAllTranslates().values().iterator().next().getName()}"/></td>
                     <td>
                         <a href="${pageContext.request.contextPath}/controller?cmd=EDIT_TOPIC_PAGE&id=${topic.getId()}">
                             <i class="material-icons edit">edit</i>
                         </a>
                     </td>
-                    <td><i class="material-icons delete" onclick="tryToDeleteTopic(${topic.getId()})">delete_forever</i></td>
+                    <td><i class="material-icons delete" onclick="tryToDeleteTopic(${topic.getId()})">delete_forever</i>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>
@@ -153,11 +156,11 @@
                                        : requestScope.totalPages}"/>
         </div>
         <%
-            } else {
+        } else {
         %>
-            </tbody>
+        </tbody>
         </table>
-            <span class="no_topics_to_show"><fmt:message key="home.no_topics_to_show"/></span>
+        <span class="no_topics_to_show"><fmt:message key="home.no_topics_to_show"/></span>
         <%
             }
         %>

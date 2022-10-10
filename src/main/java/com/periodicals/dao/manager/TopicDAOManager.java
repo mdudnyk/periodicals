@@ -90,6 +90,16 @@ public class TopicDAOManager {
         return topics;
     }
 
+    public List<Topic> getAllTopicsByNameAndLocalePagination(final String name, final String locale,
+                                                             final String defaultLocale, final int skip,
+                                                             final int amount, final String sorting) throws DAOException {
+        Connection connection = conManager.getConnection();
+        List<Topic> topics = topicDAO.getAllByNameAndLocalePagination(connection, name, locale, defaultLocale,
+                skip, amount, sorting);
+        conManager.close(connection);
+        return topics;
+    }
+
     public List<Topic> getAllTopicsByLocale(String localeId, String defaultLocale) throws DAOException {
         Connection connection = conManager.getConnection();
         List<Topic> topics = topicDAO.getAllWithTranslatesByLocale(connection, localeId, defaultLocale);
@@ -97,7 +107,7 @@ public class TopicDAOManager {
         return topics;
     }
 
-    public void updateTopicWithAllTranslations (Topic topic) throws DAOException {
+    public void updateTopicWithAllTranslations(Topic topic) throws DAOException {
         Connection connection = conManager.getConnectionForTransaction();
         try {
             Map<String, TopicTranslate> translates = topic.getAllTranslates();
@@ -114,7 +124,7 @@ public class TopicDAOManager {
         }
     }
 
-    public void deleteTopicAndAllTranslations (int topicId) throws DAOException {
+    public void deleteTopicAndAllTranslations(int topicId) throws DAOException {
         Connection connection = conManager.getConnection();
         topicDAO.delete(topicId, connection);
         conManager.close(connection);

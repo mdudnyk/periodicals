@@ -5,7 +5,6 @@ import com.periodicals.dao.exception.DAOException;
 import com.periodicals.dao.manager.DAOManagerFactory;
 import com.periodicals.entity.LocaleCustom;
 import com.periodicals.entity.Topic;
-import com.periodicals.entity.TopicTranslate;
 import com.periodicals.service.ServiceException;
 import com.periodicals.service.TopicService;
 import com.periodicals.service.impl.TopicServiceImpl;
@@ -14,7 +13,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -38,18 +36,19 @@ public class TopicsPageCommand implements FrontCommand {
         pageNumber = setPageNumber(request);
         int amountOnPage = setAmountOnPage(request);
         String sortByName = setNameSorting(request);
+        String searchString = getSearchString(request);
         checkPageNumberAccordingToTotalTopicsAmount(amountOnPage, topicsTotal, request);
-        String searchMode = setSearchMode(request);
         int positionsToSkip = pageNumber * amountOnPage - amountOnPage;
 
         List<Topic> topics = null;
         if (topicsTotal != 0) {
-            if (searchMode.equals("off")) {
+            if (searchString.length() < 1) {
                 topics = topicService.getTopicsByLocalePagination(currentLocale, defaultLocaleName,
                         positionsToSkip, amountOnPage, sortByName);
             } else {
-                topics = new ArrayList<>();
-//                topics.add(new Topic(1, new TopicTranslate(1, "en", "Sport")));
+                topics = topicService.getTopicsByNameAndLocalePagination(searchString, currentLocale,
+                        defaultLocaleName, positionsToSkip, amountOnPage, sortByName);
+                checkPageNumberAccordingToTotalTopicsAmount(amountOnPage, topics.size(), request);
             }
         }
 
@@ -59,46 +58,25 @@ public class TopicsPageCommand implements FrontCommand {
         request.getRequestDispatcher("WEB-INF/TopicsPage.jsp").forward(request, response);
     }
 
-    private String setSearchMode(final HttpServletRequest request) {
-        String searchMode = request.getParameter("searchMode");
-        String searchString = request.getParameter("searchString");
 
-        if (searchMode != null && searchMode.equals("off")) {
-            searchMode = configureSearchParameters(request, "off" , "");
-        } else {
-            if (searchString != null && searchString.length() > 0) {
-                searchMode = configureSearchParameters(request, "on" , searchString);
+    private String getSearchString(final HttpServletRequest request) {
+        String sessionSearchString = (String) request.getSession().getAttribute("topicSearchString");
+        String requestSearchString = request.getParameter("searchString");
+        String searchString = "";
+
+        if (sessionSearchString != null) {
+            if (requestSearchString != null) {
+                if (requestSearchString.length() > 0) {
+                    searchString = requestSearchString;
+                }
+                request.getSession().setAttribute("topicSearchString", searchString);
             } else {
-                searchMode = configureSearchParameters(request, "off" , "");
+                return sessionSearchString;
             }
+        } else {
+            request.getSession().setAttribute("topicSearchString", searchString);
         }
-
-        return searchMode;
-//        String defaultSearchMode = "off";
-//        String searchMode = request.getParameter("searchMode");
-//        if (searchMode == null) {
-//            String mode = (String) request.getSession().getAttribute("topicSearchMode");
-//            if (mode == null) {
-//                request.getSession().setAttribute("topicSearchMode", "off");
-//                searchMode = defaultSearchMode;
-//            } else {
-//                searchMode = mode;
-//            }
-//        } else if (!searchMode.equals("on")) {
-//            request.getSession().setAttribute("topicSearchMode", "off");
-//            searchMode = defaultSearchMode;
-//            } else {
-//                pageNumber = 1;
-//                request.getSession().setAttribute("topicSearchMode", "on");
-//            }
-//        System.out.println("2 search mode: " + searchMode);
-//        return searchMode;
-    }
-
-    private String configureSearchParameters(HttpServletRequest request, String mode, String query) {
-        request.getSession().setAttribute("topicSearchMode", mode);
-        request.setAttribute("searchString", query);
-        return mode;
+        return searchString;
     }
 
     private void checkPageNumberAccordingToTotalTopicsAmount(

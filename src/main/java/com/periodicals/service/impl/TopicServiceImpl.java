@@ -19,11 +19,6 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public List<Topic> getAllTopics() {
-        return null;
-    }
-
-    @Override
     public List<Topic> getAllTopicsByLocale(final String localeId, final String defaultLocaleId) throws DAOException {
         TopicDAOManager tdm = daoManger.getTopicDAOManager();
         return tdm.getAllTopicsByLocale(localeId, defaultLocaleId);
@@ -31,8 +26,8 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public List<Topic> getTopicsByLocalePagination(final String localeId, final String defaultLocaleId,
-                                            final int skipPositions, final int amountOnPage,
-                                            final String sortByName) throws DAOException {
+                                                   final int skipPositions, final int amountOnPage,
+                                                   final String sortByName) throws DAOException {
 
         String sorting = sortByName.equals("DESC") ? "DESC" : "ASC";
         int skip = Math.max(skipPositions, 0);
@@ -40,6 +35,19 @@ public class TopicServiceImpl implements TopicService {
         TopicDAOManager tdm = daoManger.getTopicDAOManager();
 
         return tdm.getAllTopicsByLocalePagination(localeId, defaultLocaleId, skip, amount, sorting);
+    }
+
+    @Override
+    public List<Topic> getTopicsByNameAndLocalePagination(final String name, final String localeId,
+                                                          final String defaultLocaleId, final int skipPositions,
+                                                          final int amountOnPage, final String sortByName) throws DAOException {
+
+        String sorting = sortByName.equals("DESC") ? "DESC" : "ASC";
+        int skip = Math.max(skipPositions, 0);
+        int amount = Math.max(amountOnPage, 1);
+        TopicDAOManager tdm = daoManger.getTopicDAOManager();
+
+        return tdm.getAllTopicsByNameAndLocalePagination(name, localeId, defaultLocaleId, skip, amount, sorting);
     }
 
     @Override

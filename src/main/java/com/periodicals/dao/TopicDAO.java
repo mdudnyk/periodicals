@@ -18,6 +18,9 @@ public interface TopicDAO extends GeneralDAO<Topic, Integer> {
 
     Topic getTopicByName(String s, Connection connection) throws DAOException;
 
+    List<Topic> getAllByNameAndLocalePagination(Connection connection, String name, String locale,
+                                                String defaultLocale, int skip,
+                                                int amount, String sorting) throws DAOException;
 }
 
 

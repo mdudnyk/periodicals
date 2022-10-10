@@ -118,8 +118,7 @@ h1 {
 .periodical_container {
     overflow: hidden;
     cursor: pointer;
-    margin: 0 12px;
-    margin-top: 20px;
+    margin: 20px 12px 0;
     background-color: white;
     height: 340px;
     width: 261px;

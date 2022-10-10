@@ -13,7 +13,7 @@ public class TopicDAOMySql implements TopicDAO {
 
     @Override
     public void create(final Topic entity, final Connection connection) throws DAOException {
-        try(PreparedStatement ps = connection.prepareStatement(Queries.CREATE_TOPIC, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = connection.prepareStatement(Queries.CREATE_TOPIC, Statement.RETURN_GENERATED_KEYS)) {
             if (ps.executeUpdate() > 0) {
                 try (ResultSet rs = ps.getGeneratedKeys()) {
                     if (rs.next()) {
@@ -31,7 +31,7 @@ public class TopicDAOMySql implements TopicDAO {
         List<Topic> topics = new ArrayList<>();
 
         try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement .executeQuery(Queries.GET_ALL_TOPICS)) {
+             ResultSet resultSet = statement.executeQuery(Queries.GET_ALL_TOPICS)) {
             while (resultSet.next()) {
                 topics.add(new Topic(resultSet.getInt(1)));
             }
@@ -92,6 +92,37 @@ public class TopicDAOMySql implements TopicDAO {
     }
 
     @Override
+    public List<Topic> getAllByNameAndLocalePagination(final Connection connection, final String name,
+                                                       final String locale, final String defaultLocale,
+                                                       final int skip, final int amount,
+                                                       final String sorting) throws DAOException {
+        List<Topic> topics = new ArrayList<>();
+        String query = sorting.equals("DESC") ? Queries.GET_TOPICS_WITH_TRANSLATES_BY_NAME_AND_LOCALE_PAGINATION_DESC :
+                Queries.GET_TOPICS_WITH_TRANSLATES_BY_NAME_AND_LOCALE_PAGINATION_ASC;
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, locale);
+            ps.setString(2, defaultLocale);
+            ps.setString(3, name);
+            ps.setInt(4, amount);
+            ps.setInt(5, skip);
+
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                Topic topic = new Topic(resultSet.getInt(1));
+                topic.addTranslate(
+                        new TopicTranslate(topic.getId(), locale, resultSet.getString(2))
+                );
+                topics.add(topic);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Error while trying to search topics by name with translations (by locale) " +
+                    "list for pagination from database. " + e.getMessage());
+        }
+        return topics;
+    }
+
+
+    @Override
     public Topic getEntityById(final Integer id, final Connection connection) throws DAOException {
         Topic topic = null;
 
@@ -104,7 +135,7 @@ public class TopicDAOMySql implements TopicDAO {
                 rs.close();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DAOException();
         }
 
         return topic;
@@ -123,7 +154,7 @@ public class TopicDAOMySql implements TopicDAO {
                 rs.close();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DAOException();
         }
 
         return topic;
@@ -150,7 +181,7 @@ public class TopicDAOMySql implements TopicDAO {
     public int getTopicsAmount(Connection connection) throws DAOException {
         int count = 0;
         try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement .executeQuery(Queries.GET_TOPICS_COUNT)) {
+             ResultSet resultSet = statement.executeQuery(Queries.GET_TOPICS_COUNT)) {
             while (resultSet.next()) {
                 count = resultSet.getInt(1);
             }

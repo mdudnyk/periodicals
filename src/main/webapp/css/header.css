@@ -232,13 +232,14 @@ header button:active {
 }
 
 .search_block form {
+    overflow: hidden;
     display: flex;
     align-items: center;
 }
 
 .search_block input {
     font-family:'Roboto', sans-serif !important;
-    font-size: 12pt !important;
+    font-size: 13pt !important;
     height: 35px !important;
     background-color: transparent !important;
     border: none !important;
