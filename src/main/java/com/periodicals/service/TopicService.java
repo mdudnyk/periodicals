@@ -20,4 +20,11 @@ public interface TopicService {
     List<Topic> getTopicsByNameAndLocalePagination(String searchString, String currentLocale,
                                                    String defaultLocaleName, int positionsToSkip,
                                                    int amountOnPage, String sortByName) throws DAOException;
+
+    Topic getTopicById(int id) throws DAOException, ServiceException;
+
+    void updateTopic(Topic t) throws DAOException, ServiceException;
+
+    void deleteTopic(int topicID) throws DAOException, ServiceException;
+
 }

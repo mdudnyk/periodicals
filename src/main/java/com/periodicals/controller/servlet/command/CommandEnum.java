@@ -1,9 +1,7 @@
 package com.periodicals.controller.servlet.command;
 
 import com.periodicals.controller.servlet.command.impl.get.*;
-import com.periodicals.controller.servlet.command.impl.post.CreateTopicCommand;
-import com.periodicals.controller.servlet.command.impl.post.SignInCommand;
-import com.periodicals.controller.servlet.command.impl.post.SignUpCommand;
+import com.periodicals.controller.servlet.command.impl.post.*;
 
 public enum CommandEnum {
 
@@ -15,6 +13,10 @@ public enum CommandEnum {
     TOPICS_PAGE(new TopicsPageCommand()),
     NEW_TOPIC_PAGE(new NewTopicPageCommand()),
     CREATE_TOPIC(new CreateTopicCommand()),
+    EDIT_TOPIC_PAGE(new EditTopicPageCommand()),
+    EDIT_TOPIC(new EditTopicCommand()),
+    DELETE_TOPIC(new DeleteTopicCommand()),
+
     ERROR_PAGE(new ErrorPageCommand());
 
     private final FrontCommand frontCommand;

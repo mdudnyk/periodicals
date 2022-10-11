@@ -298,3 +298,98 @@ table {
     margin: 40px 0;
     font-size: 20pt;
 }
+
+.delete_topic_modal_container {
+    z-index: 10;
+    background-color: #00000048;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    display: none;
+    justify-content: center;
+}
+
+.delete_modal_block {
+    margin-top: 150px;
+    width: 350px;
+    height: 280px;
+    background-color: whitesmoke;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px 1px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.delete_modal_header {
+    height: 60px;
+    border-radius: 10px 10px 0 0;
+    background-color: #eb5555;
+    color: white;
+    text-align: center;
+    font-size: 18pt;
+    letter-spacing: 0.01em;
+    padding-top: 19px;
+    font-weight: 500;
+}
+
+.delete_modal_content {
+    line-height: 1.5;
+    color: #eb5555;
+    font-weight: 400;
+    font-size: 15pt;
+    text-align: center;
+    padding: 10px 20px;
+    letter-spacing: 0.01em;
+}
+
+.delete_modal_topic_name {
+    font-weight: 700;
+    font-size: 17pt;
+}
+
+.delete_modal_buttons_block {
+    display: flex;
+    justify-content: center;
+    padding: 12px 0;
+    border-top: 1px solid rgb(219, 219, 219);
+    background-color: rgb(228, 228, 228);
+    border-radius: 0 0 10px 10px;
+}
+
+.topic_delete_button {
+    border: none;
+    color: white;
+    font-weight: 400;
+    background-color: #ff5555;
+    font-size: 12pt;
+    padding: 12px;
+    transition: ease-out 0.2s;
+}
+
+.topic_delete_button:hover {
+    background-color: #ff1e1e;
+}
+
+.topic_delete_button:focus {
+    background-color: #ff5555;
+}
+
+.topic_delete_cancel_button {
+    background-color: whitesmoke;
+    margin-left: 20px;
+    border: none;
+    font-weight: 400;
+    font-size: 12pt;
+    padding: 12px;
+    transition: ease-out 0.2s;
+}
+
+.topic_delete_cancel_button:hover {
+    background-color: #27c18a;
+    color: white;
+}
+
+.topic_delete_cancel_button:focus {
+    background-color: #27c18a;
+}

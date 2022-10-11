@@ -3,7 +3,7 @@ package com.periodicals.entity;
 import java.util.Objects;
 
 public class TopicTranslate {
-    private final int topicID;
+    private int topicID;
     private final String localeID;
     private String name;
 
@@ -11,6 +11,10 @@ public class TopicTranslate {
         this.topicID = topicID;
         this.localeID = localeID;
         this.name = name;
+    }
+
+    public void setTopicID(final int topicID) {
+        this.topicID = topicID;
     }
 
     public int getTopicID() {

@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PressReader | Home</title>
+    <title>PressReader | New topic</title>
     <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/img/tab-icon.ico">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/materialize/css/materialize.min.css">
@@ -17,7 +17,7 @@
 <%@ include file="fragment/Header.jspf" %>
 <div class="content">
     <div class="content_topper">
-        <a href="controller?cmd=TOPICS_PAGE" class="topics_page_link">
+        <a href="controller?cmd=TOPICS_PAGE&pageNumber=1" class="topics_page_link">
             <fmt:message key="topics.topics"/>
         </a>
         <i class="small material-icons" style="margin: 0 10px; opacity: 70%;">navigate_next</i>

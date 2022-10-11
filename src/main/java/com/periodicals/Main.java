@@ -14,8 +14,8 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) throws DAOException, ServiceException {
-//        DAOManagerFactory managerFactory = DAOManagerFactory.getInstance();
-//        TopicDAOManager topicDAOManager = managerFactory.getTopicDAOManager();
+        DAOManagerFactory managerFactory = DAOManagerFactory.getInstance();
+        TopicDAOManager topicDAOManager = managerFactory.getTopicDAOManager();
 //        Topic topic = new Topic(1);
 //        TopicTranslate tt1 = new TopicTranslate(topic.getId(), "ua","Автомобілі");
 //        TopicTranslate tt2 = new TopicTranslate(topic.getId(),"en","Automotive");
@@ -54,17 +54,10 @@ public class Main {
 //
 //        System.out.println(topicService.getAllTopicsByLocale("en", "ua"));
 //
-//        managerFactory.closeDAO();
+        System.out.println(topicDAOManager.getTopicById(10));
+
+        managerFactory.closeDAO();
 
 
-        for (int i = 1; i < 22; i++) {
-            int startPage = i - (i - 1) % 5;
-
-            System.out.println("for page: " + i + " \tstart page: " + startPage + "\t");
-        }
-
-//        int page = 9;
-//        int result = (page - (page % 5) + 1);
-//        System.out.println("for page: " + page +  "\tstart page: " + result);
     }
 }

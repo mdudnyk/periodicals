@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PressReader | Home</title>
+    <title>PressReader | Topics</title>
     <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/img/tab-icon.ico">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/materialize/css/materialize.min.css">
@@ -21,6 +21,28 @@
 <%
     List<Topic> topics = (List<Topic>) request.getAttribute("topics");
 %>
+<div class="delete_topic_modal_container" id="delete_modal">
+    <div class="delete_modal_block">
+        <div class="delete_modal_header">
+            <fmt:message key="topics.deletion_warning"/>
+        </div>
+        <div class="delete_modal_content">
+            <fmt:message key="topics.deletion_warning_msg_1"/>
+            <br>
+            <span class="delete_modal_topic_name" id="topic_name"></span>
+            <br>
+            <fmt:message key="topics.deletion_warning_msg_2"/>
+        </div>
+        <div class="delete_modal_buttons_block">
+            <button class="topic_delete_button" onclick="confirmDeleteModal()">
+                <fmt:message key="topics.modal_delete_btn"/>
+            </button>
+            <button class="topic_delete_cancel_button" onclick="closeDeleteModal()">
+                <fmt:message key="topics.modal_cancel_btn"/>
+            </button>
+        </div>
+    </div>
+</div>
 <div class="content">
     <div class="content_topper">
         <div class="content_topper_title"><fmt:message key="topics.topics"/></div>
@@ -136,14 +158,21 @@
                 <c:set var="number" scope="page" value="${number + 1}"/>
                 <tr>
                     <td><c:out value="${number}"/></td>
-                    <td class="topic_name_row"><c:out
-                            value="${topic.getAllTranslates().values().iterator().next().getName()}"/></td>
+                    <td class="topic_name_row">
+                        <c:set var="topicName"
+                               value="${topic.getAllTranslates().values().iterator().next().getName()}"
+                               scope="request"/>
+                        <c:out value="${topicName}"/>
+                    </td>
                     <td>
                         <a href="${pageContext.request.contextPath}/controller?cmd=EDIT_TOPIC_PAGE&id=${topic.getId()}">
                             <i class="material-icons edit">edit</i>
                         </a>
                     </td>
-                    <td><i class="material-icons delete" onclick="tryToDeleteTopic(${topic.getId()})">delete_forever</i>
+                    <td>
+                        <i class="material-icons delete" onclick="deleteTopicById(${topic.getId()}, '${topicName}')">
+                            delete_forever
+                        </i>
                     </td>
                 </tr>
             </c:forEach>

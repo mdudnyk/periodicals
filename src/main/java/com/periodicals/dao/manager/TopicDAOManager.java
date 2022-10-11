@@ -107,11 +107,12 @@ public class TopicDAOManager {
         return topics;
     }
 
-    public void updateTopicWithAllTranslations(Topic topic) throws DAOException {
+    public void updateTopic(Topic topic) throws DAOException {
         Connection connection = conManager.getConnectionForTransaction();
         try {
             Map<String, TopicTranslate> translates = topic.getAllTranslates();
             for (TopicTranslate t : translates.values()) {
+                t.setTopicID(topic.getId());
                 topicTranslateDAO.update(t, connection);
             }
             connection.commit();
@@ -122,12 +123,6 @@ public class TopicDAOManager {
         } finally {
             conManager.close(connection);
         }
-    }
-
-    public void deleteTopicAndAllTranslations(int topicId) throws DAOException {
-        Connection connection = conManager.getConnection();
-        topicDAO.delete(topicId, connection);
-        conManager.close(connection);
     }
 
     public int getTopicsAmount() throws DAOException {
@@ -156,5 +151,11 @@ public class TopicDAOManager {
         }
         conManager.close(connection);
         return topic;
+    }
+
+    public void deleteTopic(final int id) throws DAOException {
+        Connection connection = conManager.getConnection();
+        topicDAO.delete(id, connection);
+        conManager.close(connection);
     }
 }

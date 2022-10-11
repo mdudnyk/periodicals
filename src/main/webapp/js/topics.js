@@ -11,7 +11,25 @@ function open_amount_modal() {
     }
 }
 
-function tryToDeleteTopic(topicID) {
-    //SEND REQUEST TO CHECK IF ANY OF PUBLICATIONS IS EXIST WITH THIS TOPIC
-    console.log('TEST: Topic with ID=' + topicID + ' has been deleted.');
+let topic_to_delete_id;
+const delete_modal = document.getElementById("delete_modal");
+const topic_to_delete_name = document.getElementById("topic_name");
+function deleteTopicById(id, topic_name) {
+    topic_to_delete_id = id;
+    topic_to_delete_name.textContent = topic_name;
+    delete_modal.style.display = "flex";
+}
+function closeDeleteModal() {
+    delete_modal.style.display = "none";
+}
+async function confirmDeleteModal() {
+    let response = await fetch('controller?cmd=DELETE_TOPIC', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: "&id=" + topic_to_delete_id,
+    });
+
+    history.go(0);
 }

@@ -51,6 +51,20 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
+    public Topic getTopicById(final int id) throws DAOException, ServiceException {
+        Topic topic = null;
+        if (id > 0) {
+            topic = daoManger.getTopicDAOManager().getTopicById(id);
+            if (topic == null) {
+                throw new ServiceException("There is nothing to edit. Topic with ID=" + id + " is not existing. ");
+            }
+        } else {
+            throw new ServiceException("There is nothing to edit. Topic ID=" + id + " is not valid. ID should be > 1. ");
+        }
+        return topic;
+    }
+
+    @Override
     public int getTopicsTotal() throws DAOException {
         TopicDAOManager tdm = daoManger.getTopicDAOManager();
         return tdm.getTopicsAmount();
@@ -69,6 +83,26 @@ public class TopicServiceImpl implements TopicService {
                 newTopic.addTranslate(tt);
             });
             tdm.createTopic(newTopic);
+        }
+    }
+
+    @Override
+    public void updateTopic(Topic topic) throws DAOException, ServiceException {
+        TopicDAOManager tdm = daoManger.getTopicDAOManager();
+        if (tdm.getTopicById(topic.getId()) == null) {
+            throw new ServiceException("Topic with ID=" + topic.getId() + " not exists");
+        } else {
+            tdm.updateTopic(topic);
+        }
+    }
+
+    @Override
+    public void deleteTopic(final int id) throws DAOException, ServiceException {
+        TopicDAOManager tdm = daoManger.getTopicDAOManager();
+        if (id > 0) {
+            tdm.deleteTopic(id);
+        } else {
+            throw new ServiceException("Topic with can't be less than 1. ");
         }
     }
 }
