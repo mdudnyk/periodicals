@@ -97,7 +97,9 @@
                     <form style="z-index: 1;" action="${pageContext.request.contextPath}/controller">
                         <input type="hidden" name="cmd" value="TOPICS_PAGE">
                         <input type="hidden" name="searchString" value="">
-                        <button type="submit" class="close_search_btn">End search</button>
+                        <button type="submit" class="close_search_btn">
+                            <fmt:message key="topics.end_search"/>
+                        </button>
                     </form>
                 </c:if>
             </div>

@@ -1,5 +1,5 @@
 .content {
-    width: 800px;
+    width: 1000px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -15,7 +15,6 @@ h1 {
 }
 
 .content_topper {
-    cursor: default;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -34,22 +33,22 @@ h1 {
     margin-right: 15px;
 }
 
-.add_topic_btn {
+.add_periodical_btn {
     text-align: center;
     padding: 0 10px;
     height: 40px;
     background-color: #27c18a;
     border: none;
     color: white;
-    margin-bottom: -5px;
+    margin-bottom: -8px;
 }
 
-.add_topic_btn:hover {
+.add_periodical_btn:hover {
     background-color: #27c18be5;
     box-shadow: 0 2px 5px 1px rgba(0,0,0,0.15);
 }
 
-.add_topic_btn:enabled {
+.add_periodical_btn:enabled {
     background-color: #27c18be5;
 }
 
@@ -60,7 +59,7 @@ h1 {
     align-items: center;
 }
 
-.material-icons.add_topic {
+.material-icons.add_periodical {
     margin-right: 5px;
     color: white;
 }
@@ -77,8 +76,8 @@ h1 {
 }
 
 table {
-    width: 760px;
-    font-size: 16pt;
+    width: 990px;
+    font-size: 15pt;
     cursor: default;
 }
 
@@ -91,7 +90,8 @@ table {
 .sortable_column {
     display: flex;
     align-items: center;
-    padding-left: 55px;
+    padding-left: 28px;
+    width: 280px;
 }
 
 .sorting_block {
@@ -160,9 +160,9 @@ table {
     background-color: #27c18a !important;
 }
 
-.topic_name_row {
+.periodical_column {
     text-align: left !important;
-    padding-left: 60px;
+    padding-left: 30px;
 }
 
 .above_table_block {
@@ -245,12 +245,12 @@ table {
     font-weight: 500;
     font-size: 12pt;
     border-radius: 5px 0 0 5px;
+    z-index: 1;
     border: none;
     color: rgb(236, 236, 236);
     background-color: rgb(255, 117, 117);
     height: 35px;
-    width: 120px;
-    padding: 0;
+    padding: 0 20px;
     margin-right: -3px;
 }
 
@@ -294,12 +294,12 @@ table {
     border: none !important;
 }
 
-.no_topics_to_show {
-    margin: 40px 0;
-    font-size: 20pt;
+.no_topics_to_select {
+    padding: 20px;
+    font-size: 26pt;
 }
 
-.delete_topic_modal_container {
+.delete_periodical_modal_container {
     z-index: 3;
     background-color: #00000048;
     width: 100%;
@@ -343,7 +343,7 @@ table {
     letter-spacing: 0.01em;
 }
 
-.delete_modal_topic_name {
+.delete_modal_periodical_name {
     font-weight: 700;
     font-size: 17pt;
 }
@@ -357,7 +357,7 @@ table {
     border-radius: 0 0 10px 10px;
 }
 
-.topic_delete_button {
+.periodical_delete_button {
     border: none;
     color: white;
     font-weight: 400;
@@ -367,15 +367,15 @@ table {
     transition: ease-out 0.2s;
 }
 
-.topic_delete_button:hover {
+.periodical_delete_button:hover {
     background-color: #ff1e1e;
 }
 
-.topic_delete_button:focus {
+.periodical_delete_button:focus {
     background-color: #ff5555;
 }
 
-.topic_delete_cancel_button {
+.periodical_delete_cancel_button {
     background-color: whitesmoke;
     margin-left: 20px;
     border: none;
@@ -385,11 +385,11 @@ table {
     transition: ease-out 0.2s;
 }
 
-.topic_delete_cancel_button:hover {
+.periodical_delete_cancel_button:hover {
     background-color: #27c18a;
     color: white;
 }
 
-.topic_delete_cancel_button:focus {
+.periodical_delete_cancel_button:focus {
     background-color: #27c18a;
 }

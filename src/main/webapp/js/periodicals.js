@@ -11,24 +11,24 @@ function open_amount_modal() {
     }
 }
 
-let topic_to_delete_id;
+let periodical_to_delete_id;
 const delete_modal = document.getElementById("delete_modal");
-const topic_to_delete_name = document.getElementById("topic_name");
-function deleteTopicById(id, topic_name) {
-    topic_to_delete_id = id;
-    topic_to_delete_name.textContent = topic_name;
+const periodical_to_delete_name = document.getElementById("periodical_name");
+function deletePeriodicalById(id, periodical_name) {
+    periodical_to_delete_id = id;
+    periodical_to_delete_name.textContent = periodical_name;
     delete_modal.style.display = "flex";
 }
 function closeDeleteModal() {
     delete_modal.style.display = "none";
 }
 async function confirmDeleteModal() {
-    await fetch('controller?cmd=DELETE_TOPIC', {
+    await fetch('controller?cmd=DELETE_PERIODICAL', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: "&id=" + topic_to_delete_id,
+        body: "&id=" + periodical_to_delete_id,
     });
     history.go(0);
 }

@@ -212,7 +212,7 @@
                             <span><fmt:message key="header.link.topics"/></span>
                         </li>
                     </a>
-                    <a href="#">
+                    <a href="${pageContext.request.contextPath}/controller?cmd=PUBLICATIONS_PAGE&pageNumber=1">
                         <li>
                             <i class="material-icons profile">library_books</i>
                             <span><fmt:message key="header.link.publications"/></span>
