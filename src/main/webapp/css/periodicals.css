@@ -262,7 +262,7 @@ table {
     background-color: rgba(255, 0, 0, 0.6);
 }
 
-.search_block_topic {
+.search_block_periodical {
     background-color: whitesmoke;
     border-radius: 5px;
     height: 35px;
@@ -271,14 +271,14 @@ table {
     overflow: hidden;
 }
 
-.search_block_topic form {
+.search_block_periodical form {
     display: flex;
     align-items: center;
     margin-left: 10px;
     height: 35px;
 }
 
-.search_block_topic input {
+.search_block_periodical input {
     font-family:'Roboto', sans-serif !important;
     font-size: 12pt !important;
     padding: 0 !important;
@@ -286,17 +286,17 @@ table {
     margin: 0 !important;
 }
 
-.search_block_topic input:active {
+.search_block_periodical input:active {
     border: none !important;
 }
 
-.search_block_topic input:enabled {
+.search_block_periodical input:enabled {
     border: none !important;
 }
 
-.no_topics_to_select {
-    padding: 20px;
-    font-size: 26pt;
+.no_periodicals_to_show {
+    margin: 40px 0;
+    font-size: 20pt;
 }
 
 .delete_periodical_modal_container {

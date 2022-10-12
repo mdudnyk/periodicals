@@ -112,4 +112,34 @@ class Queries {
     public static final String GET_TOPIC_TRANSLATE_BY_LOCALE = "SELECT * FROM topic_translate WHERE topic_id=? AND locale_id=?";
     public static final String UPDATE_TOPIC_TRANSLATE = "UPDATE topic_translate SET name=? WHERE topic_id=? AND locale_id=?";
     public static final String DELETE_TOPIC_TRANSLATE = "DELETE FROM user WHERE topic_id=? AND locale_id=?";
+
+    //PERIODICAL
+    public static final String GET_PERIODICALS_FOR_TABLE_PAGINATION_ASC = """
+        SELECT DISTINCT id, title, COALESCE(
+                                    (SELECT name
+                                    FROM topic_translate
+                                    WHERE topic_id=id AND locale_id=?),
+                                    (SELECT name
+                                    FROM topic_translate
+                                    WHERE topic_id=id AND locale_id=?)
+                                    ) AS topic_name, price, status
+        FROM periodical
+            JOIN topic_translate ON id = topic_translate.topic_id
+        ORDER BY ?, title ASC
+        LIMIT ? OFFSET ?;
+                """;
+    public static final String GET_PERIODICALS_FOR_TABLE_PAGINATION_DESC = """
+        SELECT DISTINCT id, title, COALESCE(
+                                    (SELECT name
+                                    FROM topic_translate
+                                    WHERE topic_id=id AND locale_id=?),
+                                    (SELECT name
+                                    FROM topic_translate
+                                    WHERE topic_id=id AND locale_id=?)
+                                    ) AS topic_name, price, status
+        FROM periodical
+            JOIN topic_translate ON id = topic_translate.topic_id
+        ORDER BY ?, title DESC
+        LIMIT ? OFFSET ?;
+                """;
 }

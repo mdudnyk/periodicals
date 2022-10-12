@@ -2,12 +2,13 @@ package com.periodicals.entity;
 
 import com.periodicals.entity.enums.PublicationStatus;
 
+import java.io.Serializable;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Periodical {
+public class Periodical implements Serializable {
     private int id;
     private int topicID;
     private String title;

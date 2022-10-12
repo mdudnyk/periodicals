@@ -1,8 +1,9 @@
 package com.periodicals.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class MonthSelector {
+public class MonthSelector implements Serializable {
     private int year;
     private String month;
 

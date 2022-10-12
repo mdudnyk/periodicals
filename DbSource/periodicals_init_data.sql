@@ -65,3 +65,29 @@ SELECT id, name
 FROM topic
         JOIN topic_translate on topic_id = id
 WHERE name LIKE ?;
+
+SELECT DISTINCT id, title, COALESCE(
+        (SELECT name
+         FROM topic_translate
+         WHERE topic_id=id AND locale_id=?),
+        (SELECT name
+         FROM topic_translate
+         WHERE topic_id=id AND locale_id=?)
+    ) AS topic_name, price, status
+FROM periodical
+         JOIN topic_translate ON id = topic_translate.topic_id
+ORDER BY ? ASC
+LIMIT 10 OFFSET 0;
+
+SELECT DISTINCT id, title, COALESCE(
+        (SELECT name
+         FROM topic_translate
+         WHERE topic_id=id AND locale_id='ua'),
+        (SELECT name
+         FROM topic_translate
+         WHERE topic_id=id AND locale_id='en')
+    ) AS topic_name, price, status
+FROM periodical
+         JOIN topic_translate ON id = topic_translate.topic_id
+ORDER BY price DESC
+LIMIT 10 OFFSET 0;

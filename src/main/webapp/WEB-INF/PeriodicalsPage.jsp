@@ -1,6 +1,3 @@
-<%@ page import="com.periodicals.entity.Topic" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.periodicals.entity.Periodical" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ct" tagdir="/WEB-INF/tags" %>
@@ -19,9 +16,6 @@
 </head>
 <body>
 <%@ include file="fragment/Header.jspf" %>
-<%
-    List<Periodical> periodicals = (List<Periodical>) request.getAttribute("periodicals");
-%>
 <div class="delete_periodical_modal_container" id="delete_modal">
     <div class="delete_modal_block">
         <div class="delete_modal_header">
@@ -64,39 +58,33 @@
     <div class="content_main">
         <div class="above_table_block">
             <div class="amount_manage_block" onclick="open_amount_modal()">
-                <div class="amount_number">${sessionScope.periodicalAmountOnPage}</div>
+                <c:set var="amountOnPage" scope="request" value="${sessionScope.periodicalsAmountOnPage}"/>
+                <div class="amount_number">${amountOnPage}</div>
                 <i class="material-icons" id="amount_modal_icon">expand_more</i>
                 <div class="amount_modal" id="amount_modal">
                     <ul>
-                        <%
-                            int amount = (Integer) session.getAttribute("periodicalAmountOnPage");
-                            if (amount != 5) {
-                        %>
-                        <a href="${pageContext.request.contextPath}/controller?cmd=PERIODICALS_PAGE&amount=5">
-                            <li>5</li>
-                        </a>
-                        <%
-                            }
-                            if (amount != 10) {
-                        %>
-                        <a href="${pageContext.request.contextPath}/controller?cmd=PERIODICALS_PAGE&amount=10">
-                            <li>10</li>
-                        </a>
-                        <%
-                            }
-                            if (amount != 15) {
-                        %>
-                        <a href="${pageContext.request.contextPath}/controller?cmd=PERIODICALS_PAGE&amount=15">
-                            <li>15</li>
-                        </a>
-                        <%
-                            }
-                        %>
+                        <c:choose>
+                            <c:when test="${amountOnPage != 5}">
+                                <a href="${pageContext.request.contextPath}/controller?cmd=PERIODICALS_PAGE&amount=5">
+                                    <li>5</li>
+                                </a>
+                            </c:when>
+                            <c:when test="${amountOnPage != 10}">
+                                <a href="${pageContext.request.contextPath}/controller?cmd=PERIODICALS_PAGE&amount=10">
+                                    <li>10</li>
+                                </a>
+                            </c:when>
+                            <c:when test="${amountOnPage != 15}">
+                                <a href="${pageContext.request.contextPath}/controller?cmd=PERIODICALS_PAGE&amount=15">
+                                    <li>15</li>
+                                </a>
+                            </c:when>
+                        </c:choose>
                     </ul>
                 </div>
             </div>
             <div class="close_search_block">
-                <c:if test="${sessionScope.periodicalSearchString.length() > 0}">
+                <c:if test="${sessionScope.periodicalsSearchString.length() > 0}">
                     <form style="z-index: 1;" action="${pageContext.request.contextPath}/controller">
                         <input type="hidden" name="cmd" value="PERIODICALS_PAGE">
                         <input type="hidden" name="searchString" value="">
@@ -106,7 +94,7 @@
                     </form>
                 </c:if>
             </div>
-            <div class="search_block_topic">
+            <div class="search_block_periodical">
                 <form action="${pageContext.request.contextPath}/controller">
                     <input type="hidden" name="cmd" value="SEARCH_PERIODICAL">
                     <input type="text" name="searchString" value="${sessionScope.periodicalSearchString}"
@@ -117,31 +105,154 @@
                 </form>
             </div>
         </div>
+
         <table class="centered">
             <thead class="table_head">
             <tr style="border: none">
+                <c:set var="sortBy" scope="request" value="${sessionScope.periodicalsSortBy}"/>
+                <c:set var="sortOrder" scope="request" value="${sessionScope.periodicalsSortOrder}"/>
                 <th style="width: 70px;"><fmt:message key="topics.number"/></th>
                 <th>
-                    <div class="sortable_column"><fmt:message key="periodicals.topic_name"/>
+                    <div class="sortable_column"><fmt:message key="periodicals.periodicals_title"/>
                         <div class="sorting_block">
-                            <i class="material-icons sort disabled">arrow_drop_up</i>
-                            <i class="material-icons sort">arrow_drop_down</i>
+                            <c:choose>
+                                <c:when test="${sortBy.equals('title')}">
+                                    <c:choose>
+                                        <c:when test="${sortOrder.equals('ASC')}">
+                                            <a href="${pageContext.request.contextPath}/controller?cmd=PERIODICALS_PAGE&sortBy=title&sorting=DESC">
+                                                <i class="material-icons sort">arrow_drop_up</i>
+                                            </a>
+                                            <a href="">
+                                                <i class="material-icons sort disabled">arrow_drop_down</i>
+                                            </a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a href="">
+                                                <i class="material-icons sort disabled">arrow_drop_up</i>
+                                            </a>
+                                            <a href="${pageContext.request.contextPath}/controller?cmd=PERIODICALS_PAGE&sortBy=title&sorting=ASC">
+                                                <i class="material-icons sort">arrow_drop_down</i>
+                                            </a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="${pageContext.request.contextPath}/controller?cmd=PERIODICALS_PAGE&sortBy=title&sorting=DESC">
+                                        <i class="material-icons sort">arrow_drop_up</i>
+                                    </a>
+                                    <a href="${pageContext.request.contextPath}/controller?cmd=PERIODICALS_PAGE&sortBy=title&sorting=ASC">
+                                        <i class="material-icons sort">arrow_drop_down</i>
+                                    </a>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                     </div>
                 </th>
                 <th>
                     <div class="sortable_column"><fmt:message key="topics.topic_name"/>
                         <div class="sorting_block">
-                            <i class="material-icons sort disabled">arrow_drop_up</i>
-                            <i class="material-icons sort">arrow_drop_down</i>
+                            <c:choose>
+                                <c:when test="${sortBy.equals('topic')}">
+                                    <c:choose>
+                                        <c:when test="${sortOrder.equals('ASC')}">
+                                            <a href="${pageContext.request.contextPath}/controller?cmd=PERIODICALS_PAGE&sortBy=topic&sorting=DESC">
+                                                <i class="material-icons sort">arrow_drop_up</i>
+                                            </a>
+                                            <a href="">
+                                                <i class="material-icons sort disabled">arrow_drop_down</i>
+                                            </a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a href="">
+                                                <i class="material-icons sort disabled">arrow_drop_up</i>
+                                            </a>
+                                            <a href="${pageContext.request.contextPath}/controller?cmd=PERIODICALS_PAGE&sortBy=topic&sorting=ASC">
+                                                <i class="material-icons sort">arrow_drop_down</i>
+                                            </a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="${pageContext.request.contextPath}/controller?cmd=PERIODICALS_PAGE&sortBy=topic&sorting=DESC">
+                                        <i class="material-icons sort">arrow_drop_up</i>
+                                    </a>
+                                    <a href="${pageContext.request.contextPath}/controller?cmd=PERIODICALS_PAGE&sortBy=topic&sorting=ASC">
+                                        <i class="material-icons sort">arrow_drop_down</i>
+                                    </a>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                     </div>
                 </th>
                 <th>
-                    <div class="sortable_column" style="width: 210px;"><fmt:message key="periodicals.issue_country"/>
+                    <div class="sortable_column" style="width: 160px;"><fmt:message key="periodicals.price"/>${sessionScope.locale.getCurrency()}
                         <div class="sorting_block">
-                            <i class="material-icons sort disabled">arrow_drop_up</i>
-                            <i class="material-icons sort">arrow_drop_down</i>
+                            <c:choose>
+                                <c:when test="${sortBy.equals('price')}">
+                                    <c:choose>
+                                        <c:when test="${sortOrder.equals('ASC')}">
+                                            <a href="${pageContext.request.contextPath}/controller?cmd=PERIODICALS_PAGE&sortBy=price&sorting=DESC">
+                                                <i class="material-icons sort">arrow_drop_up</i>
+                                            </a>
+                                            <a href="">
+                                                <i class="material-icons sort disabled">arrow_drop_down</i>
+                                            </a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a href="">
+                                                <i class="material-icons sort disabled">arrow_drop_up</i>
+                                            </a>
+                                            <a href="${pageContext.request.contextPath}/controller?cmd=PERIODICALS_PAGE&sortBy=price&sorting=ASC">
+                                                <i class="material-icons sort">arrow_drop_down</i>
+                                            </a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="${pageContext.request.contextPath}/controller?cmd=PERIODICALS_PAGE&sortBy=price&sorting=DESC">
+                                        <i class="material-icons sort">arrow_drop_up</i>
+                                    </a>
+                                    <a href="${pageContext.request.contextPath}/controller?cmd=PERIODICALS_PAGE&sortBy=price&sorting=ASC">
+                                        <i class="material-icons sort">arrow_drop_down</i>
+                                    </a>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                    </div>
+                </th>
+                <th>
+                    <div class="sortable_column" style="width: 120px;"><fmt:message key="periodicals.status"/>
+                        <div class="sorting_block">
+                            <c:choose>
+                                <c:when test="${sortBy.equals('status')}">
+                                    <c:choose>
+                                        <c:when test="${sortOrder.equals('ASC')}">
+                                            <a href="${pageContext.request.contextPath}/controller?cmd=PERIODICALS_PAGE&sortBy=status&sorting=DESC">
+                                                <i class="material-icons sort">arrow_drop_up</i>
+                                            </a>
+                                            <a href="">
+                                                <i class="material-icons sort disabled">arrow_drop_down</i>
+                                            </a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a href="">
+                                                <i class="material-icons sort disabled">arrow_drop_up</i>
+                                            </a>
+                                            <a href="${pageContext.request.contextPath}/controller?cmd=PERIODICALS_PAGE&sortBy=status&sorting=ASC">
+                                                <i class="material-icons sort">arrow_drop_down</i>
+                                            </a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="${pageContext.request.contextPath}/controller?cmd=PERIODICALS_PAGE&sortBy=status&sorting=DESC">
+                                        <i class="material-icons sort">arrow_drop_up</i>
+                                    </a>
+                                    <a href="${pageContext.request.contextPath}/controller?cmd=PERIODICALS_PAGE&sortBy=status&sorting=ASC">
+                                        <i class="material-icons sort">arrow_drop_down</i>
+                                    </a>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                     </div>
                 </th>
@@ -150,33 +261,43 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>1</td>
-                <td class="periodical_column">Top gear</td>
-                <td class="periodical_column">Automotive</td>
-                <td>Ukraine</td>
-                <td><a href="/controller?cmd=EDIT_TOPIC_PAGE&id="><i class="material-icons edit" >edit</i></a></td>
-                <td><i class="material-icons delete" onclick="deletePeriodicalById(1)">delete_forever</i></td>
-            </tr>
-            </tbody>
-        </table>
-        <div class="under_table_block">
-            <ul class="pagination" style="cursor: default;">
-                <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-                <li><a href="#!">1</a></li>
-                <li><a href="#!">2</a></li>
-                <li class="active green"><a href="#!">3</a></li>
-                <li><a href="#!">4</a></li>
-                <li><a href="#!">5</a></li>
-                <li><a href="#!">6</a></li>
-                <li><a href="#!">7</a></li>
-                <li><a href="#!">8</a></li>
-                <li class="disabled"><a href="#!">...</a></li>
-                <li><a href="#!">22</a></li>
-                <li><a href="#!"><i class="material-icons" >chevron_right</i></a></li>
-            </ul>
-        </div>
-
+            <c:choose>
+                <c:when test="${requestScope.periodicals != null && requestScope.periodicals.size() > 0}">
+                    <c:set var="pageNumber" scope="request" value="${sessionScope.periodicalsPageNumber}"/>
+                    <c:set var="rowIndex" scope="request" value="${pageNumber * amountOnPage - amountOnPage}"/>
+                    <c:forEach var="periodical" items="${requestScope.periodicals}">
+                        <c:set var="rowIndex" scope="request" value="${rowIndex + 1}"/>
+                        <tr>
+                            <td>${rowIndex}</td>
+                            <td class="periodical_column">${periodical.getTitle()}</td>
+                            <td class="periodical_column">${periodical.getTopicName()}</td>
+                            <td>${periodical.getPrice()}</td>
+                            <td>
+                                <a href="${pageContext.request.contextPath}/controller?cmd=EDIT_PERIODICAL_PAGE&id=${periodical.getId()}">
+                                    <i class="material-icons edit">edit</i>
+                                </a>
+                            </td>
+                            <td>
+                                <i class="material-icons delete" onclick="deletePeriodicalById(${periodical.getId()}, '${periodical.getTitle}')">
+                                    delete_forever
+                                </i>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+            <div class="under_table_block">
+                <ct:paginationBar page="${pageNumber}" total="${sessionScope.periodicalSearchMode.equals('on')
+                                                                ? requestScope.periodicals.size()
+                                                                : requestScope.totalPages}"/>
+            </div>
+                </c:when>
+                <c:otherwise>
+                    </tbody>
+                    </table>
+                    <span class="no_periodicals_to_show"><fmt:message key="periodicals.no_periodicals_to_show"/></span>
+                </c:otherwise>
+            </c:choose>
     </div>
 </div>
 

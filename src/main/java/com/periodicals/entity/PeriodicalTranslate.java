@@ -1,8 +1,9 @@
 package com.periodicals.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class PeriodicalTranslate {
+public class PeriodicalTranslate implements Serializable {
     private final int periodicalID;
     private final String localeID;
     private String country;

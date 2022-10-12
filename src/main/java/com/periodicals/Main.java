@@ -3,6 +3,7 @@ package com.periodicals;
 
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.dao.manager.DAOManagerFactory;
+import com.periodicals.dao.manager.PeriodicalDAOManager;
 import com.periodicals.dao.manager.TopicDAOManager;
 import com.periodicals.entity.*;
 import com.periodicals.service.ServiceException;
@@ -16,6 +17,7 @@ public class Main {
     public static void main(String[] args) throws DAOException, ServiceException {
         DAOManagerFactory managerFactory = DAOManagerFactory.getInstance();
         TopicDAOManager topicDAOManager = managerFactory.getTopicDAOManager();
+        PeriodicalDAOManager periodicalDAOManager = managerFactory.getPeriodicalDAOManager();
 //        Topic topic = new Topic(1);
 //        TopicTranslate tt1 = new TopicTranslate(topic.getId(), "ua","Автомобілі");
 //        TopicTranslate tt2 = new TopicTranslate(topic.getId(),"en","Automotive");
@@ -54,8 +56,11 @@ public class Main {
 //
 //        System.out.println(topicService.getAllTopicsByLocale("en", "ua"));
 //
-        System.out.println(topicDAOManager.getTopicById(10));
-
+        List<PeriodicalForTable> list = periodicalDAOManager
+                .getPeriodicalsForTableSortPag("ua", "en", 0, 10, "title", "DESC");
+        for (PeriodicalForTable p : list) {
+            System.out.println(p);
+        }
         managerFactory.closeDAO();
 
 

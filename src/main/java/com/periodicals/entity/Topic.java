@@ -1,8 +1,9 @@
 package com.periodicals.entity;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Topic {
+public class Topic implements Serializable {
     private int id;
     private Map<String, TopicTranslate> translate;
 

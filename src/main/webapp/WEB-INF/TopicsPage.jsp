@@ -153,11 +153,11 @@
             <%
                 if (topics != null && topics.size() > 0) {
             %>
-            <c:set var="number" scope="page" value="${sessionScope.topicPageNumber *
+            <c:set var="number" scope="request" value="${sessionScope.topicPageNumber *
                                                         sessionScope.topicAmountOnPage -
                                                         sessionScope.topicAmountOnPage}"/>
             <c:forEach var="topic" items="${requestScope.topics}">
-                <c:set var="number" scope="page" value="${number + 1}"/>
+                <c:set var="number" scope="request" value="${number + 1}"/>
                 <tr>
                     <td><c:out value="${number}"/></td>
                     <td class="topic_name_row">
