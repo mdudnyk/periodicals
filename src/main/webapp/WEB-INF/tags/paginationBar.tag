@@ -3,6 +3,7 @@
 
 <%@ attribute name="page" required="true" type="java.lang.Integer"%>
 <%@ attribute name="total" required="true" type="java.lang.Integer"%>
+<%@ attribute name="command" required="true" type="java.lang.String"%>
 
 <c:set var="first" value="${page - (page - 1) % 5}"/>
 <c:set var="last" value="${(first + 4) > total ? total : first + 4}"/>
@@ -13,7 +14,7 @@
     </c:if>
     <c:if test="${page > 1}">
         <li>
-            <a href="${pageContext.request.contextPath}/controller?cmd=TOPICS_PAGE&pageNumber=${page - 1}">
+            <a href="${pageContext.request.contextPath}/controller?cmd=${command}&pageNumber=${page - 1}">
                 <i class="material-icons">chevron_left</i>
             </a>
         </li>
@@ -21,7 +22,7 @@
 
     <c:if test="${first != 1}">
         <li>
-            <a href="${pageContext.request.contextPath}/controller?cmd=TOPICS_PAGE&pageNumber=1">
+            <a href="${pageContext.request.contextPath}/controller?cmd=${command}&pageNumber=1">
                 1
             </a>
         </li>
@@ -36,7 +37,7 @@
         </c:if>
         <c:if test="${i != page}">
         <li>
-            <a href="${pageContext.request.contextPath}/controller?cmd=TOPICS_PAGE&pageNumber=${i}">${i}</a>
+            <a href="${pageContext.request.contextPath}/controller?cmd=${command}&pageNumber=${i}">${i}</a>
         </li>
         </c:if>
     </c:forEach>
@@ -46,7 +47,7 @@
         <a>...</a>
     </li>
     <li>
-        <a href="${pageContext.request.contextPath}/controller?cmd=TOPICS_PAGE&pageNumber=${total}">
+        <a href="${pageContext.request.contextPath}/controller?cmd=${command}&pageNumber=${total}">
             ${total}
         </a>
     </li>
@@ -54,7 +55,7 @@
 
     <c:if test="${page < total}">
         <li>
-            <a href="${pageContext.request.contextPath}/controller?cmd=TOPICS_PAGE&pageNumber=${page + 1}">
+            <a href="${pageContext.request.contextPath}/controller?cmd=${command}&pageNumber=${page + 1}">
                 <i class="material-icons">chevron_right</i>
             </a>
         </li>

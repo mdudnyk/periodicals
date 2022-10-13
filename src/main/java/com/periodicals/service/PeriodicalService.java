@@ -14,4 +14,16 @@ public interface PeriodicalService {
                                                                   final String sortBy,
                                                                   final String sortOrder) throws DAOException;
 
+    List<PeriodicalForTable> getPeriodicalsForTableByTitleSortPagination(final String localeId,
+                                                                         final String defaultLocaleId,
+                                                                         final int skipPositions,
+                                                                         final int amountOnPage,
+                                                                         final String sortBy,
+                                                                         final String sortOrder,
+                                                                         final String searchedTitle) throws DAOException;
+
+    int getPeriodicalsTotal() throws DAOException;
+
+    int getPeriodicalsTotalSearchMode(String searchQuery) throws DAOException;
+
 }

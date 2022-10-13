@@ -76,7 +76,7 @@ SELECT DISTINCT id, title, COALESCE(
     ) AS topic_name, price, status
 FROM periodical
          JOIN topic_translate ON id = topic_translate.topic_id
-ORDER BY ? ASC
+ORDER BY title ASC
 LIMIT 10 OFFSET 0;
 
 SELECT DISTINCT id, title, COALESCE(
@@ -89,5 +89,18 @@ SELECT DISTINCT id, title, COALESCE(
     ) AS topic_name, price, status
 FROM periodical
          JOIN topic_translate ON id = topic_translate.topic_id
-ORDER BY price DESC
+ORDER BY 4 ASC
+LIMIT 10 OFFSET 0;
+
+SELECT DISTINCT id, title, COALESCE(
+        (SELECT name
+         FROM topic_translate
+         WHERE topic_id=id AND locale_id='ua'),
+        (SELECT name
+         FROM topic_translate
+         WHERE topic_id=id AND locale_id='en')
+    ) AS topic_name, price, status
+FROM periodical
+         JOIN topic_translate ON id = topic_translate.topic_id
+ORDER BY 4, title
 LIMIT 10 OFFSET 0;

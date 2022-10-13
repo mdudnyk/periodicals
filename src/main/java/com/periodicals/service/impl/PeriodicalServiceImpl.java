@@ -25,4 +25,30 @@ public class PeriodicalServiceImpl implements PeriodicalService {
         return pdm.getPeriodicalsForTableSortPag(
                 localeId, defaultLocaleId, skipPositions, amountOnPage, sortBy, sortOrder);
     }
+
+    @Override
+    public List<PeriodicalForTable> getPeriodicalsForTableByTitleSortPagination(final String localeId,
+                                                                         final String defaultLocaleId,
+                                                                         final int skipPositions,
+                                                                         final int amountOnPage,
+                                                                         final String sortBy,
+                                                                         final String sortOrder,
+                                                                         final String searchedTitle)  throws DAOException {
+        PeriodicalDAOManager pdm = daoManger.getPeriodicalDAOManager();
+        return pdm.getPeriodicalsForTableByTitleSortPag(
+                localeId, defaultLocaleId, skipPositions, amountOnPage, sortBy, sortOrder, searchedTitle);
+    }
+
+
+    @Override
+    public int getPeriodicalsTotal() throws DAOException {
+        PeriodicalDAOManager tdm = daoManger.getPeriodicalDAOManager();
+        return tdm.getPeriodicalsAmount();
+    }
+
+    @Override
+    public int getPeriodicalsTotalSearchMode(final String searchQuery) throws DAOException {
+        PeriodicalDAOManager tdm = daoManger.getPeriodicalDAOManager();
+        return tdm.getPeriodicalsAmountSearchMode(searchQuery);
+    }
 }

@@ -12,4 +12,12 @@ public interface PeriodicalDAO extends GeneralDAO<Periodical, Integer> {
             Connection connection, String locale, String defaultLocale,
             int skip, int amount, String sortBy, String order) throws DAOException;
 
+    List<PeriodicalForTable> getPeriodicalsForTableByTitleSortPag(
+            Connection connection, String locale, String defaultLocale,
+            int skip, int amount, String sortBy, String order, String searchedTitle) throws DAOException;
+
+    int getPeriodicalsAmount(Connection connection) throws DAOException;
+
+    int getPeriodicalsAmountSearchMode(Connection connection, String searchQuery) throws DAOException;
+
 }

@@ -184,7 +184,9 @@
             <ct:paginationBar page="${sessionScope.topicPageNumber}"
                               total="${sessionScope.topicSearchMode.equals('on')
                                        ? requestScope.topics.size()
-                                       : requestScope.totalPages}"/>
+                                       : requestScope.totalPages}"
+                              command="TOPICS_PAGE"/>
+                                        <%--TODO make only total pages value--%>
         </div>
         <%
         } else {

@@ -31,4 +31,29 @@ public class PeriodicalDAOManager {
         conManager.close(connection);
         return periodicals;
     }
+
+    public List<PeriodicalForTable> getPeriodicalsForTableByTitleSortPag(
+            String locale, String defaultLocale, int skip, int amount,
+            String orderBy, String sorting, String searchedTitle)  throws DAOException {
+        Connection connection = conManager.getConnection();
+        List<PeriodicalForTable> periodicals = periodicalDAO.getPeriodicalsForTableByTitleSortPag(
+                connection, locale, defaultLocale, skip, amount, orderBy, sorting, searchedTitle);
+        conManager.close(connection);
+        return periodicals;
+
+    }
+
+    public int getPeriodicalsAmount() throws DAOException {
+        Connection connection = conManager.getConnection();
+        int count = periodicalDAO.getPeriodicalsAmount(connection);
+        conManager.close(connection);
+        return count;
+    }
+
+    public int getPeriodicalsAmountSearchMode(final String searchQuery) throws DAOException {
+        Connection connection = conManager.getConnection();
+        int count = periodicalDAO.getPeriodicalsAmountSearchMode(connection, searchQuery);
+        conManager.close(connection);
+        return count;
+    }
 }

@@ -63,23 +63,21 @@
                 <i class="material-icons" id="amount_modal_icon">expand_more</i>
                 <div class="amount_modal" id="amount_modal">
                     <ul>
-                        <c:choose>
-                            <c:when test="${amountOnPage != 5}">
-                                <a href="${pageContext.request.contextPath}/controller?cmd=PERIODICALS_PAGE&amount=5">
-                                    <li>5</li>
-                                </a>
-                            </c:when>
-                            <c:when test="${amountOnPage != 10}">
-                                <a href="${pageContext.request.contextPath}/controller?cmd=PERIODICALS_PAGE&amount=10">
-                                    <li>10</li>
-                                </a>
-                            </c:when>
-                            <c:when test="${amountOnPage != 15}">
-                                <a href="${pageContext.request.contextPath}/controller?cmd=PERIODICALS_PAGE&amount=15">
-                                    <li>15</li>
-                                </a>
-                            </c:when>
-                        </c:choose>
+                        <c:if test="${amountOnPage != 5}">
+                            <a href="${pageContext.request.contextPath}/controller?cmd=PERIODICALS_PAGE&amount=5">
+                                <li>5</li>
+                            </a>
+                        </c:if>
+                        <c:if test="${amountOnPage != 10}">
+                            <a href="${pageContext.request.contextPath}/controller?cmd=PERIODICALS_PAGE&amount=10">
+                                <li>10</li>
+                            </a>
+                        </c:if>
+                        <c:if test="${amountOnPage != 15}">
+                            <a href="${pageContext.request.contextPath}/controller?cmd=PERIODICALS_PAGE&amount=15">
+                                <li>15</li>
+                            </a>
+                        </c:if>
                     </ul>
                 </div>
             </div>
@@ -96,8 +94,8 @@
             </div>
             <div class="search_block_periodical">
                 <form action="${pageContext.request.contextPath}/controller">
-                    <input type="hidden" name="cmd" value="SEARCH_PERIODICAL">
-                    <input type="text" name="searchString" value="${sessionScope.periodicalSearchString}"
+                    <input type="hidden" name="cmd" value="PERIODICALS_PAGE">
+                    <input type="text" name="searchString" value="${sessionScope.periodicalSearchString}" style="width: 200px;"
                            placeholder="<fmt:message key="periodicals.search_periodical"/>" autocomplete="off">
                     <button class="search_btn" type="submit">
                         <i class="material-icons search">search</i>
@@ -272,13 +270,14 @@
                             <td class="periodical_column">${periodical.getTitle()}</td>
                             <td class="periodical_column">${periodical.getTopicName()}</td>
                             <td>${periodical.getPrice()}</td>
+                            <td>${periodical.getStatus()}</td>
                             <td>
                                 <a href="${pageContext.request.contextPath}/controller?cmd=EDIT_PERIODICAL_PAGE&id=${periodical.getId()}">
                                     <i class="material-icons edit">edit</i>
                                 </a>
                             </td>
                             <td>
-                                <i class="material-icons delete" onclick="deletePeriodicalById(${periodical.getId()}, '${periodical.getTitle}')">
+                                <i class="material-icons delete" onclick="deletePeriodicalById(${periodical.getId()}, '${periodical.getTitle()}')">
                                     delete_forever
                                 </i>
                             </td>
@@ -287,9 +286,9 @@
                 </tbody>
             </table>
             <div class="under_table_block">
-                <ct:paginationBar page="${pageNumber}" total="${sessionScope.periodicalSearchMode.equals('on')
-                                                                ? requestScope.periodicals.size()
-                                                                : requestScope.totalPages}"/>
+                <ct:paginationBar page="${pageNumber}"
+                                  total="${requestScope.totalPages}"
+                                  command="PERIODICALS_PAGE"/>
             </div>
                 </c:when>
                 <c:otherwise>

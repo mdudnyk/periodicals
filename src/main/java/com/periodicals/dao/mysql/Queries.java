@@ -32,7 +32,7 @@ class Queries {
                 FROM topic
                          JOIN topic_translate ON id = topic_id
                 GROUP BY id
-                ORDER BY name ASC;
+                ORDER BY name;
                 """;
     public static final String GET_TOPICS_WITH_TRANSLATES_BY_LOCALE_PAGINATION_ASC = """
             SELECT id, COALESCE(
@@ -46,7 +46,7 @@ class Queries {
                 FROM topic
                          JOIN topic_translate ON id = topic_id
                 GROUP BY id
-                ORDER BY name ASC
+                ORDER BY name
                 LIMIT ? OFFSET ?;
                 """;
     public static final String GET_TOPICS_WITH_TRANSLATES_BY_LOCALE_PAGINATION_DESC = """
@@ -77,7 +77,7 @@ class Queries {
                          JOIN topic_translate ON id = topic_id
                 WHERE name LIKE CONCAT( '%',?,'%')
                 GROUP BY id
-                ORDER BY name ASC
+                ORDER BY name
                 LIMIT ? OFFSET ?;
                 """;
     public static final String GET_TOPICS_WITH_TRANSLATES_BY_NAME_AND_LOCALE_PAGINATION_DESC = """
@@ -125,7 +125,7 @@ class Queries {
                                     ) AS topic_name, price, status
         FROM periodical
             JOIN topic_translate ON id = topic_translate.topic_id
-        ORDER BY ?, title ASC
+        ORDER BY ?, title
         LIMIT ? OFFSET ?;
                 """;
     public static final String GET_PERIODICALS_FOR_TABLE_PAGINATION_DESC = """
@@ -139,7 +139,39 @@ class Queries {
                                     ) AS topic_name, price, status
         FROM periodical
             JOIN topic_translate ON id = topic_translate.topic_id
-        ORDER BY ?, title DESC
+        ORDER BY ? DESC, title
         LIMIT ? OFFSET ?;
                 """;
+    public static final String GET_PERIODICALS_FOR_TABLE_BY_TITLE_PAGINATION_ASC = """
+        SELECT DISTINCT id, title, COALESCE(
+                                    (SELECT name
+                                    FROM topic_translate
+                                    WHERE topic_id=id AND locale_id=?),
+                                    (SELECT name
+                                    FROM topic_translate
+                                    WHERE topic_id=id AND locale_id=?)
+                                    ) AS topic_name, price, status
+        FROM periodical
+            JOIN topic_translate ON id = topic_translate.topic_id
+        WHERE title LIKE CONCAT( '%',?,'%')
+        ORDER BY ?, title
+        LIMIT ? OFFSET ?;
+                """;
+    public static final String GET_PERIODICALS_FOR_TABLE_BY_TITLE_PAGINATION_DESC = """
+        SELECT DISTINCT id, title, COALESCE(
+                                    (SELECT name
+                                    FROM topic_translate
+                                    WHERE topic_id=id AND locale_id=?),
+                                    (SELECT name
+                                    FROM topic_translate
+                                    WHERE topic_id=id AND locale_id=?)
+                                    ) AS topic_name, price, status
+        FROM periodical
+            JOIN topic_translate ON id = topic_translate.topic_id
+        WHERE title LIKE CONCAT( '%',?,'%')
+        ORDER BY ? DESC, title
+        LIMIT ? OFFSET ?;
+                """;
+    public static final String GET_PERIODICALS_COUNT = "SELECT COUNT(*) FROM periodical";
+    public static final String GET_PERIODICALS_COUNT_SEARCH_MODE = "SELECT COUNT(*) FROM periodical WHERE title LIKE CONCAT( '%',?,'%')";
 }
