@@ -114,24 +114,6 @@ public class TopicDAOManager {
         return topics;
     }
 
-    public void updateTopic(Topic topic) throws DAOException {
-        Connection connection = conManager.getConnectionForTransaction();
-        try {
-            Map<String, TopicTranslate> translates = topic.getAllTranslates();
-            for (TopicTranslate t : translates.values()) {
-                t.setTopicID(topic.getId());
-                topicTranslateDAO.update(t, connection);
-            }
-            connection.commit();
-        } catch (SQLException e) {
-            rollback(connection);
-            throw new DAOException("Unable to finish transaction of updating Topic with ID="
-                    + topic.getId() + ". " + e.getMessage());
-        } finally {
-            conManager.close(connection);
-        }
-    }
-
     public int getTopicsAmount() throws DAOException {
         Connection connection = conManager.getConnection();
         int count = topicDAO.getTopicsAmount(connection);
@@ -165,6 +147,24 @@ public class TopicDAOManager {
         }
         conManager.close(connection);
         return topic;
+    }
+
+    public void updateTopic(Topic topic) throws DAOException {
+        Connection connection = conManager.getConnectionForTransaction();
+        try {
+            Map<String, TopicTranslate> translates = topic.getAllTranslates();
+            for (TopicTranslate t : translates.values()) {
+                t.setTopicID(topic.getId());
+                topicTranslateDAO.update(t, connection);
+            }
+            connection.commit();
+        } catch (SQLException e) {
+            rollback(connection);
+            throw new DAOException("Unable to finish transaction of updating Topic with ID="
+                    + topic.getId() + ". " + e.getMessage());
+        } finally {
+            conManager.close(connection);
+        }
     }
 
     public void deleteTopic(final int id) throws DAOException {

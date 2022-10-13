@@ -26,4 +26,5 @@ public interface PeriodicalService {
 
     int getPeriodicalsTotalSearchMode(String searchQuery) throws DAOException;
 
+    void deletePeriodical(int periodicalID) throws DAOException, ServiceException;
 }

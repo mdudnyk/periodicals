@@ -270,7 +270,11 @@
                             <td class="periodical_column">${periodical.getTitle()}</td>
                             <td class="periodical_column">${periodical.getTopicName()}</td>
                             <td>${periodical.getPrice()}</td>
-                            <td>${periodical.getStatus()}</td>
+                            <td     <c:set var="status" scope="page" value="${periodical.getStatus()}"/>
+                                    style="font-size: 11pt; font-weight: 700;
+                                    <c:if test="${status.equalsIgnoreCase('DISABLED')}">color: rgb(255, 117, 117);</c:if>
+                                    <c:if test="${status.equalsIgnoreCase('ACTIVE')}">color: #27c18a;</c:if>">${status}
+                            </td>
                             <td>
                                 <a href="${pageContext.request.contextPath}/controller?cmd=EDIT_PERIODICAL_PAGE&id=${periodical.getId()}">
                                     <i class="material-icons edit">edit</i>

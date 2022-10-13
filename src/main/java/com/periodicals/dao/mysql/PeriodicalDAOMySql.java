@@ -32,7 +32,15 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
 
     @Override
     public void delete(final Integer id, final Connection connection) throws DAOException {
-        throw new UnsupportedOperationException();
+        try (PreparedStatement ps = connection.prepareStatement(Queries.DELETE_PERIODICAL)) {
+            ps.setInt(1, id);
+            if (ps.executeUpdate() < 1) {
+                throw new DAOException("We don`t have such periodical. ");
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Can not delete periodical with ID=" + id + " from database. "
+                    + e.getMessage());
+        }
     }
 
     @Override
@@ -107,8 +115,8 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
             }
             rs.close();
         } catch (SQLException e) {
-            throw new DAOException("Error while trying to get list of 'periodicals for table' by title with pagination. "
-                    + e.getMessage());
+            throw new DAOException("Error while trying to get list of 'periodicals for " +
+                    "table' by title with pagination. " + e.getMessage());
         }
         return periodicals;
     }
@@ -128,7 +136,8 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
     }
 
     @Override
-    public int getPeriodicalsAmountSearchMode(final Connection connection, final String searchQuery) throws DAOException {
+    public int getPeriodicalsAmountSearchMode(final Connection connection, final String searchQuery)
+            throws DAOException {
         int count = 0;
         try (PreparedStatement ps = connection.prepareStatement(Queries.GET_PERIODICALS_COUNT_SEARCH_MODE)) {
             ps.setString(1, searchQuery);
@@ -138,7 +147,8 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
             }
             resultSet.close();
         } catch (SQLException e) {
-            throw new DAOException("Error while trying to get all periodicals count (in search mode) from database. " + e.getMessage());
+            throw new DAOException("Error while trying to get all periodicals count " +
+                    "(in search mode) from database. " + e.getMessage());
         }
         return count;
     }

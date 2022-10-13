@@ -1,17 +1,18 @@
-<%@ page import="java.util.Arrays" %><%
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%
     String message = pageContext.getException().getMessage();
-    String stackTrace = Arrays.toString(pageContext.getException().getStackTrace());
 %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
         <title>PressReader | Error</title>
+        <link rel="stylesheet" href="css/error.css">
     </head>
     <body>
-        <h2>Error occurred while processing the request</h2>
-        <p>Message: <%= message %></p>
-<%--        <p>Stack trace: <%= stackTrace%></p>--%>
+        <h1>Oops! Something went wrong</h1>
+        <p>Error occurred while processing your request</p>
+        <p>Message: <%=message%></p>
         <br>
         <p>Please inform our support service: mdudnyk.sps@gmail.com</p>
     </body>

@@ -55,7 +55,7 @@ public class SetLocaleCommand implements FrontCommand {
             LOG.info("User with ID=" + user.getId() + " set his locale to '" + user.getLocaleId() + "'");
         }
 
-        response.sendRedirect(request.getHeader("Referer"));
+        response.sendRedirect(request.getHeader("referer"));
     }
 }
 

@@ -103,7 +103,6 @@ class Queries {
                     JOIN topic_translate on topic_id=id
             WHERE name=?;
             """;
-    public static final String DELETE_TOPIC = "DELETE FROM topic WHERE id=?";
     public static final String GET_TOPICS_COUNT = "SELECT COUNT(*) FROM topic";
     public static final String GET_TOPICS_COUNT_SEARCH_MODE = """
             SELECT COUNT(*)
@@ -111,6 +110,7 @@ class Queries {
                      JOIN topic_translate ON id = topic_id
             WHERE name LIKE CONCAT( '%',?,'%');
             """;
+    public static final String DELETE_TOPIC = "DELETE FROM topic WHERE id=?";
 
 
     //TOPIC_TRANSLATE
@@ -179,6 +179,7 @@ class Queries {
         ORDER BY ? DESC, title
         LIMIT ? OFFSET ?;
                 """;
+    public static final String DELETE_PERIODICAL = "DELETE FROM periodical WHERE id=?";
     public static final String GET_PERIODICALS_COUNT = "SELECT COUNT(*) FROM periodical";
     public static final String GET_PERIODICALS_COUNT_SEARCH_MODE = "SELECT COUNT(*) FROM periodical WHERE title LIKE CONCAT( '%',?,'%')";
 }

@@ -113,7 +113,7 @@ public class TopicServiceImpl implements TopicService {
         if (id > 0) {
             tdm.deleteTopic(id);
         } else {
-            throw new ServiceException("Topic with can't be less than 1. ");
+            throw new ServiceException("Topic ID can't be less than 1. ");
         }
     }
 }
