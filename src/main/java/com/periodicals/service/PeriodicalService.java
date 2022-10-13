@@ -9,15 +9,15 @@ public interface PeriodicalService {
 
     List<PeriodicalForTable> getPeriodicalsForTableSortPagination(final String localeId,
                                                                   final String defaultLocaleId,
-                                                                  final int skipPositions,
-                                                                  final int amountOnPage,
+                                                                  int skipPositions,
+                                                                  int amountOnPage,
                                                                   final String sortBy,
                                                                   final String sortOrder) throws DAOException;
 
     List<PeriodicalForTable> getPeriodicalsForTableByTitleSortPagination(final String localeId,
                                                                          final String defaultLocaleId,
-                                                                         final int skipPositions,
-                                                                         final int amountOnPage,
+                                                                         int skipPositions,
+                                                                         int amountOnPage,
                                                                          final String sortBy,
                                                                          final String sortOrder,
                                                                          final String searchedTitle) throws DAOException;

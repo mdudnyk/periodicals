@@ -25,7 +25,7 @@
             <p>
                 <fmt:message key="periodicals.deletion_warning_msg_1"/>
                 <br>
-                <span class="delete_modal_periodical_name" id="periodical_name"></span>
+                    <span class="delete_modal_periodical_name" id="periodical_name"></span>
                 <br>
                 <fmt:message key="periodicals.deletion_warning_msg_2"/>
             </p>
@@ -95,15 +95,15 @@
             <div class="search_block_periodical">
                 <form action="${pageContext.request.contextPath}/controller">
                     <input type="hidden" name="cmd" value="PERIODICALS_PAGE">
-                    <input type="text" name="searchString" value="${sessionScope.periodicalSearchString}" style="width: 200px;"
-                           placeholder="<fmt:message key="periodicals.search_periodical"/>" autocomplete="off">
+                    <input type="text" name="searchString" value="${sessionScope.periodicalsSearchString}"
+                           style="width: 200px;" placeholder="<fmt:message key="periodicals.search_periodical"/>"
+                           autocomplete="off">
                     <button class="search_btn" type="submit">
                         <i class="material-icons search">search</i>
                     </button>
                 </form>
             </div>
         </div>
-
         <table class="centered">
             <thead class="table_head">
             <tr style="border: none">
@@ -266,7 +266,7 @@
                     <c:forEach var="periodical" items="${requestScope.periodicals}">
                         <c:set var="rowIndex" scope="request" value="${rowIndex + 1}"/>
                         <tr>
-                            <td>${rowIndex}</td>
+                            <td><c:out value="${rowIndex}"/></td>
                             <td class="periodical_column">${periodical.getTitle()}</td>
                             <td class="periodical_column">${periodical.getTopicName()}</td>
                             <td>${periodical.getPrice()}</td>
@@ -294,12 +294,11 @@
                 <c:otherwise>
                     </tbody>
                     </table>
-                    <span class="no_periodicals_to_show"><fmt:message key="periodicals.no_periodicals_to_show"/></span>
+                        <span class="no_periodicals_to_show"><fmt:message key="periodicals.no_periodicals_to_show"/></span>
                 </c:otherwise>
             </c:choose>
     </div>
 </div>
-
 
 <script src="${pageContext.request.contextPath}/js/periodicals.js"></script>
 </body>

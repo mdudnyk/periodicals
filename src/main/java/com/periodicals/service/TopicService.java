@@ -9,17 +9,24 @@ import java.util.Map;
 public interface TopicService {
     List<Topic> getAllTopicsByLocale(String localeId, String defaultLocale) throws DAOException;
 
-    List<Topic> getTopicsByLocalePagination(final String localeId, final String defaultLocaleId,
-                                            final int pageNumber, final int amountOnPage,
-                                            final String sortByName) throws DAOException;
+    List<Topic> getTopicsSortPagination(final String localeId,
+                                        final String defaultLocaleId,
+                                        int skipPositions,
+                                        int amountOnPage,
+                                        final String sortOrder) throws DAOException;
+
+    List<Topic> getTopicsByNameSortPagination(final String localeId,
+                                              final String defaultLocaleId,
+                                              int skipPositions,
+                                              int amountOnPage,
+                                              final String sortOrder,
+                                              final String searchedName) throws DAOException;
 
     int getTopicsTotal() throws DAOException;
 
-    void createNewTopic(Map<String, String> translations) throws ServiceException, DAOException;
+    int getTopicsTotalSearchMode(String searchQuery) throws DAOException;
 
-    List<Topic> getTopicsByNameAndLocalePagination(String searchString, String currentLocale,
-                                                   String defaultLocaleName, int positionsToSkip,
-                                                   int amountOnPage, String sortByName) throws DAOException;
+    void createNewTopic(Map<String, String> translations) throws ServiceException, DAOException;
 
     Topic getTopicById(int id) throws DAOException, ServiceException;
 

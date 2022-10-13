@@ -17,10 +17,12 @@ public class PeriodicalServiceImpl implements PeriodicalService {
 
     public List<PeriodicalForTable> getPeriodicalsForTableSortPagination(final String localeId,
                                                                          final String defaultLocaleId,
-                                                                         final int skipPositions,
-                                                                         final int amountOnPage,
+                                                                         int skipPositions,
+                                                                         int amountOnPage,
                                                                          final String sortBy,
                                                                          final String sortOrder) throws DAOException {
+        skipPositions = Math.max(skipPositions, 0);
+        amountOnPage = Math.max(amountOnPage, 1);
         PeriodicalDAOManager pdm = daoManger.getPeriodicalDAOManager();
         return pdm.getPeriodicalsForTableSortPag(
                 localeId, defaultLocaleId, skipPositions, amountOnPage, sortBy, sortOrder);
@@ -29,8 +31,8 @@ public class PeriodicalServiceImpl implements PeriodicalService {
     @Override
     public List<PeriodicalForTable> getPeriodicalsForTableByTitleSortPagination(final String localeId,
                                                                          final String defaultLocaleId,
-                                                                         final int skipPositions,
-                                                                         final int amountOnPage,
+                                                                         int skipPositions,
+                                                                         int amountOnPage,
                                                                          final String sortBy,
                                                                          final String sortOrder,
                                                                          final String searchedTitle)  throws DAOException {

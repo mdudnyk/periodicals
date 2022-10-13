@@ -10,6 +10,8 @@ public interface TopicDAO extends GeneralDAO<Topic, Integer> {
 
     int getTopicsAmount(Connection connection) throws DAOException;
 
+    int getTopicsAmountSearchMode(Connection connection, String searchQuery) throws DAOException;
+
     List<Topic> getAllWithTranslatesByLocale(Connection connection, String locale,
                                              String defaultLocale) throws DAOException;
 
@@ -21,6 +23,5 @@ public interface TopicDAO extends GeneralDAO<Topic, Integer> {
     List<Topic> getAllByNameAndLocalePagination(Connection connection, String name, String locale,
                                                 String defaultLocale, int skip,
                                                 int amount, String sorting) throws DAOException;
+
 }
-
-

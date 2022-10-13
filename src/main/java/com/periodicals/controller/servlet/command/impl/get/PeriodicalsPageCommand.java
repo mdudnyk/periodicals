@@ -36,9 +36,7 @@ public class PeriodicalsPageCommand implements FrontCommand {
         setPeriodicalsTotal(request, periodicalService);
         setCurrentPage(request);
 
-        List<PeriodicalForTable> periodicals = getPeriodicalsList(request, periodicalService);
-        request.setAttribute("periodicals", periodicals);
-
+        request.setAttribute("periodicals", getPeriodicalsList(request, periodicalService));
         request.getRequestDispatcher("WEB-INF/PeriodicalsPage.jsp").forward(request, response);
     }
 
@@ -60,6 +58,10 @@ public class PeriodicalsPageCommand implements FrontCommand {
         if (currentPage > totalPages) {
             currentPage = totalPages;
         }
+        if (currentPage < 1) {
+            currentPage = 1;
+        }
+
         request.getSession().setAttribute("periodicalsPageNumber", currentPage);
     }
 

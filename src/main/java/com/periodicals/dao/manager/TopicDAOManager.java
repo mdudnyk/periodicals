@@ -82,20 +82,27 @@ public class TopicDAOManager {
         return topics;
     }
 
-    public List<Topic> getAllTopicsByLocalePagination(String locale, String defaultLocale,
-                                                      int skip, int amount, String sorting) throws DAOException {
+    public List<Topic> getTopicsSortPag(final String locale,
+                                        final String defaultLocale,
+                                        final int skip,
+                                        final int amount,
+                                        final String sorting) throws DAOException {
         Connection connection = conManager.getConnection();
-        List<Topic> topics = topicDAO.getAllByLocalePagination(connection, locale, defaultLocale, skip, amount, sorting);
+        List<Topic> topics = topicDAO
+                .getAllByLocalePagination(connection, locale, defaultLocale, skip, amount, sorting);
         conManager.close(connection);
         return topics;
     }
 
-    public List<Topic> getAllTopicsByNameAndLocalePagination(final String name, final String locale,
-                                                             final String defaultLocale, final int skip,
-                                                             final int amount, final String sorting) throws DAOException {
+    public List<Topic> getTopicsByNameSortPag(final String locale,
+                                              final String defaultLocale,
+                                              final int skip,
+                                              final int amount,
+                                              final String sorting,
+                                              final String name) throws DAOException {
         Connection connection = conManager.getConnection();
-        List<Topic> topics = topicDAO.getAllByNameAndLocalePagination(connection, name, locale, defaultLocale,
-                skip, amount, sorting);
+        List<Topic> topics = topicDAO.getAllByNameAndLocalePagination(
+                connection, name, locale, defaultLocale, skip, amount, sorting);
         conManager.close(connection);
         return topics;
     }
@@ -126,8 +133,15 @@ public class TopicDAOManager {
     }
 
     public int getTopicsAmount() throws DAOException {
-        Connection connection = conManager.getConnectionForTransaction();
+        Connection connection = conManager.getConnection();
         int count = topicDAO.getTopicsAmount(connection);
+        conManager.close(connection);
+        return count;
+    }
+
+    public int getTopicsAmountSearchMode(final String searchQuery) throws DAOException {
+        Connection connection = conManager.getConnection();
+        int count = topicDAO.getTopicsAmountSearchMode(connection, searchQuery);
         conManager.close(connection);
         return count;
     }

@@ -68,6 +68,7 @@ public class TopicDAOMySql implements TopicDAO {
     public List<Topic> getAllByLocalePagination(final Connection connection, final String locale,
                                                 final String defaultLocale, final int skip, final int amount,
                                                 final String sorting) throws DAOException {
+//        System.out.println("Topics to skip: " + skip + "\namount on page: " + amount);
         List<Topic> topics = new ArrayList<>();
         String query = sorting.equals("DESC") ? Queries.GET_TOPICS_WITH_TRANSLATES_BY_LOCALE_PAGINATION_DESC :
                 Queries.GET_TOPICS_WITH_TRANSLATES_BY_LOCALE_PAGINATION_ASC;
@@ -96,6 +97,7 @@ public class TopicDAOMySql implements TopicDAO {
                                                        final String locale, final String defaultLocale,
                                                        final int skip, final int amount,
                                                        final String sorting) throws DAOException {
+//        System.out.println("Search name: " + name + "\nTopics to skip: " + skip + "\namount on page: " + amount);
         List<Topic> topics = new ArrayList<>();
         String query = sorting.equals("DESC") ? Queries.GET_TOPICS_WITH_TRANSLATES_BY_NAME_AND_LOCALE_PAGINATION_DESC :
                 Queries.GET_TOPICS_WITH_TRANSLATES_BY_NAME_AND_LOCALE_PAGINATION_ASC;
@@ -125,7 +127,6 @@ public class TopicDAOMySql implements TopicDAO {
     @Override
     public Topic getEntityById(final Integer id, final Connection connection) throws DAOException {
         Topic topic = null;
-
         try (PreparedStatement ps = connection.prepareStatement(Queries.GET_TOPIC_BY_ID)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
@@ -144,7 +145,6 @@ public class TopicDAOMySql implements TopicDAO {
     @Override
     public Topic getTopicByName(final String s, final Connection connection) throws DAOException {
         Topic topic = null;
-
         try (PreparedStatement ps = connection.prepareStatement(Queries.GET_TOPIC_BY_NAME)) {
             ps.setString(1, s);
             ResultSet rs = ps.executeQuery();
@@ -188,6 +188,24 @@ public class TopicDAOMySql implements TopicDAO {
         } catch (SQLException e) {
             throw new DAOException("Error while trying to get all topics count from database. " + e.getMessage());
         }
+//        System.out.println("Topics amount: " + count);
+        return count;
+    }
+
+    @Override
+    public int getTopicsAmountSearchMode(final Connection connection, final String searchQuery) throws DAOException {
+        int count = 0;
+        try (PreparedStatement ps = connection.prepareStatement(Queries.GET_TOPICS_COUNT_SEARCH_MODE)) {
+            ps.setString(1, searchQuery);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                count = resultSet.getInt(1);
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            throw new DAOException("Error while trying to get all topics count (in search mode) from database. " + e.getMessage());
+        }
+//        System.out.println("Topics amount in search mode: " + count);
         return count;
     }
 }

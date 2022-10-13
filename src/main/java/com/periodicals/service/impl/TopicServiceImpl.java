@@ -25,29 +25,44 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public List<Topic> getTopicsByLocalePagination(final String localeId, final String defaultLocaleId,
-                                                   final int skipPositions, final int amountOnPage,
-                                                   final String sortByName) throws DAOException {
+    public List<Topic> getTopicsSortPagination(final String localeId,
+                                               final String defaultLocaleId,
+                                               int skipPositions,
+                                               int amountOnPage,
+                                               final String sortOrder) throws DAOException {
 
-        String sorting = sortByName.equals("DESC") ? "DESC" : "ASC";
-        int skip = Math.max(skipPositions, 0);
-        int amount = Math.max(amountOnPage, 1);
+        skipPositions = Math.max(skipPositions, 0);
+        amountOnPage = Math.max(amountOnPage, 1);
         TopicDAOManager tdm = daoManger.getTopicDAOManager();
-
-        return tdm.getAllTopicsByLocalePagination(localeId, defaultLocaleId, skip, amount, sorting);
+        return tdm.getTopicsSortPag(
+                localeId, defaultLocaleId, skipPositions, amountOnPage, sortOrder);
     }
 
     @Override
-    public List<Topic> getTopicsByNameAndLocalePagination(final String name, final String localeId,
-                                                          final String defaultLocaleId, final int skipPositions,
-                                                          final int amountOnPage, final String sortByName) throws DAOException {
+    public List<Topic> getTopicsByNameSortPagination(final String localeId,
+                                                     final String defaultLocaleId,
+                                                     int skipPositions,
+                                                     int amountOnPage,
+                                                     final String sortOrder,
+                                                     final String searchedName) throws DAOException {
 
-        String sorting = sortByName.equals("DESC") ? "DESC" : "ASC";
-        int skip = Math.max(skipPositions, 0);
-        int amount = Math.max(amountOnPage, 1);
+        skipPositions = Math.max(skipPositions, 0);
+        amountOnPage = Math.max(amountOnPage, 1);
         TopicDAOManager tdm = daoManger.getTopicDAOManager();
+        return tdm.getTopicsByNameSortPag(
+                localeId, defaultLocaleId, skipPositions, amountOnPage, sortOrder, searchedName);
+    }
 
-        return tdm.getAllTopicsByNameAndLocalePagination(name, localeId, defaultLocaleId, skip, amount, sorting);
+    @Override
+    public int getTopicsTotal() throws DAOException {
+        TopicDAOManager tdm = daoManger.getTopicDAOManager();
+        return tdm.getTopicsAmount();
+    }
+
+    @Override
+    public int getTopicsTotalSearchMode(final String searchQuery) throws DAOException {
+        TopicDAOManager tdm = daoManger.getTopicDAOManager();
+        return tdm.getTopicsAmountSearchMode(searchQuery);
     }
 
     @Override
@@ -56,18 +71,14 @@ public class TopicServiceImpl implements TopicService {
         if (id > 0) {
             topic = daoManger.getTopicDAOManager().getTopicById(id);
             if (topic == null) {
-                throw new ServiceException("There is nothing to edit. Topic with ID=" + id + " is not existing. ");
+                throw new ServiceException("There is nothing to edit. Topic with ID="
+                        + id + " is not existing. ");
             }
         } else {
-            throw new ServiceException("There is nothing to edit. Topic ID=" + id + " is not valid. ID should be > 1. ");
+            throw new ServiceException("There is nothing to edit. Topic ID="
+                    + id + " is not valid. ID should be > 1. ");
         }
         return topic;
-    }
-
-    @Override
-    public int getTopicsTotal() throws DAOException {
-        TopicDAOManager tdm = daoManger.getTopicDAOManager();
-        return tdm.getTopicsAmount();
     }
 
     @Override

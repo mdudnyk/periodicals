@@ -245,12 +245,12 @@ table {
     font-weight: 500;
     font-size: 12pt;
     border-radius: 5px 0 0 5px;
+    z-index: 1;
     border: none;
     color: rgb(236, 236, 236);
     background-color: rgb(255, 117, 117);
     height: 35px;
-    width: 120px;
-    padding: 0;
+    padding: 0 20px;
     margin-right: -3px;
 }
 

@@ -66,6 +66,18 @@ FROM topic
         JOIN topic_translate on topic_id = id
 WHERE name LIKE ?;
 
+SELECT id, name
+FROM topic
+         JOIN topic_translate on topic_id = id
+WHERE name LIKE ?;
+
+SELECT COUNT(*)
+FROM topic
+         JOIN topic_translate ON id = topic_id
+WHERE name LIKE CONCAT( '%',?,'%');
+
+
+
 SELECT DISTINCT id, title, COALESCE(
         (SELECT name
          FROM topic_translate

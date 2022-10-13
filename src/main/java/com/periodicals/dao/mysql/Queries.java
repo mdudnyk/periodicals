@@ -101,10 +101,17 @@ class Queries {
             SELECT id
             FROM topic
                     JOIN topic_translate on topic_id=id
-            WHERE name=?
+            WHERE name=?;
             """;
     public static final String DELETE_TOPIC = "DELETE FROM topic WHERE id=?";
     public static final String GET_TOPICS_COUNT = "SELECT COUNT(*) FROM topic";
+    public static final String GET_TOPICS_COUNT_SEARCH_MODE = """
+            SELECT COUNT(*)
+            FROM topic
+                     JOIN topic_translate ON id = topic_id
+            WHERE name LIKE CONCAT( '%',?,'%');
+            """;
+
 
     //TOPIC_TRANSLATE
     public static final String CREATE_TOPIC_TRANSLATE = "INSERT INTO topic_translate values (?, ?, ?)";
