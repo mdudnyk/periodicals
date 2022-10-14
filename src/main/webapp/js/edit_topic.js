@@ -2,23 +2,24 @@ function editTopic() {
     let input = getInputFields();
     hideAlerts();
     if (!validateInput(input)) {
-        sendNewTopicRequest(input);
+        sendEditTopicRequest(input);
     }
 }
 
-async function sendNewTopicRequest(input) {
-    let bodyString = "id=" + topic_id.textContent;
+async function sendEditTopicRequest(input) {
+    let reqBody = new URLSearchParams();
+    reqBody.append('id', topic_id.textContent);
     for (let i = 0; i < input.length; i++) {
-        bodyString += '&lang=' + input[i].langId + '&name=' + input[i].topicName;
+        reqBody.append('lang', input[i].langId);
+        reqBody.append('name', input[i].topicName);
     }
-    console.log(bodyString);
     try {
         let response = await fetch('controller?cmd=EDIT_TOPIC', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
             },
-            body: bodyString,
+            body: reqBody,
         });
         if (response.status === 200) {
             updateValuesOfOldFields();
@@ -33,7 +34,6 @@ async function sendNewTopicRequest(input) {
             }
         }
     } catch (e) {
-        console.log(e);
         try_later.style.display = 'block';
         alert_block.style.display = 'flex';
     }
@@ -50,6 +50,8 @@ function getInputFields() {
                 oldName: b[i].getAttribute('topicName'),
                 topicName : b[i].value,
             }
+            console.log(result[i].oldName);
+            console.log(result[i].topicName);
         }
     }
     return result;
@@ -93,8 +95,8 @@ function validateInput(input) {
         no_values.style.display = 'block';
         isError = true;
     } else {
-        for(let i = 0; i < input.length; i++) {
-            let elem = input[i];
+        for (let a = 0; a < input.length; a++) {
+            let elem = input[a];
             if (elem.topicName.length === 0) {
                 fill_all.style.display = 'block';
                 isError = true;
@@ -103,14 +105,22 @@ function validateInput(input) {
                 try_later.style.display = 'block';
                 isError = true;
                 break;
-            } else if (elem.oldName === elem.topicName) {
+            }
+        }
+        if (isError === false) {
+            let isAtLeastOneChanged = false;
+            for (let i = 0; i < input.length; i++) {
+                if (input[i].oldName !== input[i].topicName) {
+                    isAtLeastOneChanged = true;
+                    break;
+                }
+            }
+            if (isAtLeastOneChanged === false) {
                 no_changes.style.display = 'block';
                 isError = true;
-                break;
             }
         }
     }
-
     if (isError === true) {
         alert_block.style.display = 'flex';
     }

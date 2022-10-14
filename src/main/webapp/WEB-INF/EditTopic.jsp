@@ -75,6 +75,10 @@
                                             value="${translation.getName()}"
                                             topicName="${translation.getName()}"
                                        </c:if>
+                                        <c:if test="${translation == null}">
+                                            value=""
+                                            topicName=""
+                                        </c:if>
                                        style="font-size: 16pt;" autocomplete="off">
                                 <label for="input_${locale.getShortNameId()}" style="color: rgb(141, 141, 141); font-size: 14pt; font-weight: 300;">
                                     <fmt:message key="edit_topic.topic_name"/>

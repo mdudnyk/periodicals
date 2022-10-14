@@ -119,6 +119,7 @@ class Queries {
     public static final String GET_TOPIC_TRANSLATE_BY_LOCALE = "SELECT * FROM topic_translate WHERE topic_id=? AND locale_id=?";
     public static final String UPDATE_TOPIC_TRANSLATE = "UPDATE topic_translate SET name=? WHERE topic_id=? AND locale_id=?";
     public static final String DELETE_TOPIC_TRANSLATE = "DELETE FROM user WHERE topic_id=? AND locale_id=?";
+    public static final String TOPIC_TRANSLATE_EXISTS = "SELECT EXISTS(SELECT * FROM topic_translate WHERE topic_id=? AND locale_id=?)";
 
     //PERIODICAL
     public static final String GET_PERIODICALS_FOR_TABLE_PAGINATION_ASC = """

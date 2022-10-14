@@ -45,7 +45,6 @@ INSERT INTO periodicals_db.topic_translate values (11, 'ua', 'Новини');
 INSERT INTO periodicals_db.topic_translate values (12, 'en', 'Traveling');
 INSERT INTO periodicals_db.topic_translate values (12, 'ua', 'Подорожі');
 
-
 SELECT id, COALESCE(
         (SELECT name
          FROM topic_translate
@@ -116,3 +115,7 @@ FROM periodical
          JOIN topic_translate ON id = topic_translate.topic_id
 ORDER BY 4, title
 LIMIT 10 OFFSET 0;
+
+UPDATE topic_translate
+SET name='aaa'
+WHERE topic_id=3 AND locale_id='ua'

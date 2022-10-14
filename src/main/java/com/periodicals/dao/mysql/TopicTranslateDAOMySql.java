@@ -49,7 +49,6 @@ public class TopicTranslateDAOMySql implements TopicTranslateDAO {
             throw new DAOException("Error while trying to get all translates of topic with ID='" + parentObjID
                     + "' list from database. " + e.getMessage());
         }
-
         return translates;
     }
 
@@ -62,17 +61,16 @@ public class TopicTranslateDAOMySql implements TopicTranslateDAO {
             ps.setInt(1, parentObjID);
             ps.setString(2, localeID);
             ResultSet rs = ps.executeQuery();
-
             if (rs.isBeforeFirst()) {
                 rs.next();
                 topicTranslate = fillEntityFromResultSet(rs);
                 rs.close();
             }
+            rs.close();
         } catch (SQLException e) {
             throw new DAOException("Error while trying to get translation for topic with ID=" + parentObjID + " and locale="
                     + localeID + ". " + e.getMessage());
         }
-
         return topicTranslate;
     }
 
@@ -83,9 +81,7 @@ public class TopicTranslateDAOMySql implements TopicTranslateDAO {
             ps.setString(1, entity.getName());
             ps.setInt(2, entity.getTopicID());
             ps.setString(3, entity.getLocaleID());
-            if (ps.executeUpdate() < 1) {
-                throw new DAOException("We don`t have such topic translate. ");
-            }
+            ps.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Can not update topic translate with topicID=" + entity.getTopicID()
                     + " and localeID='" + entity.getLocaleID() + "'. " + e.getMessage());
@@ -106,6 +102,26 @@ public class TopicTranslateDAOMySql implements TopicTranslateDAO {
         }
     }
 
+    @Override
+    public boolean checkIfTranslationExists(final int topicID,
+                                            final String localeID, final Connection connection) throws DAOException {
+        boolean exists = false;
+        try (PreparedStatement ps = connection.prepareStatement(Queries.TOPIC_TRANSLATE_EXISTS)){
+            ps.setInt(1, topicID);
+            ps.setString(2, localeID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                if (rs.getInt(1) == 1) {
+                    exists = true;
+                }
+            }
+        } catch (SQLException e) {
+            throw new DAOException("An error occurred while trying to check if translation for topic with ID=" + topicID + " and locale="
+                    + localeID + " is exists. " + e.getMessage());
+        }
+        return exists;
+    }
+
     private void fillPreparedStatement(PreparedStatement ps, TopicTranslate entity) throws SQLException {
         ps.setInt(1, entity.getTopicID());
         ps.setString(2, entity.getLocaleID());
@@ -116,7 +132,6 @@ public class TopicTranslateDAOMySql implements TopicTranslateDAO {
         int topicID = resultSet.getInt(1);
         String localeID = resultSet.getString(2);
         String name = resultSet.getString(3);
-
         return new TopicTranslate(topicID, localeID, name);
     }
 }

@@ -7,12 +7,10 @@ function createNewTopic() {
 }
 
 async function sendNewTopicRequest(input) {
-    let bodyString = '';
+    let reqBody = new URLSearchParams();
     for (let i = 0; i < input.length; i++) {
-        bodyString += 'lang=' + input[i].langId + '&name=' + input[i].topicName;
-        if (i < input.length - 1) {
-            bodyString += '&';
-        }
+        reqBody.append('lang', input[i].langId);
+        reqBody.append('name', input[i].topicName);
     }
     try {
         let response = await fetch('controller?cmd=CREATE_TOPIC', {
@@ -20,7 +18,7 @@ async function sendNewTopicRequest(input) {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: bodyString,
+            body: reqBody,
         });
         if (response.status === 200) {
             clearInputFields();

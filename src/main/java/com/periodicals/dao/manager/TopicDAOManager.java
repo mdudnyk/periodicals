@@ -155,7 +155,11 @@ public class TopicDAOManager {
             Map<String, TopicTranslate> translates = topic.getAllTranslates();
             for (TopicTranslate t : translates.values()) {
                 t.setTopicID(topic.getId());
-                topicTranslateDAO.update(t, connection);
+                if (topicTranslateDAO.checkIfTranslationExists(t.getTopicID(), t.getLocaleID(), connection)) {
+                    topicTranslateDAO.update(t, connection);
+                } else {
+                    topicTranslateDAO.create(topic.getId(), t, connection);
+                }
             }
             connection.commit();
         } catch (SQLException e) {

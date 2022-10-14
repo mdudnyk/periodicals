@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,7 +26,6 @@ public class EditTopicCommand implements FrontCommand {
         TopicService topicService = new TopicServiceImpl(daoManager);
         String topicId = request.getParameter("id");
         int id = 0;
-
         if (topicId != null) {
             try {
                 id = Integer.parseInt(topicId);
@@ -50,6 +50,10 @@ public class EditTopicCommand implements FrontCommand {
         Map<String, TopicTranslate> translations = new HashMap<>();
         String[] locales = request.getParameterValues("lang");
         String[] names = request.getParameterValues("name");
+
+        System.out.println(request.getParameter("lang"));
+        System.out.println(request.getParameter("name"));
+
 
         if (locales != null && names != null && locales.length == names.length) {
             for (int i = 0; i < locales.length; i++) {
