@@ -45,6 +45,8 @@ INSERT INTO periodicals_db.topic_translate values (11, 'ua', 'Новини');
 INSERT INTO periodicals_db.topic_translate values (12, 'en', 'Traveling');
 INSERT INTO periodicals_db.topic_translate values (12, 'ua', 'Подорожі');
 
+
+
 SELECT id, COALESCE(
         (SELECT name
          FROM topic_translate

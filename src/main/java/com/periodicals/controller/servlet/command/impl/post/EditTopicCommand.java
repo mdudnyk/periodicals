@@ -13,7 +13,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,16 +50,11 @@ public class EditTopicCommand implements FrontCommand {
         String[] locales = request.getParameterValues("lang");
         String[] names = request.getParameterValues("name");
 
-        System.out.println(request.getParameter("lang"));
-        System.out.println(request.getParameter("name"));
-
-
         if (locales != null && names != null && locales.length == names.length) {
             for (int i = 0; i < locales.length; i++) {
                 translations.put(locales[i], new TopicTranslate(0, locales[i], names[i]));
             }
         }
-
         return translations;
     }
 }
