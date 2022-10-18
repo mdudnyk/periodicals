@@ -151,6 +151,10 @@ public class PeriodicalsPageCommand implements FrontCommand {
 
         List<PeriodicalForTable> periodicals;
 
+        System.out.println(amountOnPage);
+        System.out.println(pageNumber);
+        System.out.println(positionsToSkip);
+
         if (searchString.equals("")) {
             periodicals = periodicalService.getPeriodicalsForTableSortPagination(
                     currentLocale,
@@ -169,6 +173,7 @@ public class PeriodicalsPageCommand implements FrontCommand {
                     (String) request.getSession().getAttribute("periodicalsSortOrder"),
                     searchString);
         }
+        System.out.println(periodicals);
         return periodicals;
     }
 }

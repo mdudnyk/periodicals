@@ -23,4 +23,12 @@
         <param-name>defaultLocale</param-name>
         <param-value>en</param-value>
     </context-param>
+    <context-param>
+        <param-name>imageStorage</param-name>
+        <param-value>C:\\Users\\mdudnyk\\Desktop\\periodical_images\\</param-value>
+    </context-param>
+    <context-param>
+        <param-name>noImageFile</param-name>
+        <param-value>C:\\Users\\mdudnyk\\Desktop\\periodical_images\\no_image.svg</param-value>
+    </context-param>
 </web-app>

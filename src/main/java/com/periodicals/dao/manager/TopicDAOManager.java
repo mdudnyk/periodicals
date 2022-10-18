@@ -128,14 +128,6 @@ public class TopicDAOManager {
         return count;
     }
 
-    private void rollback(final Connection con) throws DAOException {
-        try {
-            con.rollback();
-        } catch (SQLException ex) {
-            throw new DAOException("Something went wrong while trying to rollback. " + ex.getMessage());
-        }
-    }
-
     public Topic getTopicByName(final List<String> strings) throws DAOException {
         Connection connection = conManager.getConnection();
         Topic topic = null;
@@ -175,5 +167,13 @@ public class TopicDAOManager {
         Connection connection = conManager.getConnection();
         topicDAO.delete(id, connection);
         conManager.close(connection);
+    }
+
+    private void rollback(final Connection con) throws DAOException {
+        try {
+            con.rollback();
+        } catch (SQLException ex) {
+            throw new DAOException("Something went wrong while trying to rollback. " + ex.getMessage());
+        }
     }
 }

@@ -16,10 +16,7 @@ import org.json.simple.parser.ParseException;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.stream.Collectors;
+
 
 
 public class CreatePeriodicalCommand implements FrontCommand {
@@ -30,17 +27,32 @@ public class CreatePeriodicalCommand implements FrontCommand {
 //        String path = request.getServletContext().getRealPath("/");
 //        System.out.println(path);
 
-//        String requestData = request.getReader().lines().collect(Collectors.joining());
-//        JSONParser parser = new JSONParser();
-//        JSONObject json = null;
-//        try {
-//            json = (JSONObject) parser.parse(requestData);
-//        } catch (ParseException e) {
-//            System.out.println("JSON parser: nothing to parse. " + e.getMessage());
-//        }
-//        assert json != null;
-//        System.out.println(requestData);
+        JSONObject json = getJSONFromRequest(request);
+        String imageURL = getImageFromRequest(request);
+        System.out.println(json);
 
+        Part imagePart = request.getPart("image");
+        FileUtils.writeByteArrayToFile(new File("C:\\Users\\mdudnyk\\Desktop\\image.jpeg"), imagePart.getInputStream().readAllBytes());
+
+    }
+
+    private String getImageFromRequest(final HttpServletRequest request) throws ServletException, IOException {
+        String imageUrl = null;
+        String defaultImageStorage = request.getSession()
+                .getServletContext()
+                .getInitParameter("imageStorage");
+        String defaultImageURL = request.getSession()
+                .getServletContext()
+                .getInitParameter("noImageFile");
+        Part imagePart = request.getPart("image");
+
+        if (imagePart != null) {
+
+        }
+        return null;
+    }
+
+    private JSONObject getJSONFromRequest(final HttpServletRequest request) throws ServletException, IOException {
         Part jsonPart = request.getPart("json");
         JSONParser parser = new JSONParser();
         JSONObject json = null;
@@ -50,15 +62,7 @@ public class CreatePeriodicalCommand implements FrontCommand {
         } catch (ParseException e) {
             System.out.println("JSON parser: nothing to parse. " + e.getMessage());
         }
-        assert json != null;
-        System.out.println(json);
-
-        Part imagePart = request.getPart("image");
-//        Part jsonPart = request.getPart("json");
-//
-//        System.out.println(jsonPart.getInputStream());
-//
-        FileUtils.writeByteArrayToFile(new File("C:\\Users\\mdudnyk\\Desktop\\image.jpeg"), imagePart.getInputStream().readAllBytes());
-
+        assert json != null : "No JSON in quest from server. ";
+        return json;
     }
 }

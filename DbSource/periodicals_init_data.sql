@@ -46,6 +46,65 @@ INSERT INTO periodicals_db.topic_translate values (12, 'en', 'Traveling');
 INSERT INTO periodicals_db.topic_translate values (12, 'ua', 'Подорожі');
 
 
+INSERT INTO periodical values (DEFAULT, 1, 'Top Gear', DEFAULT, 12300, '1', 1, 'ACTIVE');
+INSERT INTO periodical values (DEFAULT, 1, 'Autosport', DEFAULT, 15400, '1', 1, 'ACTIVE');
+INSERT INTO periodical values (DEFAULT, 1, 'Evo', DEFAULT, 12460, '1', 1, 'DISABLED');
+INSERT INTO periodical values (DEFAULT, 1, 'Classic Driver', DEFAULT, 10590,'1', 1, 'ACTIVE');
+
+INSERT INTO periodical values (DEFAULT, 2, 'Forbes', DEFAULT, 13090,'1', 1, 'ACTIVE');
+INSERT INTO periodical values (DEFAULT, 2, 'The Insider', DEFAULT, 13100, '1', 1, 'ACTIVE');
+INSERT INTO periodical values (DEFAULT, 2, 'Fast Company', DEFAULT, 18460, '1', 1, 'ACTIVE');
+INSERT INTO periodical values (DEFAULT, 2, 'Business Traveler', DEFAULT, 23999, '1', 1, 'ACTIVE');
+
+INSERT INTO periodical values (DEFAULT, 3, 'Science', DEFAULT, 35700, '1', 1, 'ACTIVE');
+INSERT INTO periodical values (DEFAULT, 3, 'Popular Science', DEFAULT, 29999, '1', 1, 'ACTIVE');
+INSERT INTO periodical values (DEFAULT, 3, 'Android Advisor', DEFAULT, 22360, '1', 1, 'ACTIVE');
+INSERT INTO periodical values (DEFAULT, 3, 'Macworld', DEFAULT, 18320, '1', 1, 'ACTIVE');
+
+INSERT INTO periodical values (DEFAULT, 4, 'The Knitter', DEFAULT, 19999, '1', 1, 'ACTIVE');
+INSERT INTO periodical values (DEFAULT, 4, 'Mollie', DEFAULT, 19099, '1', 1, 'ACTIVE');
+INSERT INTO periodical values (DEFAULT, 4, 'Crochet', DEFAULT, 9960, '1', 1, 'ACTIVE');
+INSERT INTO periodical values (DEFAULT, 4, 'Simply Sewing', DEFAULT, 16620, '1', 1, 'ACTIVE');
+
+INSERT INTO periodical values (DEFAULT, 5, 'ARQ', DEFAULT, 34999, '1', 1, 'ACTIVE');
+INSERT INTO periodical values (DEFAULT, 5, 'Frankie', DEFAULT, 20000, '1', 1, 'ACTIVE');
+INSERT INTO periodical values (DEFAULT, 5, 'Designlines', DEFAULT, 26010, '1', 1, 'ACTIVE');
+INSERT INTO periodical values (DEFAULT, 5, 'Interior Design', DEFAULT, 40590, '1', 1, 'ACTIVE');
+
+INSERT INTO periodical values (DEFAULT, 6, 'Good Food', DEFAULT, 34010, '1', 1, 'ACTIVE');
+INSERT INTO periodical values (DEFAULT, 6, 'Clean Eating', DEFAULT, 20599, '1', 1, 'ACTIVE');
+INSERT INTO periodical values (DEFAULT, 6, 'Beer & Brewing', DEFAULT, 18000, '1', 1, 'ACTIVE');
+INSERT INTO periodical values (DEFAULT, 6, 'Gourmet', DEFAULT, 32910, '1', 1, 'ACTIVE');
+
+INSERT INTO periodical values (DEFAULT, 7, 'Retro Gamer', DEFAULT, 32099, '1', 1, 'ACTIVE');
+INSERT INTO periodical values (DEFAULT, 7, 'Level', DEFAULT, 20900, '1', 1, 'ACTIVE');
+INSERT INTO periodical values (DEFAULT, 7, 'Minecraft', DEFAULT, 9999, '1', 1, 'ACTIVE');
+INSERT INTO periodical values (DEFAULT, 7, 'Sjakk', DEFAULT, 10090, '1', 1, 'ACTIVE');
+
+INSERT INTO periodical values (DEFAULT, 8, 'Men\'s Health', DEFAULT, 39000, '1', 1, 'ACTIVE');
+INSERT INTO periodical values (DEFAULT, 8, 'MindFood', DEFAULT, 8900, '1', 1, 'ACTIVE');
+INSERT INTO periodical values (DEFAULT, 8, 'Yoga', DEFAULT, 12099, '1', 1, 'ACTIVE');
+INSERT INTO periodical values (DEFAULT, 8, 'Anatomica', DEFAULT, 9000, '1', 1, 'ACTIVE');
+
+INSERT INTO periodical values (DEFAULT, 9, 'Canadian Geographic', DEFAULT, 31010, '1', 1, 'ACTIVE');
+INSERT INTO periodical values (DEFAULT, 9, 'All About Space', DEFAULT, 30900, '1', 1, 'ACTIVE');
+INSERT INTO periodical values (DEFAULT, 9, 'Storica', DEFAULT, 29999, '1', 1, 'ACTIVE');
+INSERT INTO periodical values (DEFAULT, 9, 'National Geographic', DEFAULT, 50090, '1', 1, 'ACTIVE');
+
+INSERT INTO periodical values (DEFAULT, 11, 'The Guardian', DEFAULT, 5099, '1', 1, 'ACTIVE');
+INSERT INTO periodical values (DEFAULT, 11, 'The Daily Telegraph', DEFAULT, 7900, '1', 1, 'ACTIVE');
+INSERT INTO periodical values (DEFAULT, 11, 'El Universo', DEFAULT, 7120, '1', 1, 'ACTIVE');
+INSERT INTO periodical values (DEFAULT, 11, 'New York Daily News', DEFAULT, 4070, '1', 1, 'ACTIVE');
+
+
+
+
+
+
+
+
+
+
 
 SELECT id, COALESCE(
         (SELECT name
@@ -77,47 +136,20 @@ FROM topic
          JOIN topic_translate ON id = topic_id
 WHERE name LIKE CONCAT( '%',?,'%');
 
-
-
-SELECT DISTINCT id, title, COALESCE(
-        (SELECT name
-         FROM topic_translate
-         WHERE topic_id=id AND locale_id=?),
-        (SELECT name
-         FROM topic_translate
-         WHERE topic_id=id AND locale_id=?)
-    ) AS topic_name, price, status
-FROM periodical
-         JOIN topic_translate ON id = topic_translate.topic_id
-ORDER BY title ASC
-LIMIT 10 OFFSET 0;
+SELECT title FROM periodical;
 
 SELECT DISTINCT id, title, COALESCE(
         (SELECT name
          FROM topic_translate
-         WHERE topic_id=id AND locale_id='ua'),
+         WHERE topic_id=periodical.topic_id AND locale_id='ua'),
         (SELECT name
          FROM topic_translate
-         WHERE topic_id=id AND locale_id='en')
+         WHERE topic_id=periodical.topic_id AND locale_id='en')
     ) AS topic_name, price, status
 FROM periodical
-         JOIN topic_translate ON id = topic_translate.topic_id
-ORDER BY 4 ASC
-LIMIT 10 OFFSET 0;
+         JOIN topic_translate ON topic_translate.topic_id=periodical.topic_id
 
-SELECT DISTINCT id, title, COALESCE(
-        (SELECT name
-         FROM topic_translate
-         WHERE topic_id=id AND locale_id='ua'),
-        (SELECT name
-         FROM topic_translate
-         WHERE topic_id=id AND locale_id='en')
-    ) AS topic_name, price, status
-FROM periodical
-         JOIN topic_translate ON id = topic_translate.topic_id
-ORDER BY 4, title
-LIMIT 10 OFFSET 0;
+ORDER BY 1, 2 DESC
+LIMIT 10 OFFSET 10;
 
-UPDATE topic_translate
-SET name='aaa'
-WHERE topic_id=3 AND locale_id='ua'
+

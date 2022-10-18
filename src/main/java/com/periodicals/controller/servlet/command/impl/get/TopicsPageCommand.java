@@ -87,7 +87,6 @@ public class TopicsPageCommand implements FrontCommand {
         } else {
             currentPage = (Integer) request.getSession().getAttribute("topicsPageNumber");
         }
-
         if (currentPage > totalPages) {
             currentPage = totalPages;
         }

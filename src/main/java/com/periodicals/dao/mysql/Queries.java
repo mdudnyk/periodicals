@@ -126,58 +126,58 @@ class Queries {
         SELECT DISTINCT id, title, COALESCE(
                                     (SELECT name
                                     FROM topic_translate
-                                    WHERE topic_id=id AND locale_id=?),
+                                    WHERE topic_id=periodical.topic_id AND locale_id=?),
                                     (SELECT name
                                     FROM topic_translate
-                                    WHERE topic_id=id AND locale_id=?)
+                                    WHERE topic_id=periodical.topic_id AND locale_id=?)
                                     ) AS topic_name, price, status
         FROM periodical
-            JOIN topic_translate ON id = topic_translate.topic_id
-        ORDER BY ?, title
+            JOIN topic_translate ON topic_translate.topic_id=periodical.topic_id
+        ORDER BY ?, 2
         LIMIT ? OFFSET ?;
                 """;
     public static final String GET_PERIODICALS_FOR_TABLE_PAGINATION_DESC = """
         SELECT DISTINCT id, title, COALESCE(
                                     (SELECT name
                                     FROM topic_translate
-                                    WHERE topic_id=id AND locale_id=?),
+                                    WHERE topic_id=periodical.topic_id AND locale_id=?),
                                     (SELECT name
                                     FROM topic_translate
-                                    WHERE topic_id=id AND locale_id=?)
+                                    WHERE topic_id=periodical.topic_id AND locale_id=?)
                                     ) AS topic_name, price, status
         FROM periodical
-            JOIN topic_translate ON id = topic_translate.topic_id
-        ORDER BY ? DESC, title
+            JOIN topic_translate ON topic_translate.topic_id=periodical.topic_id
+        ORDER BY ? DESC, 2
         LIMIT ? OFFSET ?;
                 """;
     public static final String GET_PERIODICALS_FOR_TABLE_BY_TITLE_PAGINATION_ASC = """
         SELECT DISTINCT id, title, COALESCE(
                                     (SELECT name
                                     FROM topic_translate
-                                    WHERE topic_id=id AND locale_id=?),
+                                    WHERE topic_id=periodical.topic_id AND locale_id=?),
                                     (SELECT name
                                     FROM topic_translate
-                                    WHERE topic_id=id AND locale_id=?)
+                                    WHERE topic_id=periodical.topic_id AND locale_id=?)
                                     ) AS topic_name, price, status
         FROM periodical
-            JOIN topic_translate ON id = topic_translate.topic_id
+            JOIN topic_translate ON topic_translate.topic_id=periodical.topic_id
         WHERE title LIKE CONCAT( '%',?,'%')
-        ORDER BY ?, title
+        ORDER BY ?, 2
         LIMIT ? OFFSET ?;
                 """;
     public static final String GET_PERIODICALS_FOR_TABLE_BY_TITLE_PAGINATION_DESC = """
         SELECT DISTINCT id, title, COALESCE(
                                     (SELECT name
                                     FROM topic_translate
-                                    WHERE topic_id=id AND locale_id=?),
+                                    WHERE topic_id=periodical.topic_id AND locale_id=?),
                                     (SELECT name
                                     FROM topic_translate
-                                    WHERE topic_id=id AND locale_id=?)
+                                    WHERE topic_id=periodical.topic_id AND locale_id=?)
                                     ) AS topic_name, price, status
         FROM periodical
-            JOIN topic_translate ON id = topic_translate.topic_id
+            JOIN topic_translate ON topic_translate.topic_id=periodical.topic_id
         WHERE title LIKE CONCAT( '%',?,'%')
-        ORDER BY ? DESC, title
+        ORDER BY ? DESC, 2
         LIMIT ? OFFSET ?;
                 """;
     public static final String DELETE_PERIODICAL = "DELETE FROM periodical WHERE id=?";
