@@ -17,6 +17,8 @@ public enum CommandEnum {
     EDIT_TOPIC(new EditTopicCommand()),
     DELETE_TOPIC(new DeleteTopicCommand()),
     PERIODICALS_PAGE(new PeriodicalsPageCommand()),
+    NEW_PERIODICAL_PAGE(new NewPeriodicalPageCommand()),
+    CREATE_PERIODICAL(new CreatePeriodicalCommand()),
     DELETE_PERIODICAL(new DeletePeriodicalCommand()),
     ERROR_PAGE(new ErrorPageCommand());
 
