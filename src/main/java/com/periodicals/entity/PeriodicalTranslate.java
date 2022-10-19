@@ -4,24 +4,17 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class PeriodicalTranslate implements Serializable {
-    private final int periodicalID;
     private final String localeID;
-    private String country;
-    private String language;
-    private String description;
+    private final String country;
+    private final String language;
+    private final String description;
 
-    public PeriodicalTranslate(final int periodicalID, final String localeID,
-                               final String country, final String language,
-                               final String description) {
-        this.periodicalID = periodicalID;
+    public PeriodicalTranslate(final String localeID, final String country,
+                               final String language, final String description) {
         this.localeID = localeID;
         this.country = country;
         this.language = language;
         this.description = description;
-    }
-
-    public int getPeriodicalID() {
-        return periodicalID;
     }
 
     public String getLocaleID() {
@@ -32,24 +25,12 @@ public class PeriodicalTranslate implements Serializable {
         return country;
     }
 
-    public void setCountry(final String country) {
-        this.country = country;
-    }
-
     public String getLanguage() {
         return language;
     }
 
-    public void setLanguage(final String language) {
-        this.language = language;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(final String description) {
-        this.description = description;
     }
 
     @Override
@@ -57,19 +38,18 @@ public class PeriodicalTranslate implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         final PeriodicalTranslate that = (PeriodicalTranslate) o;
-        return periodicalID == that.periodicalID && localeID.equals(that.localeID) && country.equals(that.country) && language.equals(that.language) && description.equals(that.description);
+        return localeID.equals(that.localeID) && country.equals(that.country) && language.equals(that.language) && description.equals(that.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(periodicalID, localeID, country, language, description);
+        return Objects.hash(localeID, country, language, description);
     }
 
     @Override
     public String toString() {
         return "PeriodicalTranslate{" +
-                "periodicalID=" + periodicalID +
-                ", localeID='" + localeID + '\'' +
+                "localeID='" + localeID + '\'' +
                 ", country='" + country + '\'' +
                 ", language='" + language + '\'' +
                 ", description='" + description + '\'' +

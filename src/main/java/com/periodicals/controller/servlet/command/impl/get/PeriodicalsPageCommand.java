@@ -148,12 +148,7 @@ public class PeriodicalsPageCommand implements FrontCommand {
         int pageNumber = (Integer) request.getSession().getAttribute("periodicalsPageNumber");
         String searchString = (String) request.getSession().getAttribute("periodicalsSearchString");
         int positionsToSkip = pageNumber * amountOnPage - amountOnPage;
-
         List<PeriodicalForTable> periodicals;
-
-        System.out.println(amountOnPage);
-        System.out.println(pageNumber);
-        System.out.println(positionsToSkip);
 
         if (searchString.equals("")) {
             periodicals = periodicalService.getPeriodicalsForTableSortPagination(
@@ -173,7 +168,6 @@ public class PeriodicalsPageCommand implements FrontCommand {
                     (String) request.getSession().getAttribute("periodicalsSortOrder"),
                     searchString);
         }
-        System.out.println(periodicals);
         return periodicals;
     }
 }

@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.util.List;
 
 public interface PeriodicalDAO extends GeneralDAO<Periodical, Integer> {
+
     List<PeriodicalForTable> getPeriodicalsForTableSortPag(
             Connection connection, String locale, String defaultLocale,
             int skip, int amount, String sortBy, String order) throws DAOException;
@@ -19,5 +20,7 @@ public interface PeriodicalDAO extends GeneralDAO<Periodical, Integer> {
     int getPeriodicalsAmount(Connection connection) throws DAOException;
 
     int getPeriodicalsAmountSearchMode(Connection connection, String searchQuery) throws DAOException;
+
+    boolean getIsPeriodicalExists(Connection connection, String title) throws DAOException;
 
 }

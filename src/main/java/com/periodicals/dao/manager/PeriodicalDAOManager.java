@@ -12,7 +12,7 @@ import com.periodicals.entity.PeriodicalForTable;
 import java.sql.Connection;
 import java.util.List;
 
-public class PeriodicalDAOManager implements GeneralDAO<Periodical, Integer> {
+public class PeriodicalDAOManager  {
     private ConnectionManager conManager;
     private PeriodicalDAO periodicalDAO;
 
@@ -22,6 +22,11 @@ public class PeriodicalDAOManager implements GeneralDAO<Periodical, Integer> {
     public PeriodicalDAOManager(ConnectionManager connectionManager) {
         this.conManager = connectionManager;
         periodicalDAO = new PeriodicalDAOMySql();
+    }
+
+    public boolean getIsPeriodicalExists(final String title) throws DAOException {
+        Connection connection = conManager.getConnection();
+        return periodicalDAO.getIsPeriodicalExists(connection, title);
     }
 
     public List<PeriodicalForTable> getPeriodicalsForTableSortPag(
@@ -59,34 +64,17 @@ public class PeriodicalDAOManager implements GeneralDAO<Periodical, Integer> {
         return count;
     }
 
-    public void deleteTopic(final int id) throws DAOException {
+    public void deletePeriodical(final int id) throws DAOException {
         Connection connection = conManager.getConnection();
         periodicalDAO.delete(id, connection);
         conManager.close(connection);
     }
 
-    @Override
-    public void create(final Periodical entity, final Connection connection) throws DAOException {
-        throw new UnsupportedOperationException();
-    }
+    public void createPeriodical(final Periodical periodical) throws DAOException {
+        Connection connection = conManager.getConnectionForTransaction();
 
-    @Override
-    public List<Periodical> getAll(final Connection connection) throws DAOException {
-        throw new UnsupportedOperationException();
-    }
+        periodicalDAO.create(periodical, connection);
 
-    @Override
-    public Periodical getEntityById(final Integer id, final Connection connection) throws DAOException {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void update(final Periodical entity, final Connection connection) throws DAOException {
-
-    }
-
-    @Override
-    public void delete(final Integer id, final Connection connection) throws DAOException {
-
+        conManager.close(connection);
     }
 }

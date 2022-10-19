@@ -122,6 +122,7 @@ class Queries {
     public static final String TOPIC_TRANSLATE_EXISTS = "SELECT EXISTS(SELECT * FROM topic_translate WHERE topic_id=? AND locale_id=?)";
 
     //PERIODICAL
+    public static final String CREATE_PERIODICAL = "INSERT INTO periodical values (DEFAULT, ?, ?, ?, ?, ?, ?, ?)";
     public static final String GET_PERIODICALS_FOR_TABLE_PAGINATION_ASC = """
         SELECT DISTINCT id, title, COALESCE(
                                     (SELECT name
@@ -182,5 +183,7 @@ class Queries {
                 """;
     public static final String DELETE_PERIODICAL = "DELETE FROM periodical WHERE id=?";
     public static final String GET_PERIODICALS_COUNT = "SELECT COUNT(*) FROM periodical";
-    public static final String GET_PERIODICALS_COUNT_SEARCH_MODE = "SELECT COUNT(*) FROM periodical WHERE title LIKE CONCAT( '%',?,'%')";
+    public static final String GET_PERIODICALS_COUNT_SEARCH_MODE = "SELECT COUNT(*) FROM periodical WHERE " +
+            "title LIKE CONCAT( '%',?,'%')";
+    public static final String GET_IS_PERIODICAL_EXISTS = "SELECT EXISTS(SELECT * FROM periodical WHERE title=? LIMIT 1)";
 }

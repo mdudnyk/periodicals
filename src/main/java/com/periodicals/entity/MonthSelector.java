@@ -1,54 +1,25 @@
 package com.periodicals.entity;
 
+import org.json.simple.JSONArray;
+
 import java.io.Serializable;
 import java.util.Objects;
 
 public class MonthSelector implements Serializable {
-    private int year;
-    private String month;
+    private final int year;
+    private final JSONArray month;
 
-    public MonthSelector (int year) {
-        setYear(year);
-        month = "000000000000";
-    }
-
-    public MonthSelector (int year, String month) {
-        setYear(year);
-        setMonth(month);
+    public MonthSelector(final int year, final JSONArray month) {
+        this.year = year;
+        this.month = month;
     }
 
     public int getYear() {
         return year;
     }
 
-    private void setYear(int year) {
-        if (year > 2021 && year < 2100) {
-            this.year = year;
-        } else {
-            throw new IllegalArgumentException("You are able to set year " +
-                    "between 2021 and 2100. Your input is: " + year);
-        }
-    }
-
-    public String getMonth() {
+    public JSONArray getMonth() {
         return month;
-    }
-
-    public void setMonth(final String month) {
-        if (month.length() == 12) {
-            for (int i = 0; i < month.length(); i++) {
-                if (month.charAt(i) != '0' && month.charAt(i) != '1') {
-                    throw new IllegalArgumentException("Not appropriate 'month' field format. " +
-                            "This string should looks like '010001001000'," +
-                            " and consist of only from '1' and '0' symbols. Your input is: " + month);
-                }
-            }
-            this.month = month;
-        } else {
-            throw new IllegalArgumentException("Not appropriate 'month' field format. " +
-                    "This string should looks like '010001001000'," +
-                    " and be 12 symbols long. Your input is: " + month);
-        }
     }
 
     @Override
@@ -68,7 +39,7 @@ public class MonthSelector implements Serializable {
     public String toString() {
         return "MonthSelector{" +
                 "year=" + year +
-                ", month='" + month + '\'' +
+                ", month=" + month +
                 '}';
     }
 }

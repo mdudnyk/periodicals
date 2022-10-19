@@ -10,16 +10,16 @@ public class PeriodicalForTable implements Serializable {
     private final String title;
     private final String topicName;
     private final String price;
-    private final String status;
+    private final boolean isPeriodicalActive;
 
     public PeriodicalForTable(final int id, final String title,
                               final String topicName, final int price,
-                              final String status) {
+                              final boolean isPeriodicalActive) {
         this.id = id;
         this.title = title;
         this.topicName = topicName;
         this.price = MoneyFormatter.toHumanReadable(price);
-        this.status = status;
+        this.isPeriodicalActive = isPeriodicalActive;
     }
 
     public int getId() {
@@ -38,8 +38,8 @@ public class PeriodicalForTable implements Serializable {
         return price;
     }
 
-    public String getStatus() {
-        return status;
+    public boolean isPeriodicalActive() {
+        return isPeriodicalActive;
     }
 
     @Override
@@ -47,15 +47,14 @@ public class PeriodicalForTable implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         final PeriodicalForTable that = (PeriodicalForTable) o;
-        return id == that.id && title.equals(that.title)
-                && Objects.equals(topicName, that.topicName)
-                && price.equals(that.price)
-                && status.equals(that.status);
+        return id == that.id && isPeriodicalActive == that.isPeriodicalActive
+                && title.equals(that.title) && topicName.equals(that.topicName)
+                && price.equals(that.price);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, topicName, price, status);
+        return Objects.hash(id, title, topicName, price, isPeriodicalActive);
     }
 
     @Override
@@ -64,8 +63,8 @@ public class PeriodicalForTable implements Serializable {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", topicName='" + topicName + '\'' +
-                ", price=" + price +
-                ", status='" + status + '\'' +
+                ", price='" + price + '\'' +
+                ", isPeriodicalActive=" + isPeriodicalActive +
                 '}';
     }
 }

@@ -59,8 +59,9 @@ function open_frequency_modal() {
         frequency_modal.style.display = 'block';
     }
 }
-function setFrequency(parameter) {
+function setFrequency(parameter, period) {
     selected_frequency_text.textContent = parameter;
+    selected_frequency_text.setAttribute('period', period);
     open_frequency_modal();
 }
 const frequency_digit = document.getElementById("frequency_digit");
@@ -135,7 +136,7 @@ const title_name = document.getElementById('title_input');
 const topic_id = document.getElementById('show_all_topics_text');
 const frequency_number = document.getElementById('frequency_digit');
 const frequency_period = document.getElementById('selected_frequency_text');
-const min_sub_period = document.getElementById('period_digit');
+const sub_period = document.getElementById('period_digit');
 const hryvnias = document.getElementById('hryvnias');
 const kopecks = document.getElementById('kopecks');
 const switch_block = document.getElementById('switch_block');
@@ -155,9 +156,11 @@ class Periodical {
     constructor() {
         this.title = title_name.value;
         this.topic = parseInt(topic_id.getAttribute('topicId'));
-        this.frequency = parseInt(frequency_number.textContent);
-        this.period = frequency_period.textContent;
-        this.min_subcr = parseInt(min_sub_period.textContent);
+        this.frequency = {
+            amount : parseInt(frequency_number.textContent),
+            period : frequency_period.getAttribute('period'),
+        };
+        this.subscription_period = parseInt(sub_period.textContent);
         this.price = parseInt(hryvnias.value + kopecks.value);
         this.status_value = switch_block.checked;
         this.release = getReleaseMonthObj(month_selectors);
@@ -187,7 +190,7 @@ function getReleaseMonthObj(elems) {
             monthArr.push(form.elements[j].checked);
         }
         let releaseObj = {
-            year : form.getAttribute('year'),
+            year : parseInt(form.getAttribute('year')),
             month : monthArr,
         }
         resultArr.push(releaseObj);
@@ -200,6 +203,7 @@ function createNewPeriodical() {
     let new_periodical = new Periodical();
     if (isInputValid(periodical_state_at_startup, new_periodical)) {
         tryToSendCreateRequest(new_periodical);
+        // console.log(new_periodical);
     } else {
         alert_block.style.display = 'flex';
     }
@@ -227,7 +231,7 @@ async function tryToSendCreateRequest(periodical) {
             success_block.style.display = 'flex';
         } else {
             alert_block.style.display = 'flex';
-            if (result === 560) {
+            if (result === 564) {
                 have_periodical.style.display = 'block';
             } else {
                 try_later.style.display = 'block';

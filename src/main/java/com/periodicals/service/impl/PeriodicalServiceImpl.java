@@ -3,6 +3,7 @@ package com.periodicals.service.impl;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.dao.manager.DAOManagerFactory;
 import com.periodicals.dao.manager.PeriodicalDAOManager;
+import com.periodicals.entity.Periodical;
 import com.periodicals.entity.PeriodicalForTable;
 import com.periodicals.service.PeriodicalService;
 import com.periodicals.service.ServiceException;
@@ -14,6 +15,18 @@ public class PeriodicalServiceImpl implements PeriodicalService {
 
     public PeriodicalServiceImpl(DAOManagerFactory daoManger) {
         this.daoManger = daoManger;
+    }
+
+    @Override
+    public void createPeriodical(final Periodical periodical) throws DAOException, ServiceException {
+        PeriodicalDAOManager pdm = daoManger.getPeriodicalDAOManager();
+
+        if (!pdm.getIsPeriodicalExists(periodical.getTitle())) {
+            pdm.createPeriodical(periodical);
+        } else {
+            throw new ServiceException("Periodical with title=" + periodical.getTitle() + " already exists. ");
+        }
+
     }
 
     public List<PeriodicalForTable> getPeriodicalsForTableSortPagination(final String localeId,
@@ -42,7 +55,6 @@ public class PeriodicalServiceImpl implements PeriodicalService {
                 localeId, defaultLocaleId, skipPositions, amountOnPage, sortBy, sortOrder, searchedTitle);
     }
 
-
     @Override
     public int getPeriodicalsTotal() throws DAOException {
         PeriodicalDAOManager pdm = daoManger.getPeriodicalDAOManager();
@@ -59,7 +71,7 @@ public class PeriodicalServiceImpl implements PeriodicalService {
     public void deletePeriodical(final int id) throws DAOException, ServiceException {
         PeriodicalDAOManager pdm = daoManger.getPeriodicalDAOManager();
         if (id > 0) {
-            pdm.deleteTopic(id);
+            pdm.deletePeriodical(id);
         } else {
             throw new ServiceException("Periodical ID can't be less than 1. ");
         }

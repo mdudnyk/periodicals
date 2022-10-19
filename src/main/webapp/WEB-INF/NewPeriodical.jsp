@@ -140,18 +140,18 @@
                                 <fmt:message key="new_periodical.per"/>
                             </div>
                             <div class="show_frequency_field" onclick="open_frequency_modal()">
-                                <span id="selected_frequency_text"><fmt:message key="new_periodical.frequency_month"/></span>
+                                <span id="selected_frequency_text" period="month"><fmt:message key="new_periodical.frequency_month"/></span>
                                 <i class="material-icons frequency" id="frequency_modal_icon">expand_more</i>
                             </div>
                             <div class="frequency_modal" id="frequency_modal">
                                 <ul>
-                                    <li onclick="setFrequency('<fmt:message key="new_periodical.frequency_week"/>')">
+                                    <li onclick="setFrequency('<fmt:message key="new_periodical.frequency_week"/>', 'week')">
                                         <fmt:message key="new_periodical.frequency_week"/>
                                     </li>
-                                    <li onclick="setFrequency('<fmt:message key="new_periodical.frequency_month"/>')">
+                                    <li onclick="setFrequency('<fmt:message key="new_periodical.frequency_month"/>', 'month')">
                                         <fmt:message key="new_periodical.frequency_month"/>
                                     </li>
-                                    <li onclick="setFrequency('<fmt:message key="new_periodical.frequency_year"/>')">
+                                    <li onclick="setFrequency('<fmt:message key="new_periodical.frequency_year"/>', 'year')">
                                         <fmt:message key="new_periodical.frequency_year"/>
                                     </li>
                                 </ul>

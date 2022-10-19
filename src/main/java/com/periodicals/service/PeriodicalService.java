@@ -1,11 +1,14 @@
 package com.periodicals.service;
 
 import com.periodicals.dao.exception.DAOException;
+import com.periodicals.entity.Periodical;
 import com.periodicals.entity.PeriodicalForTable;
 
 import java.util.List;
 
 public interface PeriodicalService {
+
+    void createPeriodical(Periodical periodical) throws DAOException, ServiceException;
 
     List<PeriodicalForTable> getPeriodicalsForTableSortPagination(final String localeId,
                                                                   final String defaultLocaleId,

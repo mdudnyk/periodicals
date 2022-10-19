@@ -115,6 +115,7 @@ public class TopicTranslateDAOMySql implements TopicTranslateDAO {
                     exists = true;
                 }
             }
+            rs.close();
         } catch (SQLException e) {
             throw new DAOException("An error occurred while trying to check if translation for topic with ID=" + topicID + " and locale="
                     + localeID + " is exists. " + e.getMessage());

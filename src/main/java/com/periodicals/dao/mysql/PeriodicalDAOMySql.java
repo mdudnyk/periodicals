@@ -12,7 +12,25 @@ import java.util.List;
 public class PeriodicalDAOMySql implements PeriodicalDAO {
     @Override
     public void create(final Periodical entity, final Connection connection) throws DAOException {
-        throw new UnsupportedOperationException();
+        try (PreparedStatement ps = connection.prepareStatement(Queries.CREATE_PERIODICAL, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setInt(1, entity.getTopicID());
+            ps.setString(2, entity.getTitle());
+            ps.setString(3, entity.getTitleImgLink());
+            ps.setInt(4, entity.getPrice());
+            ps.setString(5, entity.getFrequency().toJSONString());
+            ps.setInt(6, entity.getSubPeriod());
+            ps.setBoolean(7, entity.isPeriodicalActive());
+            if (ps.executeUpdate() > 0) {
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        entity.setId(rs.getInt(1));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Error while trying to create new periodical with title="
+                    + entity.getTitle() + ". " + e.getMessage());
+        }
     }
 
     @Override
@@ -70,7 +88,7 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
                    rs.getString(2),
                    rs.getString(3),
                    rs.getInt(4),
-                   rs.getString(5)
+                   rs.getBoolean(5)
                 ));
             }
             rs.close();
@@ -110,7 +128,7 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
                         rs.getString(2),
                         rs.getString(3),
                         rs.getInt(4),
-                        rs.getString(5)
+                        rs.getBoolean(5)
                 ));
             }
             rs.close();
@@ -151,6 +169,25 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
                     "(in search mode) from database. " + e.getMessage());
         }
         return count;
+    }
+
+    @Override
+    public boolean getIsPeriodicalExists(Connection connection, final String title) throws DAOException {
+        boolean exists = false;
+        try (PreparedStatement ps = connection.prepareStatement(Queries.GET_IS_PERIODICAL_EXISTS)) {
+            ps.setString(1, title);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                if (rs.getInt(1) == 1) {
+                    exists = true;
+                }
+            }
+            rs.close();
+        } catch (SQLException e) {
+            throw new DAOException("Error while trying to check if periodical with title="
+                    + title + " exists. " + e.getMessage());
+        }
+        return exists;
     }
 }
 
