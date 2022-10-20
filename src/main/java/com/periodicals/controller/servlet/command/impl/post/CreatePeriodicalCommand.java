@@ -1,5 +1,6 @@
 package com.periodicals.controller.servlet.command.impl.post;
 
+import com.mysql.cj.util.Base64Decoder;
 import com.periodicals.controller.servlet.command.FrontCommand;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.dao.manager.DAOManagerFactory;
@@ -21,10 +22,8 @@ import org.json.simple.parser.ParseException;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 public class CreatePeriodicalCommand implements FrontCommand {
     @Override
@@ -32,6 +31,7 @@ public class CreatePeriodicalCommand implements FrontCommand {
                         final HttpServletResponse response,
                         final DAOManagerFactory daoManager)
             throws DAOException, ServletException, IOException, ServiceException {
+
         JSONObject periodicalJson = getPeriodicalJSONFromRequest(request);
         String imageURL = getGeneratedImageURL(request);
         Periodical newPeriodical = fillEntityFromRequest(periodicalJson, imageURL);
@@ -172,21 +172,31 @@ public class CreatePeriodicalCommand implements FrontCommand {
         return "" + currentTimestamp + randomInt + ".jpeg";
     }
 
-    private JSONObject getPeriodicalJSONFromRequest(final HttpServletRequest request) throws ServletException, IOException {
+    private JSONObject getPeriodicalJSONFromRequest(final HttpServletRequest request)
+            throws ServletException, IOException {
         Part jsonPart = request.getPart("json");
+        byte[] bytesArr = jsonPart.getInputStream().readAllBytes();
+        String jsonString = new String(bytesArr, StandardCharsets.UTF_8);
+
+        assert jsonString.length() > 0 : "No JSON string in quest from server. ";
+
         String periodicalJSONKey = "periodical";
         JSONParser parser = new JSONParser();
         JSONObject json = null;
         JSONObject periodicalJSON;
+
         try {
-            json = (JSONObject) parser
-                    .parse(new InputStreamReader(jsonPart.getInputStream()));
+            json = (JSONObject) parser.parse(jsonString);
         } catch (ParseException e) {
             System.out.println("JSON parser: nothing to parse. " + e.getMessage());
         }
-        assert json != null : "No any JSON in quest from server. ";
+
+        assert json != null : "Invalid JSON format in quest from server. ";
         periodicalJSON = (JSONObject) json.get(periodicalJSONKey);
-        assert periodicalJSON != null : "No JSON with key=" + periodicalJSONKey + " in quest from server. ";
+
+        assert periodicalJSON != null : "No JSON object with key="
+                + periodicalJSONKey + " in quest from server. ";
+
         return periodicalJSON;
     }
 }
