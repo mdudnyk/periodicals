@@ -45,7 +45,6 @@ public class EditPeriodicalPageCommand implements FrontCommand {
             } catch (ServiceException e) {
                 response.setStatus(566);
             }
-            System.out.println(periodical);
             request.setAttribute("periodical", periodical);
         } else {
             throw new IllegalArgumentException("Nothing to edit. Periodical without ID is not editable. ");

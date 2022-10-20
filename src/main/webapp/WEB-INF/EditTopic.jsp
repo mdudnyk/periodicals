@@ -79,7 +79,7 @@
                                             value=""
                                             topicName=""
                                         </c:if>
-                                       style="font-size: 16pt;" autocomplete="off">
+                                       style="font-size: 16pt;" spellcheck="false" autocomplete="off">
                                 <label for="input_${locale.getShortNameId()}" style="color: rgb(141, 141, 141); font-size: 14pt; font-weight: 300;">
                                     <fmt:message key="edit_topic.topic_name"/>
                                     <span style="font-weight: 700; text-transform: lowercase">

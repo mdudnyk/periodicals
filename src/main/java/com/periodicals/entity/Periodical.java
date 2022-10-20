@@ -1,6 +1,5 @@
 package com.periodicals.entity;
 
-import com.periodicals.entity.enums.PublicationStatus;
 import org.json.simple.JSONObject;
 
 import java.io.Serializable;
@@ -15,7 +14,7 @@ public class Periodical implements Serializable {
     private final int price;
     private final JSONObject frequency;
     private final int subPeriod;
-    private boolean isPeriodicalActive;
+    private final boolean isPeriodicalActive;
     private Map<String, PeriodicalTranslate> translation;
     private Map<Integer, MonthSelector> releaseCalendar;
 

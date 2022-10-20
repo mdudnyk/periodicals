@@ -85,7 +85,7 @@
                 <c:if test="${sessionScope.periodicalsSearchString.length() > 0}">
                     <form style="z-index: 1;" action="${pageContext.request.contextPath}/controller">
                         <input type="hidden" name="cmd" value="PERIODICALS_PAGE">
-                        <input type="hidden" name="searchString" value="">
+                        <input type="hidden" name="searchString" value="" spellcheck="false" autocomplete="off">
                         <button type="submit" class="close_search_btn">
                             <fmt:message key="periodicals.end_search"/>
                         </button>
@@ -97,7 +97,7 @@
                     <input type="hidden" name="cmd" value="PERIODICALS_PAGE">
                     <input type="text" name="searchString" value="${sessionScope.periodicalsSearchString}"
                            style="width: 200px;" placeholder="<fmt:message key="periodicals.search_periodical"/>"
-                           autocomplete="off">
+                           spellcheck="false" autocomplete="off">
                     <button class="search_btn" type="submit">
                         <i class="material-icons search">search</i>
                     </button>

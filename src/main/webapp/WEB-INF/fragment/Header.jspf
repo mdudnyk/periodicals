@@ -20,7 +20,7 @@
                 <form action="${pageContext.request.contextPath}/controller">
                     <input type="hidden" name="cmd" value="SEARCH_BY_TITLE">
                     <input type="text" name="search_string"
-                           placeholder="<fmt:message key="header.search_by_title"/>" autocomplete="off" required>
+                           placeholder="<fmt:message key="header.search_by_title"/>" spellcheck="false" autocomplete="off">
                     <button class="search_btn" type="submit">
                         <i class="material-icons search">search</i>
                     </button>

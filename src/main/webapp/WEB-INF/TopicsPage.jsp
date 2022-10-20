@@ -83,7 +83,7 @@
                 <c:if test="${sessionScope.topicsSearchString.length() > 0}">
                     <form style="z-index: 1;" action="${pageContext.request.contextPath}/controller">
                         <input type="hidden" name="cmd" value="TOPICS_PAGE">
-                        <input type="hidden" name="searchString" value="">
+                        <input type="hidden" name="searchString" value="" spellcheck="false" autocomplete="off">
                         <button type="submit" class="close_search_btn">
                             <fmt:message key="topics.end_search"/>
                         </button>
@@ -95,7 +95,7 @@
                     <input type="hidden" name="cmd" value="TOPICS_PAGE">
                     <input type="text" name="searchString" value="${sessionScope.topicsSearchString}"
                            style="width: 200px;" placeholder="<fmt:message key="topics.search_topic"/>"
-                           autocomplete="off">
+                           spellcheck="false" autocomplete="off">
                     <button class="search_btn" type="submit">
                         <i class="material-icons search">search</i>
                     </button>

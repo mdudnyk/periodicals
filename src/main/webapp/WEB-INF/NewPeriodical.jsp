@@ -91,7 +91,7 @@
                         <div class="info_block_header"><fmt:message key="new_periodical.title"/></div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="title_input" type="text" autocomplete="off">
+                                <input id="title_input" type="text" spellcheck="false" autocomplete="off">
                                 <label for="title_input"><fmt:message key="new_periodical.periodical_name"/></label>
                             </div>
                         </div>
@@ -315,7 +315,7 @@
                         <div class="row">
                             <div class="input-field col s12">
                                 <input class="publishing_county" id="country_input_${locale.getShortNameId()}"
-                                       lang="${locale.getShortNameId()}" type="text" autocomplete="off">
+                                       lang="${locale.getShortNameId()}" type="text" spellcheck="false" autocomplete="off">
                                 <label for="country_input_${locale.getShortNameId()}">
                                     <fmt:message key="new_periodical.input_lang"/>
                                     <span class="lang_name">${locale.getLangNameOriginal()}</span>
@@ -330,7 +330,7 @@
                         <div class="row">
                             <div class="input-field col s12">
                                 <input class="publishing_language" id="lang_input_${locale.getShortNameId()}"
-                                       lang="${locale.getShortNameId()}" type="text" autocomplete="off">
+                                       lang="${locale.getShortNameId()}" type="text" spellcheck="false" autocomplete="off">
                                 <label for="lang_input_${locale.getShortNameId()}">
                                     <fmt:message key="new_periodical.input_lang"/>
                                     <span class="lang_name">${locale.getLangNameOriginal()}</span>
@@ -345,7 +345,7 @@
                         <div class="row">
                             <div class="input-field col s12">
                                 <textarea class="materialize-textarea" id="desc_input_${locale.getShortNameId()}"
-                                          lang="${locale.getShortNameId()}" type="text" autocomplete="off"></textarea>
+                                          lang="${locale.getShortNameId()}" type="text" spellcheck="false" autocomplete="off"></textarea>
                                 <label for="desc_input_${locale.getShortNameId()}">
                                     <fmt:message key="new_periodical.input_lang"/>
                                     <span class="lang_name">${locale.getLangNameOriginal()}</span>

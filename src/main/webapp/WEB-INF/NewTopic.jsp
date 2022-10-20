@@ -62,7 +62,7 @@
                     <div class="row">
                         <div class="input-field col s12">
                             <input id="input_${locale.getShortNameId()}"
-                                   lang="${locale.getShortNameId()}" type="text" style="font-size: 16pt;" autocomplete="off">
+                                   lang="${locale.getShortNameId()}" type="text" style="font-size: 16pt;" spellcheck="false" autocomplete="off">
                             <label for="input_${locale.getShortNameId()}" style="color: rgb(141, 141, 141); font-size: 14pt; font-weight: 300;">
                                 <fmt:message key="new_topic.topic_name"/>
                                 <span style="font-weight: 700; text-transform: lowercase">

@@ -75,8 +75,7 @@
                     <div class="title_img_container" style="margin-top: 30px;">
                         <div class="please_upload_image"><fmt:message key="new_periodical.please_upload"/></div>
                         <img class="title_img" id="title_img"
-                             src="<ct:imageEncoderBase64
-                                image_name="${requestScope.periodical.getTitleImgLink()}"/>">
+                             src="<ct:imageEncoderBase64 image_name="${requestScope.periodical.getTitleImgLink()}"/>">
                         <div class="edit_image_block" onclick="activate_file_input_window()">
                             <i class="material-icons small" style="color: white;">edit</i>
                         </div>
@@ -94,7 +93,8 @@
                         <div class="info_block_header"><fmt:message key="new_periodical.title"/></div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="title_input" type="text" autocomplete="off">
+                                <input id="title_input" type="text" spellcheck="false" autocomplete="off"
+                                       value="${requestScope.periodical.getTitle()}">
                                 <label for="title_input"><fmt:message key="new_periodical.periodical_name"/></label>
                             </div>
                         </div>
@@ -103,11 +103,23 @@
                         <div>
                             <div class="info_block_header" style="width: 300px;"><fmt:message key="new_periodical.topic"/></div>
                             <div class="show_all_topics_field" onclick="open_topic_modal()">
-                                <c:if test="${requestScope.topics.size() < 1}">
-                                    <span id="no_topics_to_select"><fmt:message key="home.no_topics_to_show"/></span>
+                                <c:if test="${requestScope.periodical.getTopicID() < 1}">
+                                    <span id="show_all_topics_text" topicId="0">
+                                        <fmt:message key="periodicals.no_topic_name"/>
+                                    </span>
+                                </c:if>
+                                <c:if test="${requestScope.periodical.getTopicID() > 0}">
+                                    <c:forEach var="topic" items="${requestScope.topics}">
+                                        <c:if test="${topic.getId() == requestScope.periodical.getTopicID()}">
+                                            <c:set var="topicName" scope="page"
+                                                value="${topic.getAllTranslates().values().iterator().next().getName()}"/>
+                                        </c:if>
+                                    </c:forEach>
+                                    <span id="show_all_topics_text" topicId="${requestScope.periodical.getTopicID()}">
+                                            ${topicName}
+                                    </span>
                                 </c:if>
                                 <c:if test="${requestScope.topics.size() > 0}">
-                                    <span id="show_all_topics_text" topicId="0"><fmt:message key="home.show_all"/></span>
                                     <span id="select_one_topic_text" style="display: none;"><fmt:message key="home.choose_one"/></span>
                                 </c:if>
                                 <i class="material-icons topic" id="topic_modal_icon">expand_more</i>
@@ -116,11 +128,9 @@
                                 <ul>
                                     <c:forEach var="topic" items="${requestScope.topics}">
                                         <c:set var="topicId" scope="page"
-                                               value="${topic.getId()}"
-                                        />
+                                               value="${topic.getId()}"/>
                                         <c:set var="topicName" scope="page"
-                                               value="${topic.getAllTranslates().values().iterator().next().getName()}"
-                                        />
+                                               value="${topic.getAllTranslates().values().iterator().next().getName()}"/>
                                         <li topicId="${topicId}" onclick="setTopic('${topicName}', ${topicId})">${topicName}</li>
                                     </c:forEach>
                                 </ul>
@@ -134,7 +144,9 @@
                                 <div class="month_amount_btn" style="border-radius: 10px 10px 0 0;" onclick="up_frequency()">
                                     <i class="material-icons" style="color: white;">arrow_drop_up</i>
                                 </div>
-                                <div class="month_amount_digit" id="frequency_digit">1</div>
+                                <div class="month_amount_digit" id="frequency_digit">
+                                    ${requestScope.periodical.getFrequency().get("amount")}
+                                </div>
                                 <div class="month_amount_btn" style="border-radius: 0 0 10px 10px;" onclick="down_frequency()">
                                     <i class="material-icons" style="color: white;">arrow_drop_down</i>
                                 </div>
@@ -143,7 +155,11 @@
                                 <fmt:message key="new_periodical.per"/>
                             </div>
                             <div class="show_frequency_field" onclick="open_frequency_modal()">
-                                <span id="selected_frequency_text" period="month"><fmt:message key="new_periodical.frequency_month"/></span>
+                                <span id="selected_frequency_text"
+                                      period="${requestScope.periodical.getFrequency().get("period")}">
+                                    <fmt:message key="new_periodical.frequency_${requestScope
+                                                    .periodical.getFrequency().get('period')}"/>
+                                </span>
                                 <i class="material-icons frequency" id="frequency_modal_icon">expand_more</i>
                             </div>
                             <div class="frequency_modal" id="frequency_modal">
@@ -170,7 +186,9 @@
                                 <div class="month_amount_btn" style="border-radius: 10px 10px 0 0;" onclick="up_period()">
                                     <i class="material-icons" style="color: white;">arrow_drop_up</i>
                                 </div>
-                                <div class="month_amount_digit" id="period_digit">1</div>
+                                <div class="month_amount_digit" id="period_digit">
+                                    ${requestScope.periodical.getSubPeriod()}
+                                </div>
                                 <div class="month_amount_btn" style="border-radius: 0 0 10px 10px;" onclick="down_period()">
                                     <i class="material-icons" style="color: white;">arrow_drop_down</i>
                                 </div>
@@ -184,10 +202,16 @@
                             <span style="font-size: 10.5pt; margin-left: 4px; margin-top: 7px;"><fmt:message key="new_periodical.price_addition"/></span>
                         </div>
                         <div class="row">
+                            <c:set var="price" scope="page"
+                                   value="${MoneyFormatter.toHumanReadable(requestScope.periodical.getPrice())}"/>
                             <div class="input-field col s12" style="display: flex; flex-direction:row; align-items: center; justify-content: center;">
-                                <input id="hryvnias" type="text" style="width: 65px; text-align: right;" value="0" maxlength="5" autocomplete="off">
+                                <input id="hryvnias" type="text" style="width: 65px; text-align: right;"
+                                       value="${price.split(',')[0]}"
+                                       maxlength="5" autocomplete="off">
                                 <span style="font-size: 16pt; margin: 3px; color: rgba(0, 0, 0, 0.555);">,</span>
-                                <input id="kopecks" type="text" style="width: 30px; text-align: center;" value="00" maxlength="2" autocomplete="off">
+                                <input id="kopecks" type="text" style="width: 30px; text-align: center;"
+                                       value="${price.split(',')[1]}"
+                                       maxlength="2" autocomplete="off">
                                 <span style="font-size: 14pt; font-weight: 300; color: rgba(0, 0, 0, 0.555); margin-bottom: 4px; margin-left: 5px;">${sessionScope.locale.getCurrency()}</span>
                             </div>
                         </div>
@@ -197,7 +221,12 @@
                         <div class="switch" style="margin-top: 34px;">
                             <label>
                                 <fmt:message key="new_periodical.status_disabled"/>
-                                <input type="checkbox" id="switch_block" checked>
+                                <c:if test="${requestScope.periodical.isPeriodicalActive() == true }">
+                                    <input type="checkbox" id="switch_block" checked>
+                                </c:if>
+                                <c:if test="${requestScope.periodical.isPeriodicalActive() == false }">
+                                    <input type="checkbox" id="switch_block">
+                                </c:if>
                                 <span class="lever"></span>
                                 <fmt:message key="new_periodical.status_active"/>
                             </label>
@@ -209,105 +238,13 @@
                 <div class="periodical_info_block" style="min-width: 800px;">
                     <div class="info_block_header"><fmt:message key="new_periodical.release"/></div>
                     <div id="month_selector_container">
-                        <div class="month_selector">
-                            <c:set var = "now" value = "<%=new java.util.Date()%>" />
-                            <span class="month_selector_year" style="margin-right: 10px;">
-                                <fmt:formatDate pattern="yyyy" value="${now}"/>
-                            </span>
-                            <form action="#" class="month_form" style="display: flex;"
-                                  year="<fmt:formatDate pattern="yyyy" value="${now}"/>">
-                                <p class="checkbox_block">
-                                    <fmt:message key="periodical.jan"/>
-                                    <label class="checkbox_label">
-                                        <input type="checkbox" class="filled-in checkbox-green"/>
-                                        <span></span>
-                                    </label>
-                                </p>
-                                <p class="checkbox_block">
-                                    <fmt:message key="periodical.feb"/>
-                                    <label class="checkbox_label">
-                                        <input type="checkbox" class="filled-in checkbox-green"/>
-                                        <span></span>
-                                    </label>
-                                </p>
-                                <p class="checkbox_block">
-                                    <fmt:message key="periodical.mar"/>
-                                    <label class="checkbox_label">
-                                        <input type="checkbox" class="filled-in checkbox-green"/>
-                                        <span></span>
-                                    </label>
-                                </p>
-                                <p class="checkbox_block">
-                                    <fmt:message key="periodical.apr"/>
-                                    <label class="checkbox_label">
-                                        <input type="checkbox" class="filled-in checkbox-green"/>
-                                        <span></span>
-                                    </label>
-                                </p>
-                                <p class="checkbox_block">
-                                    <fmt:message key="periodical.may"/>
-                                    <label class="checkbox_label">
-                                        <input type="checkbox" class="filled-in checkbox-green"/>
-                                        <span></span>
-                                    </label>
-                                </p>
-                                <p class="checkbox_block">
-                                    <fmt:message key="periodical.jun"/>
-                                    <label class="checkbox_label">
-                                        <input type="checkbox" class="filled-in checkbox-green"/>
-                                        <span></span>
-                                    </label>
-                                </p>
-                                <p class="checkbox_block">
-                                    <fmt:message key="periodical.jul"/>
-                                    <label class="checkbox_label">
-                                        <input type="checkbox" class="filled-in checkbox-green"/>
-                                        <span></span>
-                                    </label>
-                                </p>
-                                <p class="checkbox_block">
-                                    <fmt:message key="periodical.aug"/>
-                                    <label class="checkbox_label">
-                                        <input type="checkbox" class="filled-in checkbox-green"/>
-                                        <span></span>
-                                    </label>
-                                </p>
-                                <p class="checkbox_block">
-                                    <fmt:message key="periodical.sep"/>
-                                    <label class="checkbox_label">
-                                        <input type="checkbox" class="filled-in checkbox-green"/>
-                                        <span></span>
-                                    </label>
-                                </p>
-                                <p class="checkbox_block">
-                                    <fmt:message key="periodical.oct"/>
-                                    <label class="checkbox_label">
-                                        <input type="checkbox" class="filled-in checkbox-green"/>
-                                        <span></span>
-                                    </label>
-                                </p>
-                                <p class="checkbox_block">
-                                    <fmt:message key="periodical.nov"/>
-                                    <label class="checkbox_label">
-                                        <input type="checkbox" class="filled-in checkbox-green"/>
-                                        <span></span>
-                                    </label>
-                                </p>
-                                <p class="checkbox_block">
-                                    <fmt:message key="periodical.dec"/>
-                                    <label class="checkbox_label">
-                                        <input type="checkbox" class="filled-in checkbox-green"/>
-                                        <span></span>
-                                    </label>
-                                </p>
-                            </form>
-                        </div>
+                        <ct:monthSelectorPerEdit calendar="${requestScope.periodical.getReleaseCalendar()}"/>
                     </div>
                     <button onclick="addNextYear()" id="add_year_btn">
                         <fmt:message key="new_periodical.release.add_year"/>
                     </button>
                     <button onclick="removeLastYear()" id="remove_year_btn" style="display: none;">
-                        <fmt:message key="new_periodical.release.remova_last"/>
+                        <fmt:message key="new_periodical.release.remove_last"/>
                     </button>
                 </div>
             </div>
@@ -315,11 +252,22 @@
                 <div class="periodical_info_block" style="min-width: 250px;">
                     <div class="info_block_header"><fmt:message key="new_periodical.publishing_country"/></div>
                     <c:forEach var="locale" items="${applicationScope.locales.values()}">
+                        <c:set var="locale_id" scope="page" value="${locale.getShortNameId()}"/>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input class="publishing_county" id="country_input_${locale.getShortNameId()}"
-                                       lang="${locale.getShortNameId()}" type="text" autocomplete="off">
-                                <label for="country_input_${locale.getShortNameId()}">
+                                <input class="publishing_county" id="country_input_${locale_id}"
+                                        lang="${locale_id}" type="text"
+                                        <c:set var="translation"
+                                               scope="request"
+                                               value="${requestScope.periodical.getTranslation().get(locale_id)}"/>
+                                        <c:if test="${translation != null}">
+                                            value="${requestScope.periodical.getTranslation().get(locale_id).getCountry()}"
+                                        </c:if>
+                                        <c:if test="${translation == null}">
+                                            value=""
+                                        </c:if>
+                                       spellcheck="false" autocomplete="off">
+                                <label for="country_input_${locale_id}">
                                     <fmt:message key="new_periodical.input_lang"/>
                                     <span class="lang_name">${locale.getLangNameOriginal()}</span>
                                 </label>
@@ -330,11 +278,22 @@
                 <div class="periodical_info_block" style="min-width: 250px;">
                     <div class="info_block_header"><fmt:message key="new_periodical.publishing_language"/></div>
                     <c:forEach var="locale" items="${applicationScope.locales.values()}">
+                        <c:set var="locale_id" scope="page" value="${locale.getShortNameId()}"/>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input class="publishing_language" id="lang_input_${locale.getShortNameId()}"
-                                       lang="${locale.getShortNameId()}" type="text" autocomplete="off">
-                                <label for="lang_input_${locale.getShortNameId()}">
+                                <input class="publishing_language" id="lang_input_${locale_id}"
+                                        lang="${locale_id}" type="text"
+                                        <c:set var="translation"
+                                            scope="request"
+                                            value="${requestScope.periodical.getTranslation().get(locale_id)}"/>
+                                        <c:if test="${translation != null}">
+                                            value="${requestScope.periodical.getTranslation().get(locale_id).getLanguage()}"
+                                        </c:if>
+                                        <c:if test="${translation == null}">
+                                            value=""
+                                        </c:if>
+                                       spellcheck="false" autocomplete="off">
+                                <label for="lang_input_${locale_id}">
                                     <fmt:message key="new_periodical.input_lang"/>
                                     <span class="lang_name">${locale.getLangNameOriginal()}</span>
                                 </label>
@@ -345,11 +304,19 @@
                 <div class="periodical_info_block" style="width: 470px;">
                     <div class="info_block_header"><fmt:message key="new_periodical.publishing_description"/></div>
                     <c:forEach var="locale" items="${applicationScope.locales.values()}">
+                        <c:set var="locale_id" scope="page" value="${locale.getShortNameId()}"/>
                         <div class="row">
                             <div class="input-field col s12">
-                                <textarea class="materialize-textarea" id="desc_input_${locale.getShortNameId()}"
-                                          lang="${locale.getShortNameId()}" type="text" autocomplete="off"></textarea>
-                                <label for="desc_input_${locale.getShortNameId()}">
+                                <c:if test="${requestScope.periodical.getTranslation().get(locale_id) != null}">
+                                    <textarea class="materialize-textarea" id="desc_input_${locale_id}"
+                                              lang="${locale_id}" type="text" spellcheck="false" autocomplete="off"
+                                    >${requestScope.periodical.getTranslation().get(locale_id).getDescription()}</textarea>
+                                </c:if>
+                                <c:if test="${requestScope.periodical.getTranslation().get(locale_id) == null}">
+                                    <textarea class="materialize-textarea" id="desc_input_${locale_id}"
+                                              lang="${locale_id}" type="text" autocomplete="off"></textarea>
+                                </c:if>
+                                <label for="desc_input_${locale_id}">
                                     <fmt:message key="new_periodical.input_lang"/>
                                     <span class="lang_name">${locale.getLangNameOriginal()}</span>
                                 </label>
