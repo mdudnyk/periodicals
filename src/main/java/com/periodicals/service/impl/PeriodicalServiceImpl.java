@@ -76,4 +76,20 @@ public class PeriodicalServiceImpl implements PeriodicalService {
             throw new ServiceException("Periodical ID can't be less than 1. ");
         }
     }
+
+    @Override
+    public Periodical getPeriodicalById(final int id) throws DAOException, ServiceException {
+        Periodical periodical;
+        if (id > 0) {
+            periodical = daoManger.getPeriodicalDAOManager().getPeriodicalById(id);
+            if (periodical == null) {
+                throw new ServiceException("There is nothing to edit. Periodical with ID="
+                        + id + " is not exists. ");
+            }
+        } else {
+            throw new ServiceException("There is nothing to edit. Periodical ID="
+                    + id + " is not valid. ID should be > 1. ");
+        }
+        return periodical;
+    }
 }

@@ -123,6 +123,7 @@ class Queries {
 
     //PERIODICAL
     public static final String CREATE_PERIODICAL = "INSERT INTO periodical values (DEFAULT, ?, ?, ?, ?, ?, ?, ?)";
+    public static final String GET_PERIODICAL_BY_ID = "SELECT * FROM periodical WHERE id=?";
     public static final String GET_PERIODICALS_FOR_TABLE_PAGINATION_ASC = """
         SELECT DISTINCT id, title, COALESCE(
                                     (SELECT name
@@ -133,7 +134,7 @@ class Queries {
                                     WHERE topic_id=periodical.topic_id AND locale_id=?)
                                     ) AS topic_name, price, status
         FROM periodical
-            JOIN topic_translate ON topic_translate.topic_id=periodical.topic_id
+            LEFT JOIN topic_translate ON topic_translate.topic_id=periodical.topic_id
         ORDER BY ?, 2
         LIMIT ? OFFSET ?;
                 """;
@@ -147,7 +148,7 @@ class Queries {
                                     WHERE topic_id=periodical.topic_id AND locale_id=?)
                                     ) AS topic_name, price, status
         FROM periodical
-            JOIN topic_translate ON topic_translate.topic_id=periodical.topic_id
+            LEFT JOIN topic_translate ON topic_translate.topic_id=periodical.topic_id
         ORDER BY ? DESC, 2
         LIMIT ? OFFSET ?;
                 """;
@@ -161,7 +162,7 @@ class Queries {
                                     WHERE topic_id=periodical.topic_id AND locale_id=?)
                                     ) AS topic_name, price, status
         FROM periodical
-            JOIN topic_translate ON topic_translate.topic_id=periodical.topic_id
+            LEFT JOIN topic_translate ON topic_translate.topic_id=periodical.topic_id
         WHERE title LIKE CONCAT( '%',?,'%')
         ORDER BY ?, 2
         LIMIT ? OFFSET ?;
@@ -176,7 +177,7 @@ class Queries {
                                     WHERE topic_id=periodical.topic_id AND locale_id=?)
                                     ) AS topic_name, price, status
         FROM periodical
-            JOIN topic_translate ON topic_translate.topic_id=periodical.topic_id
+            LEFT JOIN topic_translate ON topic_translate.topic_id=periodical.topic_id
         WHERE title LIKE CONCAT( '%',?,'%')
         ORDER BY ? DESC, 2
         LIMIT ? OFFSET ?;
@@ -186,4 +187,14 @@ class Queries {
     public static final String GET_PERIODICALS_COUNT_SEARCH_MODE = "SELECT COUNT(*) FROM periodical WHERE " +
             "title LIKE CONCAT( '%',?,'%')";
     public static final String GET_IS_PERIODICAL_EXISTS = "SELECT EXISTS(SELECT * FROM periodical WHERE title=? LIMIT 1)";
+
+    //PERIODICAL_TRANSLATE
+    public static final String CREATE_PERIODICAL_TRANSLATE = "INSERT INTO periodical_translate values (?, ?, ?, ?, ?)";
+    public static final String GET_PERIODICAL_TRANSLATION_BY_PERIODICAL_ID =
+            "SELECT * FROM periodical_translate WHERE periodical_id=?";
+
+    //PERIODICAL_RELEASE_CALENDAR
+    public static final String CREATE_PERIODICAL_RELEASE_CALENDAR = "INSERT INTO release_calendar values (?, ?, ?)";
+    public static final String GET_PERIODICAL_RELEASE_CALENDAR_BY_PERIODICAL_ID =
+            "SELECT * FROM release_calendar WHERE periodical_id=?";
 }

@@ -1,6 +1,5 @@
 package com.periodicals.controller.servlet.command.impl.post;
 
-import com.mysql.cj.util.Base64Decoder;
 import com.periodicals.controller.servlet.command.FrontCommand;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.dao.manager.DAOManagerFactory;
@@ -22,6 +21,7 @@ import org.json.simple.parser.ParseException;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
@@ -33,17 +33,24 @@ public class CreatePeriodicalCommand implements FrontCommand {
             throws DAOException, ServletException, IOException, ServiceException {
 
         JSONObject periodicalJson = getPeriodicalJSONFromRequest(request);
-        String imageURL = getGeneratedImageURL(request);
-        Periodical newPeriodical = fillEntityFromRequest(periodicalJson, imageURL);
+        String imageName = getGeneratedImageName(request);
+        Periodical newPeriodical = fillEntityFromRequest(periodicalJson, imageName);
 
         PeriodicalService ps = new PeriodicalServiceImpl(daoManager);
         try {
             ps.createPeriodical(newPeriodical);
             Part imagePart = request.getPart("image");
-            FileUtils.writeByteArrayToFile(new File(imageURL),
-                    imagePart.getInputStream().readAllBytes());
+            if (imagePart != null) {
+                String imagesFolder = request.getSession()
+                        .getServletContext()
+                        .getInitParameter("imagesFolder");
+                assert imagesFolder != null : "Check 'imagesFolder' " +
+                        "context parameter in web.xml file. ";
+                FileUtils.writeByteArrayToFile(new File(imagesFolder + imageName),
+                        imagePart.getInputStream().readAllBytes());
+            }
         } catch (ServiceException e) {
-            response.setStatus(564);
+            response.setStatus(565);
         }
     }
 
@@ -146,23 +153,25 @@ public class CreatePeriodicalCommand implements FrontCommand {
         return translations;
     }
 
-    private String getGeneratedImageURL(final HttpServletRequest request) throws ServletException, IOException {
-        String fileName;
-        String defaultImageStorage = request.getSession()
-                .getServletContext()
-                .getInitParameter("imageStorage");
+    private String getGeneratedImageName(final HttpServletRequest request) throws ServletException, IOException {
+        String imageName = null;
         Part imagePart = request.getPart("image");
 
-        if (imagePart == null) {
-            String defaultImageURL = request.getSession()
-                    .getServletContext()
-                    .getInitParameter("noImageFile");
-            assert defaultImageURL != null : "No default title image file url in web.xml. ";
-            return defaultImageURL;
-        } else {
-            fileName = generateRandomImageName();
+        if (imagePart != null) {
+            imageName = generateRandomImageName();
         }
-        return defaultImageStorage + fileName;
+//        if (imagePart == null) {
+//            String defaultImageFileName = request.getSession()
+//                    .getServletContext()
+//                    .getInitParameter("defaultImageFileName");
+//            assert defaultImageFileName != null : "No default title image file name in web.xml. " +
+//                    "Check 'defaultImageFileName' context-param. ";
+//            imageName = defaultImageFileName;
+//        } else {
+//            imageName = generateRandomImageName();
+//        }
+        System.out.println(imageName);
+        return imageName;
     }
 
     private String generateRandomImageName() {

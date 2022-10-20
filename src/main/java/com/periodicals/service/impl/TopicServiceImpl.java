@@ -67,7 +67,7 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public Topic getTopicById(final int id) throws DAOException, ServiceException {
-        Topic topic = null;
+        Topic topic;
         if (id > 0) {
             topic = daoManger.getTopicDAOManager().getTopicById(id);
             if (topic == null) {

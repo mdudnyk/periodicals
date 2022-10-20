@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="ct" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <html lang="${sessionScope.locale.getShortNameId()}">
@@ -7,7 +8,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PressReader | New Periodical</title>
+    <title>PressReader | Edit Periodical</title>
     <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/img/tab-icon.ico">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/materialize/css/materialize.min.css">
@@ -22,11 +23,11 @@
             <fmt:message key="new_periodical.periodicals"/>
         </a>
         <i class="small material-icons" style="margin: 0 10px; opacity: 70%;">navigate_next</i>
-        <a style="color: #27c18a; font-weight: 500;"><fmt:message key="new_periodical.new_periodical"/></a>
+        <a style="color: #27c18a; font-weight: 500;"><fmt:message key="edit_periodical.edit_periodical"/></a>
     </div>
     <div class="content_main">
         <div class="content_main_top_text">
-            <fmt:message key="new_periodical.header"/>
+            <fmt:message key="edit_periodical.header"/>
         </div>
         <div class="msg_container">
             <div class="common_msg_block alert" id="alert_block">
@@ -62,7 +63,7 @@
                 <i class="material-icons">check_circle</i>
                 <div>
                     <span class="new_periodical_alerts" id="success">
-                        <fmt:message key="new_periodical.success.created"/>
+                        <fmt:message key="edit_periodical.success.edited"/>
                     </span>
                 </div>
             </div>
@@ -73,7 +74,9 @@
                     <div class="info_block_header"><fmt:message key="new_periodical.title_image"/></div>
                     <div class="title_img_container" style="margin-top: 30px;">
                         <div class="please_upload_image"><fmt:message key="new_periodical.please_upload"/></div>
-                        <img class="title_img" id="title_img">
+                        <img class="title_img" id="title_img"
+                             src="<ct:imageEncoderBase64
+                                image_name="${requestScope.periodical.getTitleImgLink()}"/>">
                         <div class="edit_image_block" onclick="activate_file_input_window()">
                             <i class="material-icons small" style="color: white;">edit</i>
                         </div>
@@ -304,7 +307,7 @@
                         <fmt:message key="new_periodical.release.add_year"/>
                     </button>
                     <button onclick="removeLastYear()" id="remove_year_btn" style="display: none;">
-                        <fmt:message key="new_periodical.release.remove_last"/>
+                        <fmt:message key="new_periodical.release.remova_last"/>
                     </button>
                 </div>
             </div>
@@ -356,11 +359,11 @@
                 </div>
             </div>
         </div>
-        <button class="create_periodical_button" onclick="createNewPeriodical()"><fmt:message key="new_periodical.create_periodical"/></button>
+        <button class="create_periodical_button" onclick="createNewPeriodical()"><fmt:message key="edit_periodical.edit_periodical_btn"/></button>
     </div>
 </div>
 
-<script src="${pageContext.request.contextPath}/js/new_periodical.js"></script>
+<script src="${pageContext.request.contextPath}/js/edit_periodical.js"></script>
 <script src="${pageContext.request.contextPath}/materialize/js/materialize.min.js"></script>
 </body>
 </html>

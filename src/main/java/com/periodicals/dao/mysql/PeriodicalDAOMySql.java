@@ -4,6 +4,9 @@ import com.periodicals.dao.PeriodicalDAO;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.entity.Periodical;
 import com.periodicals.entity.PeriodicalForTable;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -40,7 +43,26 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
 
     @Override
     public Periodical getEntityById(final Integer id, final Connection connection) throws DAOException {
-        throw new UnsupportedOperationException();
+        Periodical periodical;
+        try (PreparedStatement ps = connection.prepareStatement(Queries.GET_PERIODICAL_BY_ID)) {
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            int topicId = rs.getInt(2);
+            String title = rs.getString(3);
+            String imageUrl = rs.getString(4);
+            int price = rs.getInt(5);
+            JSONObject frequency = (JSONObject) new JSONParser().parse(rs.getString(6));
+            int subPeriod = rs.getInt(7);
+            boolean status = rs.getBoolean(8);
+            rs.close();
+
+            periodical = new Periodical(id, topicId, title, imageUrl, price, frequency, subPeriod, status);
+        } catch (SQLException | ParseException e) {
+            throw new DAOException("Error while trying to get periodical with id=" + id + ". " + e.getMessage());
+        }
+        return periodical;
     }
 
     @Override

@@ -20,6 +20,7 @@ public enum CommandEnum {
     NEW_PERIODICAL_PAGE(new NewPeriodicalPageCommand()),
     CREATE_PERIODICAL(new CreatePeriodicalCommand()),
     DELETE_PERIODICAL(new DeletePeriodicalCommand()),
+    EDIT_PERIODICAL_PAGE(new EditPeriodicalPageCommand()),
     ERROR_PAGE(new ErrorPageCommand());
 
     private final FrontCommand frontCommand;

@@ -268,7 +268,14 @@
                         <tr>
                             <td><c:out value="${rowIndex}"/></td>
                             <td class="periodical_column">${periodical.getTitle()}</td>
-                            <td class="periodical_column">${periodical.getTopicName()}</td>
+                            <td class="periodical_column">
+                                    <c:if test="${periodical.getTopicName() == null}">
+                                        <fmt:message key="periodicals.no_topic_name"/>
+                                    </c:if>
+                                    <c:if test="${periodical.getTopicName() != null}">
+                                        ${periodical.getTopicName()}
+                                    </c:if>
+                            </td>
                             <td>${periodical.getPrice()}</td>
                             <td
                                     <c:set var="status" scope="page" value="${periodical.isPeriodicalActive()}"/>
