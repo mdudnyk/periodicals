@@ -278,7 +278,7 @@
                             </td>
                             <td>${periodical.getPrice()}</td>
                             <td
-                                    <c:set var="status" scope="page" value="${periodical.isPeriodicalActive()}"/>
+                                    <c:set var="status" scope="page" value="${periodical.isActive()}"/>
                                     style="font-size: 11pt; font-weight: 700;
                                     <c:if test="${status == false}">color: rgb(255, 117, 117);">
                                         <fmt:message key="periodicals.status.disabled"/>

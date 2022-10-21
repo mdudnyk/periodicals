@@ -14,20 +14,20 @@ public class Periodical implements Serializable {
     private final int price;
     private final JSONObject frequency;
     private final int subPeriod;
-    private final boolean isPeriodicalActive;
+    private final boolean isActive;
     private Map<String, PeriodicalTranslate> translation;
     private Map<Integer, MonthSelector> releaseCalendar;
 
     public Periodical(final int topicID, final String title, final String titleImgLink,
                       final int price, final JSONObject frequency, final int subPeriod,
-                      final boolean isPeriodicalActive) {
+                      final boolean isActive) {
         this.topicID = topicID;
         this.title = title;
         this.titleImgLink = titleImgLink;
         this.price = price;
         this.frequency = frequency;
         this.subPeriod = subPeriod;
-        this.isPeriodicalActive = isPeriodicalActive;
+        this.isActive = isActive;
     }
 
     public Periodical(final int id, final int topicID, final String title, final String titleImgLink,
@@ -40,7 +40,7 @@ public class Periodical implements Serializable {
         this.price = price;
         this.frequency = frequency;
         this.subPeriod = subPeriod;
-        this.isPeriodicalActive = isPeriodicalActive;
+        this.isActive = isPeriodicalActive;
     }
 
     public int getId() {
@@ -71,8 +71,8 @@ public class Periodical implements Serializable {
         return subPeriod;
     }
 
-    public boolean isPeriodicalActive() {
-        return isPeriodicalActive;
+    public boolean isActive() {
+        return isActive;
     }
 
     public Map<String, PeriodicalTranslate> getTranslation() {
@@ -101,7 +101,7 @@ public class Periodical implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         final Periodical that = (Periodical) o;
         return id == that.id && topicID == that.topicID && price == that.price
-                && subPeriod == that.subPeriod && isPeriodicalActive == that.isPeriodicalActive
+                && subPeriod == that.subPeriod && isActive == that.isActive
                 && title.equals(that.title) && titleImgLink.equals(that.titleImgLink)
                 && frequency.equals(that.frequency) && Objects.equals(translation, that.translation)
                 && Objects.equals(releaseCalendar, that.releaseCalendar);
@@ -110,7 +110,7 @@ public class Periodical implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id, topicID, title, titleImgLink, price,
-                frequency, subPeriod, isPeriodicalActive, translation, releaseCalendar);
+                frequency, subPeriod, isActive, translation, releaseCalendar);
     }
 
     @Override
@@ -123,7 +123,7 @@ public class Periodical implements Serializable {
                 ", price=" + price +
                 ", frequency=" + frequency +
                 ", subPeriod=" + subPeriod +
-                ", isPeriodicalActive=" + isPeriodicalActive +
+                ", isPeriodicalActive=" + isActive +
                 ", translation=" + translation +
                 ", releaseCalendar=" + releaseCalendar +
                 '}';

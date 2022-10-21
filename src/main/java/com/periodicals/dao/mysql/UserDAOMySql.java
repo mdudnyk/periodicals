@@ -3,7 +3,6 @@ package com.periodicals.dao.mysql;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.dao.UserDAO;
 import com.periodicals.entity.User;
-import com.periodicals.entity.enums.BlockingStatus;
 import com.periodicals.entity.enums.Role;
 
 import java.sql.*;
@@ -116,7 +115,7 @@ public class UserDAOMySql implements UserDAO {
         ps.setString(5, entity.getEmail());
         ps.setString(6, entity.getRole().name());
         ps.setInt(7, entity.getBalance());
-        ps.setString(8, entity.getBlockingStatus().name());
+        ps.setBoolean(8, entity.isActive());
     }
 
     private User fillEntityFromResultSet(ResultSet resultSet) throws SQLException {
@@ -128,8 +127,8 @@ public class UserDAOMySql implements UserDAO {
         String email = resultSet.getString(6);
         Role role = Role.valueOf(resultSet.getString(7));
         int balance = resultSet.getInt(8);
-        BlockingStatus blockingStatus = BlockingStatus.valueOf(resultSet.getString(9));
+        boolean isActive = resultSet.getBoolean(9);
 
-        return new User(id, localeId, firstName, lastName, password, email, role, balance, blockingStatus);
+        return new User(id, localeId, firstName, lastName, password, email, role, balance, isActive);
     }
 }

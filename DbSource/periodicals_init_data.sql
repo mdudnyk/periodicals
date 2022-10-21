@@ -1,11 +1,11 @@
 INSERT INTO periodicals_db.locale values('ua', 'українська', 'грн', '/img/ua_flag.png');
 INSERT INTO periodicals_db.locale values('en', 'english', 'uah', '/img/en_flag.png');
 
-INSERT INTO periodicals_db.user values(1, 'ua', 'admin', 'admin', 'qwerty123', 'press_reader_admin@gmail.com', 'ADMIN', 100000, 'NOT_BLOCKED');
-INSERT INTO periodicals_db.user values(DEFAULT, 'ua', 'Myroslav', 'Dudnyk', 'qwerty123', 'mdudnyk.sps@gmail.com', 'CUSTOMER', 0, 'NOT_BLOCKED');
-INSERT INTO periodicals_db.user values(DEFAULT, 'ua', 'Petro', 'Bamper', 'qwerty123', 'petro_bamper@gmail.com', 'CUSTOMER', 1000, 'BLOCKED');
-INSERT INTO periodicals_db.user values(DEFAULT, 'en', 'John', 'Redneck', 'qwerty123', 'johny_boy_from_texas@gmail.com', 'CUSTOMER', 1000, 'NOT_BLOCKED');
-INSERT INTO periodicals_db.user values(DEFAULT, 'en', 'Бабушка', 'Міша', 'qwerty123', 'babushka_misha@gmail.com', 'CUSTOMER', 2340, 'NOT_BLOCKED');
+INSERT INTO periodicals_db.user values(1, 'ua', 'admin', 'admin', 'qwerty123', 'admin@gmail.com', 'ADMIN', 100000, false);
+INSERT INTO periodicals_db.user values(DEFAULT, 'ua', 'Myroslav', 'Dudnyk', 'qwerty123', 'mdudnyk.sps@gmail.com', 'CUSTOMER', 0, false);
+INSERT INTO periodicals_db.user values(DEFAULT, 'ua', 'Petro', 'Bamper', 'qwerty123', 'petro_bamper@gmail.com', 'CUSTOMER', 1000, false);
+INSERT INTO periodicals_db.user values(DEFAULT, 'en', 'John', 'Redneck', 'qwerty123', 'johny_boy_from_texas@gmail.com', 'CUSTOMER', 1000, true);
+INSERT INTO periodicals_db.user values(DEFAULT, 'en', 'Бабушка', 'Міша', 'qwerty123', 'babushka_misha@gmail.com', 'CUSTOMER', 2340, false);
 
 INSERT INTO periodicals_db.topic values(1);
 INSERT INTO periodicals_db.topic values(2);
@@ -97,4 +97,3 @@ INSERT INTO periodical values (DEFAULT, 11, 'El Universo', DEFAULT, 7120, '{"amo
 INSERT INTO periodical values (DEFAULT, 11, 'New York Daily News', DEFAULT, 4070, '{"amount": 1, "period": "month"}', 1, true);
 
 
-SELECT id, title, title_img, price FROM periodical WHERE topic_id=1 AND NOT status=0 ORDER BY id DESC LIMIT 4

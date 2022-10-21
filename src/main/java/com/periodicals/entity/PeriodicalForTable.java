@@ -10,16 +10,16 @@ public class PeriodicalForTable implements Serializable {
     private final String title;
     private final String topicName;
     private final String price;
-    private final boolean isPeriodicalActive;
+    private final boolean isActive;
 
     public PeriodicalForTable(final int id, final String title,
                               final String topicName, final int price,
-                              final boolean isPeriodicalActive) {
+                              final boolean isActive) {
         this.id = id;
         this.title = title;
         this.topicName = topicName;
         this.price = MoneyFormatter.toHumanReadable(price);
-        this.isPeriodicalActive = isPeriodicalActive;
+        this.isActive = isActive;
     }
 
     public int getId() {
@@ -38,8 +38,8 @@ public class PeriodicalForTable implements Serializable {
         return price;
     }
 
-    public boolean isPeriodicalActive() {
-        return isPeriodicalActive;
+    public boolean isActive() {
+        return isActive;
     }
 
     @Override
@@ -47,14 +47,14 @@ public class PeriodicalForTable implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         final PeriodicalForTable that = (PeriodicalForTable) o;
-        return id == that.id && isPeriodicalActive == that.isPeriodicalActive
+        return id == that.id && isActive == that.isActive
                 && title.equals(that.title) && topicName.equals(that.topicName)
                 && price.equals(that.price);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, topicName, price, isPeriodicalActive);
+        return Objects.hash(id, title, topicName, price, isActive);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class PeriodicalForTable implements Serializable {
                 ", title='" + title + '\'' +
                 ", topicName='" + topicName + '\'' +
                 ", price='" + price + '\'' +
-                ", isPeriodicalActive=" + isPeriodicalActive +
+                ", isPeriodicalActive=" + isActive +
                 '}';
     }
 }

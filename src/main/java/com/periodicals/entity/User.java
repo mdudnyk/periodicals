@@ -1,6 +1,5 @@
 package com.periodicals.entity;
 
-import com.periodicals.entity.enums.BlockingStatus;
 import com.periodicals.entity.enums.Role;
 
 import java.io.Serializable;
@@ -9,18 +8,31 @@ import java.util.Objects;
 public class User implements Serializable {
     private int id;
     private String localeId;
-    private String firstname;
-    private String lastname;
-    private String password;
-    private String email;
-    private Role role;
-    private int balance;
-    private BlockingStatus blockingStatus;
+    private final String firstname;
+    private final String lastname;
+    private final String password;
+    private final String email;
+    private final Role role;
+    private final int balance;
+    private final boolean isActive;
     private Address address;
 
-    public User(final int id, final String localeId, final String firstname, final String lastname,
+    public User(final String localeId, final String firstname, final String lastname,
                 final String password, final String email, final Role role, final int balance,
-                final BlockingStatus blockingStatus) {
+                final boolean isActive) {
+        this.localeId = localeId;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+        this.balance = balance;
+        this.isActive = isActive;
+    }
+
+    public User(final int id, final String localeId, final String firstname, final String lastname,
+                final String password, final String email,
+                final Role role, final int balance, final boolean isActive) {
         this.id = id;
         this.localeId = localeId;
         this.firstname = firstname;
@@ -29,84 +41,55 @@ public class User implements Serializable {
         this.email = email;
         this.role = role;
         this.balance = balance;
-        this.blockingStatus = blockingStatus;
+        this.isActive = isActive;
     }
-
 
     public int getId() {
         return id;
-    }
-
-    public void setId(final int id) {
-        this.id = id;
     }
 
     public String getLocaleId() {
         return localeId;
     }
 
-    public void setLocaleId(final String localeId) {
-        this.localeId = localeId;
-    }
-
     public String getFirstname() {
         return firstname;
-    }
-
-    public void setFirstname(final String firstname) {
-        this.firstname = firstname;
     }
 
     public String getLastname() {
         return lastname;
     }
 
-    public void setLastname(final String lastname) {
-        this.lastname = lastname;
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    public void setPassword(final String password) {
-        this.password = password;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(final String email) {
-        this.email = email;
-    }
-
     public Role getRole() {
         return role;
-    }
-
-    public void setRole(final Role role) {
-        this.role = role;
     }
 
     public int getBalance() {
         return balance;
     }
 
-    public void setBalance(final int balance) {
-        this.balance = balance;
-    }
-
-    public BlockingStatus getBlockingStatus() {
-        return blockingStatus;
-    }
-
-    public void setBlockingStatus(final BlockingStatus blockingStatus) {
-        this.blockingStatus = blockingStatus;
+    public boolean isActive() {
+        return isActive;
     }
 
     public Address getAddress() {
         return address;
+    }
+
+    public void setId(final int id) {
+        this.id = id;
+    }
+
+    public void setLocaleId(final String localeId) {
+        this.localeId = localeId;
     }
 
     public void setAddress(final Address address) {
@@ -118,16 +101,15 @@ public class User implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         final User user = (User) o;
-        return id == user.id && localeId.equals(user.localeId) && balance == user.balance
-                && firstname.equals(user.firstname) && lastname.equals(user.lastname)
-                && password.equals(user.password) && email.equals(user.email)
-                && role == user.role && blockingStatus == user.blockingStatus
-                && Objects.equals(address, user.address);
+        return id == user.id && balance == user.balance && isActive == user.isActive
+                && localeId.equals(user.localeId) && firstname.equals(user.firstname)
+                && lastname.equals(user.lastname) && password.equals(user.password)
+                && email.equals(user.email) && role == user.role && Objects.equals(address, user.address);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, localeId, firstname, lastname, password, email, role, balance, blockingStatus, address);
+        return Objects.hash(id, localeId, firstname, lastname, password, email, role, balance, isActive, address);
     }
 
     @Override
@@ -141,7 +123,7 @@ public class User implements Serializable {
                 ", email='" + email + '\'' +
                 ", role=" + role +
                 ", balance=" + balance +
-                ", blockingStatus=" + blockingStatus +
+                ", isActive=" + isActive +
                 ", address=" + address +
                 '}';
     }

@@ -5,7 +5,6 @@ import com.periodicals.dao.exception.DAOException;
 import com.periodicals.dao.manager.DAOManagerFactory;
 import com.periodicals.entity.LocaleCustom;
 import com.periodicals.entity.User;
-import com.periodicals.entity.enums.BlockingStatus;
 import com.periodicals.entity.enums.Role;
 import com.periodicals.service.ServiceException;
 import com.periodicals.service.UserService;
@@ -24,7 +23,7 @@ public class SignUpCommand implements FrontCommand {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         User user = new User(1, localeObj.getShortNameId() , firstname, lastname,
-                password, email, Role.CUSTOMER, 0, BlockingStatus.NOT_BLOCKED);
+                password, email, Role.CUSTOMER, 0, false);
 
         UserService service = new UserServiceImpl(daoFactory);
 

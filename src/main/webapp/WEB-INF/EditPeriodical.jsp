@@ -1,7 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ct" tagdir="/WEB-INF/tags" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <html lang="${sessionScope.locale.getShortNameId()}">
 <head>
@@ -221,10 +219,10 @@
                         <div class="switch" style="margin-top: 34px;">
                             <label>
                                 <fmt:message key="new_periodical.status_disabled"/>
-                                <c:if test="${requestScope.periodical.isPeriodicalActive() == true }">
+                                <c:if test="${requestScope.periodical.isActive() == true }">
                                     <input type="checkbox" id="switch_block" checked>
                                 </c:if>
-                                <c:if test="${requestScope.periodical.isPeriodicalActive() == false }">
+                                <c:if test="${requestScope.periodical.isActive() == false }">
                                     <input type="checkbox" id="switch_block">
                                 </c:if>
                                 <span class="lever"></span>

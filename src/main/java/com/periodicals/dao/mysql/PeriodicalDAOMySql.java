@@ -23,7 +23,7 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
             ps.setInt(4, entity.getPrice());
             ps.setString(5, entity.getFrequency().toJSONString());
             ps.setInt(6, entity.getSubPeriod());
-            ps.setBoolean(7, entity.isPeriodicalActive());
+            ps.setBoolean(7, entity.isActive());
             if (ps.executeUpdate() > 0) {
                 try (ResultSet rs = ps.getGeneratedKeys()) {
                     if (rs.next()) {
@@ -75,7 +75,7 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
             ps.setInt(4, entity.getPrice());
             ps.setString(5, entity.getFrequency().toJSONString());
             ps.setInt(6, entity.getSubPeriod());
-            ps.setBoolean(7, entity.isPeriodicalActive());
+            ps.setBoolean(7, entity.isActive());
             ps.setInt(8, entity.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -92,7 +92,7 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
             ps.setInt(3, entity.getPrice());
             ps.setString(4, entity.getFrequency().toJSONString());
             ps.setInt(5, entity.getSubPeriod());
-            ps.setBoolean(6, entity.isPeriodicalActive());
+            ps.setBoolean(6, entity.isActive());
             ps.setInt(7, entity.getId());
             ps.executeUpdate();
         } catch (SQLException e) {

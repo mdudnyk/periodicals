@@ -14,7 +14,7 @@ class Queries {
     public static final String GET_USER_BY_ID = "SELECT * FROM user WHERE id=?";
     public static final String GET_USER_BY_EMAIL = "SELECT * FROM user WHERE email=?";
     public static final String UPDATE_USER = "UPDATE user SET locale_id=?, firstname=?, lastname=?, password=?, " +
-            "email=?, role=?, balance=?, blocking_status=? WHERE id=?";
+            "email=?, role=?, balance=?, is_blocked=? WHERE id=?";
     public static final String DELETE_USER = "DELETE FROM user WHERE id=?";
 
     //TOPIC
@@ -124,9 +124,9 @@ class Queries {
     //PERIODICAL
     public static final String CREATE_PERIODICAL = "INSERT INTO periodical values (DEFAULT, ?, ?, ?, ?, ?, ?, ?)";
     public static final String UPDATE_PERIODICAL = "UPDATE periodical " +
-            "SET topic_id=?, title=?, title_img=?, price=?, publication_frequency=?, subscription_period=?, status=? WHERE id=?";
+            "SET topic_id=?, title=?, title_img_name=?, price=?, publication_frequency=?, subscription_period=?, is_active=? WHERE id=?";
     public static final String UPDATE_PERIODICAL_WITHOUT_IMAGE = "UPDATE periodical " +
-            "SET topic_id=?, title=?, price=?, publication_frequency=?, subscription_period=?, status=? WHERE id=?";
+            "SET topic_id=?, title=?, price=?, publication_frequency=?, subscription_period=?, is_active=? WHERE id=?";
     public static final String GET_PERIODICAL_BY_ID = "SELECT * FROM periodical WHERE id=?";
     public static final String GET_PERIODICALS_FOR_TABLE_PAGINATION_ASC = """
         SELECT DISTINCT id, title, COALESCE(
@@ -136,7 +136,7 @@ class Queries {
                                     (SELECT name
                                     FROM topic_translate
                                     WHERE topic_id=periodical.topic_id AND locale_id=?)
-                                    ) AS topic_name, price, status
+                                    ) AS topic_name, price, is_active
         FROM periodical
             LEFT JOIN topic_translate ON topic_translate.topic_id=periodical.topic_id
         ORDER BY ?, 2
@@ -150,7 +150,7 @@ class Queries {
                                     (SELECT name
                                     FROM topic_translate
                                     WHERE topic_id=periodical.topic_id AND locale_id=?)
-                                    ) AS topic_name, price, status
+                                    ) AS topic_name, price, is_active
         FROM periodical
             LEFT JOIN topic_translate ON topic_translate.topic_id=periodical.topic_id
         ORDER BY ? DESC, 2
@@ -164,7 +164,7 @@ class Queries {
                                     (SELECT name
                                     FROM topic_translate
                                     WHERE topic_id=periodical.topic_id AND locale_id=?)
-                                    ) AS topic_name, price, status
+                                    ) AS topic_name, price, is_active
         FROM periodical
             LEFT JOIN topic_translate ON topic_translate.topic_id=periodical.topic_id
         WHERE title LIKE CONCAT( '%',?,'%')
@@ -179,15 +179,15 @@ class Queries {
                                     (SELECT name
                                     FROM topic_translate
                                     WHERE topic_id=periodical.topic_id AND locale_id=?)
-                                    ) AS topic_name, price, status
+                                    ) AS topic_name, price, is_active
         FROM periodical
             LEFT JOIN topic_translate ON topic_translate.topic_id=periodical.topic_id
         WHERE title LIKE CONCAT( '%',?,'%')
         ORDER BY ? DESC, 2
         LIMIT ? OFFSET ?;
                 """;
-    public static final String GET_PERIODICALS_FOR_HOME_PAGE = "SELECT id, title, title_img, price FROM periodical " +
-            "WHERE topic_id=? AND NOT status=0 ORDER BY id DESC LIMIT 4";
+    public static final String GET_PERIODICALS_FOR_HOME_PAGE = "SELECT id, title, title_img_name, price FROM periodical " +
+            "WHERE topic_id=? AND is_active=true ORDER BY id DESC LIMIT 4";
     public static final String DELETE_PERIODICAL = "DELETE FROM periodical WHERE id=?";
     public static final String GET_PERIODICALS_COUNT = "SELECT COUNT(*) FROM periodical";
     public static final String GET_PERIODICALS_COUNT_SEARCH_MODE = "SELECT COUNT(*) FROM periodical WHERE " +

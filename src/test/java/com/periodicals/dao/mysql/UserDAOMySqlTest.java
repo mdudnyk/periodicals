@@ -2,7 +2,6 @@ package com.periodicals.dao.mysql;
 
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.entity.User;
-import com.periodicals.entity.enums.BlockingStatus;
 import com.periodicals.entity.enums.Role;
 import org.junit.jupiter.api.*;
 import java.sql.Connection;
@@ -37,7 +36,7 @@ class UserDAOMySqlTest {
     @Test
     void create() throws DAOException {
         User user = new User(1, "ua", "Myroslav", "Dudnyk", "yamahar1",
-                "mad0013@mail.ru", Role.CUSTOMER, 100, BlockingStatus.NOT_BLOCKED);
+                "mad0013@mail.ru", Role.CUSTOMER, 100, false);
         new UserDAOMySql().create(user, connection);
     }
 
