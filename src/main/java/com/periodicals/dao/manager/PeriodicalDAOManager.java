@@ -9,14 +9,14 @@ import com.periodicals.dao.exception.DAOException;
 import com.periodicals.dao.mysql.PeriodicalDAOMySql;
 import com.periodicals.dao.mysql.PeriodicalTranslationDAOMySql;
 import com.periodicals.dao.mysql.ReleaseCalendarDAOMySql;
-import com.periodicals.entity.MonthSelector;
-import com.periodicals.entity.Periodical;
-import com.periodicals.entity.PeriodicalForTable;
-import com.periodicals.entity.PeriodicalTranslate;
+import com.periodicals.entity.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PeriodicalDAOManager  {
     private ConnectionManager conManager;
@@ -148,6 +148,19 @@ public class PeriodicalDAOManager  {
         }
         conManager.close(connection);
         return periodical;
+    }
+
+    public Map<Integer, List<PeriodicalForHomePage>> getPeriodicalsForHomePage(final List<Topic> topics)
+            throws DAOException {
+        Connection connection = conManager.getConnection();
+        Map<Integer, List<PeriodicalForHomePage>> periodicals = new HashMap<>();
+        List<PeriodicalForHomePage> list = new ArrayList<>();
+        for (Topic t : topics) {
+            list = periodicalDAO.getPeriodicalsForHomePage(t.getId(), connection);
+            periodicals.put(t.getId(), list);
+        }
+        conManager.close(connection);
+        return periodicals;
     }
 
     private void rollback(final Connection con) throws DAOException {

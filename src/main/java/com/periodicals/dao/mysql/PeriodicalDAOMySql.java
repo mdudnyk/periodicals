@@ -3,6 +3,7 @@ package com.periodicals.dao.mysql;
 import com.periodicals.dao.PeriodicalDAO;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.entity.Periodical;
+import com.periodicals.entity.PeriodicalForHomePage;
 import com.periodicals.entity.PeriodicalForTable;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -98,6 +99,29 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
             throw new DAOException("Can not update periodical(without image) with id="
                     + entity.getId() + ". "+ e.getMessage());
         }
+    }
+
+    @Override
+    public List<PeriodicalForHomePage> getPeriodicalsForHomePage(final int id, final Connection connection)
+            throws DAOException {
+        List<PeriodicalForHomePage> periodicals = new ArrayList<>();
+        try (PreparedStatement ps = connection.prepareStatement(Queries.GET_PERIODICALS_FOR_HOME_PAGE)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                PeriodicalForHomePage periodical = new PeriodicalForHomePage(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4));
+                periodicals.add(periodical);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            throw new DAOException("Error while trying to get periodicals for " +
+                    "home page with topic id=" + id + ". " + e.getMessage());
+        }
+        return periodicals;
     }
 
     @Override

@@ -186,6 +186,8 @@ class Queries {
         ORDER BY ? DESC, 2
         LIMIT ? OFFSET ?;
                 """;
+    public static final String GET_PERIODICALS_FOR_HOME_PAGE = "SELECT id, title, title_img, price FROM periodical " +
+            "WHERE topic_id=? AND NOT status=0 ORDER BY id DESC LIMIT 4";
     public static final String DELETE_PERIODICAL = "DELETE FROM periodical WHERE id=?";
     public static final String GET_PERIODICALS_COUNT = "SELECT COUNT(*) FROM periodical";
     public static final String GET_PERIODICALS_COUNT_SEARCH_MODE = "SELECT COUNT(*) FROM periodical WHERE " +

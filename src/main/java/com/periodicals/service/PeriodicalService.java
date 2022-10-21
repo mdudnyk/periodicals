@@ -2,9 +2,12 @@ package com.periodicals.service;
 
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.entity.Periodical;
+import com.periodicals.entity.PeriodicalForHomePage;
 import com.periodicals.entity.PeriodicalForTable;
+import com.periodicals.entity.Topic;
 
 import java.util.List;
+import java.util.Map;
 
 public interface PeriodicalService {
 
@@ -34,5 +37,7 @@ public interface PeriodicalService {
     void deletePeriodical(int periodicalID) throws DAOException, ServiceException;
 
     Periodical getPeriodicalById(int id) throws DAOException, ServiceException;
+
+    Map<Integer, List<PeriodicalForHomePage>> getPeriodicalsForHomePage(List<Topic> topics) throws DAOException;
 
 }

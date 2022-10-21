@@ -95,3 +95,6 @@ INSERT INTO periodical values (DEFAULT, 11, 'The Guardian', DEFAULT, 5099, '{"am
 INSERT INTO periodical values (DEFAULT, 11, 'The Daily Telegraph', DEFAULT, 7900, '{"amount": 1, "period": "month"}', 1, true);
 INSERT INTO periodical values (DEFAULT, 11, 'El Universo', DEFAULT, 7120, '{"amount": 1, "period": "month"}', 1, true);
 INSERT INTO periodical values (DEFAULT, 11, 'New York Daily News', DEFAULT, 4070, '{"amount": 1, "period": "month"}', 1, true);
+
+
+SELECT id, title, title_img, price FROM periodical WHERE topic_id=1 AND NOT status=0 ORDER BY id DESC LIMIT 4

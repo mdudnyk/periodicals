@@ -4,11 +4,14 @@ import com.periodicals.dao.exception.DAOException;
 import com.periodicals.dao.manager.DAOManagerFactory;
 import com.periodicals.dao.manager.PeriodicalDAOManager;
 import com.periodicals.entity.Periodical;
+import com.periodicals.entity.PeriodicalForHomePage;
 import com.periodicals.entity.PeriodicalForTable;
+import com.periodicals.entity.Topic;
 import com.periodicals.service.PeriodicalService;
 import com.periodicals.service.ServiceException;
 
 import java.util.List;
+import java.util.Map;
 
 public class PeriodicalServiceImpl implements PeriodicalService {
     private final DAOManagerFactory daoManger;
@@ -99,5 +102,12 @@ public class PeriodicalServiceImpl implements PeriodicalService {
                     + id + " is not valid. ID should be > 1. ");
         }
         return periodical;
+    }
+
+    @Override
+    public Map<Integer, List<PeriodicalForHomePage>> getPeriodicalsForHomePage(final List<Topic> topics)
+            throws DAOException {
+        PeriodicalDAOManager pdm = daoManger.getPeriodicalDAOManager();
+        return pdm.getPeriodicalsForHomePage(topics);
     }
 }
