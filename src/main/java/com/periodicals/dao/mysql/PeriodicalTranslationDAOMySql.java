@@ -42,6 +42,42 @@ public class PeriodicalTranslationDAOMySql implements PeriodicalTranslationDAO {
         return translations;
     }
 
+    @Override
+    public boolean checkIfTranslationExists(final int id,
+                                            final String localeId, final Connection connection) throws DAOException {
+        boolean exists = false;
+        try (PreparedStatement ps = connection.prepareStatement(Queries.PERIODICAL_TRANSLATE_EXISTS)) {
+            ps.setInt(1, id);
+            ps.setString(2, localeId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                if (rs.getInt(1) == 1) {
+                    exists = true;
+                }
+            }
+            rs.close();
+        } catch (SQLException e) {
+            throw new DAOException("An error occurred while trying to check if translation for " +
+                    "periodical with id=" + id + " and locale=" + localeId + " is exists. " + e.getMessage());
+        }
+        return exists;
+    }
+
+    @Override
+    public void update(final int id, final PeriodicalTranslate entity, final Connection connection) throws DAOException {
+        try (PreparedStatement ps = connection.prepareStatement(Queries.UPDATE_PERIODICAL_TRANSLATION)) {
+            ps.setString(1, entity.getCountry());
+            ps.setString(2, entity.getLanguage());
+            ps.setString(3, entity.getDescription());
+            ps.setInt(4, id);
+            ps.setString(5, entity.getLocaleID());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Can not update periodical translation with locale=" + entity.getLocaleID()
+                    + " for periodical with id=" + id + ". "+ e.getMessage());
+        }
+    }
+
 
     public void update(final PeriodicalTranslate entity, final Connection connection) throws DAOException {
 

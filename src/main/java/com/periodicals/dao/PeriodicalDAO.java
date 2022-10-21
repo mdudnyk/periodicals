@@ -23,4 +23,8 @@ public interface PeriodicalDAO extends GeneralDAO<Periodical, Integer> {
 
     boolean getIsPeriodicalExists(Connection connection, String title) throws DAOException;
 
+    boolean getIsPeriodicalExists(Connection connection, int id, String title) throws DAOException;
+
+    void updateWithoutImage(Periodical periodical, Connection connection) throws DAOException;
+
 }

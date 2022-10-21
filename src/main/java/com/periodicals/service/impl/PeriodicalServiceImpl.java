@@ -20,13 +20,21 @@ public class PeriodicalServiceImpl implements PeriodicalService {
     @Override
     public void createPeriodical(final Periodical periodical) throws DAOException, ServiceException {
         PeriodicalDAOManager pdm = daoManger.getPeriodicalDAOManager();
-
         if (!pdm.getIsPeriodicalExists(periodical.getTitle())) {
             pdm.createPeriodical(periodical);
         } else {
             throw new ServiceException("Periodical with title=" + periodical.getTitle() + " already exists. ");
         }
+    }
 
+    @Override
+    public void editPeriodical(final Periodical periodical) throws DAOException, ServiceException {
+        PeriodicalDAOManager pdm = daoManger.getPeriodicalDAOManager();
+        if (!pdm.getIsPeriodicalExists(periodical.getId(), periodical.getTitle())) {
+            pdm.editPeriodical(periodical);
+        } else {
+            throw new ServiceException("Periodical with title=" + periodical.getTitle() + " already exists. ");
+        }
     }
 
     public List<PeriodicalForTable> getPeriodicalsForTableSortPagination(final String localeId,

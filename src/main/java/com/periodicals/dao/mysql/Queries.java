@@ -123,6 +123,10 @@ class Queries {
 
     //PERIODICAL
     public static final String CREATE_PERIODICAL = "INSERT INTO periodical values (DEFAULT, ?, ?, ?, ?, ?, ?, ?)";
+    public static final String UPDATE_PERIODICAL = "UPDATE periodical " +
+            "SET topic_id=?, title=?, title_img=?, price=?, publication_frequency=?, subscription_period=?, status=? WHERE id=?";
+    public static final String UPDATE_PERIODICAL_WITHOUT_IMAGE = "UPDATE periodical " +
+            "SET topic_id=?, title=?, price=?, publication_frequency=?, subscription_period=?, status=? WHERE id=?";
     public static final String GET_PERIODICAL_BY_ID = "SELECT * FROM periodical WHERE id=?";
     public static final String GET_PERIODICALS_FOR_TABLE_PAGINATION_ASC = """
         SELECT DISTINCT id, title, COALESCE(
@@ -187,14 +191,26 @@ class Queries {
     public static final String GET_PERIODICALS_COUNT_SEARCH_MODE = "SELECT COUNT(*) FROM periodical WHERE " +
             "title LIKE CONCAT( '%',?,'%')";
     public static final String GET_IS_PERIODICAL_EXISTS = "SELECT EXISTS(SELECT * FROM periodical WHERE title=? LIMIT 1)";
+    public static final String GET_IS_PERIODICAL_EXISTS_EXCEPT_ID =
+            "SELECT EXISTS(SELECT * FROM periodical WHERE title=? AND NOT id=? LIMIT 1)";
 
     //PERIODICAL_TRANSLATE
     public static final String CREATE_PERIODICAL_TRANSLATE = "INSERT INTO periodical_translate values (?, ?, ?, ?, ?)";
     public static final String GET_PERIODICAL_TRANSLATION_BY_PERIODICAL_ID =
             "SELECT * FROM periodical_translate WHERE periodical_id=?";
+    public static final String PERIODICAL_TRANSLATE_EXISTS = "SELECT EXISTS(SELECT * FROM periodical_translate " +
+            "WHERE periodical_id=? AND locale_id=?)";
+    public static final String UPDATE_PERIODICAL_TRANSLATION =
+            "UPDATE periodical_translate SET publishing_country=?, publishing_lang=?, description=? " +
+                    "WHERE periodical_id=? AND locale_id=?";
 
     //PERIODICAL_RELEASE_CALENDAR
     public static final String CREATE_PERIODICAL_RELEASE_CALENDAR = "INSERT INTO release_calendar values (?, ?, ?)";
     public static final String GET_PERIODICAL_RELEASE_CALENDAR_BY_PERIODICAL_ID =
             "SELECT * FROM release_calendar WHERE periodical_id=?";
+    public static final String PERIODICAL_CALENDAR_EXISTS = "SELECT EXISTS(SELECT * FROM release_calendar " +
+            "WHERE periodical_id=? AND year=?)";
+    public static final String UPDATE_PERIODICAL_CALENDAR =
+            "UPDATE release_calendar SET month=?" +
+                    "WHERE periodical_id=? AND year=?";
 }

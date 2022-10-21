@@ -18,10 +18,9 @@ public enum CommandEnum {
     DELETE_TOPIC(new DeleteTopicCommand()),
     PERIODICALS_PAGE(new PeriodicalsPageCommand()),
     NEW_PERIODICAL_PAGE(new NewPeriodicalPageCommand()),
-    CREATE_PERIODICAL(new CreatePeriodicalCommand()),
-    DELETE_PERIODICAL(new DeletePeriodicalCommand()),
     EDIT_PERIODICAL_PAGE(new EditPeriodicalPageCommand()),
-    EDIT_PERIODICAL(new EditPeriodicalCommand()),
+    CREATE_EDIT_PERIODICAL(new CreateEditPeriodicalCommand()),
+    DELETE_PERIODICAL(new DeletePeriodicalCommand()),
     ERROR_PAGE(new ErrorPageCommand());
 
     private final FrontCommand frontCommand;

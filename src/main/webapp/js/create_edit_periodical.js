@@ -198,19 +198,18 @@ function getReleaseMonthObj(elems) {
     return resultArr;
 }
 
-function createNewPeriodical() {
+function createEditPeriodical(periodical_id) {
     hideAlerts();
     let new_periodical = new Periodical();
     if (isInputValid(periodical_state_at_startup, new_periodical)) {
-        tryToSendCreateRequest(new_periodical);
-        // console.log(new_periodical);
+        tryToSendCreateRequest(new_periodical, periodical_id);
     } else {
         alert_block.style.display = 'flex';
     }
     window.scrollTo(0, 0);
 }
 
-async function tryToSendCreateRequest(periodical) {
+async function tryToSendCreateRequest(periodical, id) {
     const formData = new FormData();
     const dto_object = new Blob([JSON.stringify({
         periodical,
@@ -222,8 +221,15 @@ async function tryToSendCreateRequest(periodical) {
         formData.append('image', file_input.files[0]);
     }
 
+    let requestStr;
+    if (id < 1) {
+        requestStr = 'http://localhost:8080/periodicals/controller?cmd=CREATE_EDIT_PERIODICAL';
+    } else {
+        requestStr = 'http://localhost:8080/periodicals/controller?cmd=CREATE_EDIT_PERIODICAL&id=' + id;
+    }
+
     try {
-        let response = await fetch('http://localhost:8080/periodicals/controller?cmd=CREATE_PERIODICAL', {
+        let response = await fetch(requestStr, {
             method: 'POST',
             body: formData,
         });
@@ -270,8 +276,10 @@ function isInputValid(old_periodical, new_periodical) {
         }
     }
     if (JSON.stringify(old_periodical) === JSON.stringify(new_periodical)) {
-        make_changes.style.display = 'block';
-        return false;
+        if (file_input.files.length < 1) {
+            make_changes.style.display = 'block';
+            return false;
+        }
     }
     if (hasEmptyFields(new_periodical)) {
         fill_all.style.display = 'block';

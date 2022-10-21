@@ -39,6 +39,11 @@ public class PeriodicalDAOManager  {
         return periodicalDAO.getIsPeriodicalExists(connection, title);
     }
 
+    public boolean getIsPeriodicalExists(final int id, final String title) throws DAOException {
+        Connection connection = conManager.getConnection();
+        return periodicalDAO.getIsPeriodicalExists(connection, id, title);
+    }
+
     public List<PeriodicalForTable> getPeriodicalsForTableSortPag(
             String locale, String defaultLocale, int skip, int amount,
             String orderBy, String sorting) throws DAOException {
@@ -82,7 +87,6 @@ public class PeriodicalDAOManager  {
 
     public void createPeriodical(final Periodical periodical) throws DAOException {
         Connection connection = conManager.getConnectionForTransaction();
-
         try {
             periodicalDAO.create(periodical, connection);
             for (PeriodicalTranslate pt : periodical.getTranslation().values()) {
@@ -90,6 +94,40 @@ public class PeriodicalDAOManager  {
             }
             for (MonthSelector ms : periodical.getReleaseCalendar().values()) {
                 releaseCalendarDAO.create(periodical.getId(), ms, connection);
+            }
+            connection.commit();
+        } catch (SQLException e) {
+            rollback(connection);
+            throw new DAOException("Unable to finish transaction of updating Topic with ID="
+                    + periodical.getId() + ". " + e.getMessage());
+        } finally {
+            conManager.close(connection);
+        }
+    }
+
+    public void editPeriodical(final Periodical periodical) throws DAOException {
+        Connection connection = conManager.getConnectionForTransaction();
+        try {
+            if (periodical.getTitleImgLink() == null) {
+                periodicalDAO.updateWithoutImage(periodical, connection);
+            } else {
+                periodicalDAO.update(periodical, connection);
+            }
+            for (PeriodicalTranslate pt : periodical.getTranslation().values()) {
+                if (periodicalTranslationDAO
+                        .checkIfTranslationExists(periodical.getId(), pt.getLocaleID(), connection)) {
+                    periodicalTranslationDAO.update(periodical.getId(), pt, connection);
+                } else {
+                    periodicalTranslationDAO.create(periodical.getId(), pt, connection);
+                }
+            }
+            for (MonthSelector ms : periodical.getReleaseCalendar().values()) {
+                if (releaseCalendarDAO
+                        .checkIfCalendarExists(periodical.getId(), ms.getYear(), connection)) {
+                    releaseCalendarDAO.update(periodical.getId(), ms, connection);
+                } else {
+                    releaseCalendarDAO.create(periodical.getId(), ms, connection);
+                }
             }
             connection.commit();
         } catch (SQLException e) {

@@ -12,4 +12,8 @@ public interface ReleaseCalendarDAO {
 
     Map<Integer, MonthSelector> getCalendarByPeriodicalId(int id, Connection connection) throws DAOException;
 
+    boolean checkIfCalendarExists(int id, int year, Connection connection) throws DAOException;
+
+    void update(int id, MonthSelector entity, Connection connection) throws DAOException;
+
 }

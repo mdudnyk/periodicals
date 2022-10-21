@@ -10,6 +10,8 @@ public interface PeriodicalService {
 
     void createPeriodical(Periodical periodical) throws DAOException, ServiceException;
 
+    void editPeriodical(Periodical periodical) throws DAOException, ServiceException;
+
     List<PeriodicalForTable> getPeriodicalsForTableSortPagination(final String localeId,
                                                                   final String defaultLocaleId,
                                                                   int skipPositions,

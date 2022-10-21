@@ -314,7 +314,7 @@
                                 </c:if>
                                 <c:if test="${requestScope.periodical.getTranslation().get(locale_id) == null}">
                                     <textarea class="materialize-textarea" id="desc_input_${locale_id}"
-                                              lang="${locale_id}" type="text" autocomplete="off"></textarea>
+                                              lang="${locale_id}" type="text" spellcheck="false" autocomplete="off"></textarea>
                                 </c:if>
                                 <label for="desc_input_${locale_id}">
                                     <fmt:message key="new_periodical.input_lang"/>
@@ -327,13 +327,13 @@
             </div>
         </div>
         <button class="create_periodical_button"
-                onclick="editPeriodical(${requestScope.periodical.getId()})">
+                onclick="createEditPeriodical(${requestScope.periodical.getId()})">
             <fmt:message key="edit_periodical.edit_periodical_btn"/>
         </button>
     </div>
 </div>
 
-<script src="${pageContext.request.contextPath}/js/edit_periodical.js"></script>
+<script src="${pageContext.request.contextPath}/js/create_edit_periodical.js"></script>
 <script src="${pageContext.request.contextPath}/materialize/js/materialize.min.js"></script>
 </body>
 </html>

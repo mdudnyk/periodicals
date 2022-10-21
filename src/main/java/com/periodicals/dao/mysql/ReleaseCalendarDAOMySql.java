@@ -45,6 +45,39 @@ public class ReleaseCalendarDAOMySql implements ReleaseCalendarDAO {
         return calendar;
     }
 
+    @Override
+    public boolean checkIfCalendarExists(final int id, final int year, final Connection connection) throws DAOException {
+        boolean exists = false;
+        try (PreparedStatement ps = connection.prepareStatement(Queries.PERIODICAL_CALENDAR_EXISTS)) {
+            ps.setInt(1, id);
+            ps.setInt(2, year);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                if (rs.getInt(1) == 1) {
+                    exists = true;
+                }
+            }
+            rs.close();
+        } catch (SQLException e) {
+            throw new DAOException("An error occurred while trying to check if calendar for " +
+                    "periodical with id=" + id + " and year=" + year + " is exists. " + e.getMessage());
+        }
+        return exists;
+    }
+
+    @Override
+    public void update(final int id, final MonthSelector entity, final Connection connection) throws DAOException {
+        try (PreparedStatement ps = connection.prepareStatement(Queries.UPDATE_PERIODICAL_CALENDAR)) {
+            ps.setString(1, entity.getMonth().toJSONString());
+            ps.setInt(2, id);
+            ps.setInt(3, entity.getYear());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Can not update periodical calendar with year=" + entity.getYear()
+                    + " for periodical with id=" + id + ". "+ e.getMessage());
+        }
+    }
+
     private void fillPreparedStatement(PreparedStatement ps, final int periodicalId, MonthSelector entity)
             throws SQLException {
         ps.setInt(1, periodicalId);

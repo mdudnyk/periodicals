@@ -356,11 +356,11 @@
                 </div>
             </div>
         </div>
-        <button class="create_periodical_button" onclick="createNewPeriodical()"><fmt:message key="new_periodical.create_periodical"/></button>
+        <button class="create_periodical_button" onclick="createEditPeriodical(0)"><fmt:message key="new_periodical.create_periodical"/></button>
     </div>
 </div>
 
-<script src="${pageContext.request.contextPath}/js/new_periodical.js"></script>
+<script src="${pageContext.request.contextPath}/js/create_edit_periodical.js"></script>
 <script src="${pageContext.request.contextPath}/materialize/js/materialize.min.js"></script>
 </body>
 </html>

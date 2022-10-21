@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-public class CreatePeriodicalCommand implements FrontCommand {
+public class CreateEditPeriodicalCommand implements FrontCommand {
     @Override
     public void execute(final HttpServletRequest request,
                         final HttpServletResponse response,
@@ -33,11 +33,23 @@ public class CreatePeriodicalCommand implements FrontCommand {
 
         JSONObject periodicalJson = getPeriodicalJSONFromRequest(request);
         String imageName = getGeneratedImageName(request);
-        Periodical newPeriodical = fillEntityFromRequest(periodicalJson, imageName);
+        Periodical periodical = fillEntityFromRequest(periodicalJson, imageName);
+
+        String periodicalId = request.getParameter("id");
 
         PeriodicalService ps = new PeriodicalServiceImpl(daoManager);
         try {
-            ps.createPeriodical(newPeriodical);
+            if (periodicalId == null) {
+                ps.createPeriodical(periodical);
+            } else {
+                try {
+                    periodical.setId(Integer.parseInt(periodicalId));
+                    ps.editPeriodical(periodical);
+                } catch (NumberFormatException e) {
+                    response.setStatus(500);
+                    return;
+                }
+            }
             Part imagePart = request.getPart("image");
             if (imagePart != null) {
                 String imagesFolder = request.getSession()
