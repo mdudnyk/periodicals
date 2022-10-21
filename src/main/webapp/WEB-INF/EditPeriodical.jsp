@@ -326,7 +326,10 @@
                 </div>
             </div>
         </div>
-        <button class="create_periodical_button" onclick="createNewPeriodical()"><fmt:message key="edit_periodical.edit_periodical_btn"/></button>
+        <button class="create_periodical_button"
+                onclick="editPeriodical(${requestScope.periodical.getId()})">
+            <fmt:message key="edit_periodical.edit_periodical_btn"/>
+        </button>
     </div>
 </div>
 

@@ -96,16 +96,18 @@ function down_period() {
 
 
 //Release month
-const month_selector_first = document.querySelector('.month_selector');
 const month_selector_container = document.getElementById('month_selector_container');
+const month_selector_arr = month_selector_container.getElementsByClassName('month_selector');
 const remove_year_btn = document.getElementById('remove_year_btn');
 const add_year_btn = document.getElementById('add_year_btn');
 function addNextYear() {
-    const year = parseInt(month_selector_first.querySelector('.month_selector_year').textContent);
-    const newForm = month_selector_first.cloneNode('month_selector');
-    newForm.querySelector('.month_selector_year').textContent = year + 1;
-    newForm.querySelector('.month_form').setAttribute('year', year + 1);
-    month_selector_container.appendChild(newForm);
+    const last_selector_index = month_selector_arr.length - 1;
+    const last_selector = month_selector_arr[last_selector_index];
+    const year = parseInt(last_selector.querySelector('.month_selector_year').textContent);
+    const new_selector = last_selector.cloneNode('month_selector');
+    new_selector.querySelector('.month_selector_year').textContent = year + 1;
+    new_selector.querySelector('.month_form').setAttribute('year', year + 1);
+    month_selector_container.appendChild(new_selector);
     add_year_btn.style.display = 'none';
     remove_year_btn.style.display = 'block';
 }
@@ -198,19 +200,18 @@ function getReleaseMonthObj(elems) {
     return resultArr;
 }
 
-function createNewPeriodical() {
+function editPeriodical(periodical_id) {
     hideAlerts();
-    let new_periodical = new Periodical();
-    if (isInputValid(periodical_state_at_startup, new_periodical)) {
-        tryToSendCreateRequest(new_periodical);
-        // console.log(new_periodical);
+    let edited_periodical = new Periodical();
+    if (isInputValid(periodical_state_at_startup, edited_periodical)) {
+        tryToSendEditRequest(edited_periodical, periodical_id);
     } else {
         alert_block.style.display = 'flex';
     }
     window.scrollTo(0, 0);
 }
 
-async function tryToSendCreateRequest(periodical) {
+async function tryToSendEditRequest(periodical, id) {
     const formData = new FormData();
     const dto_object = new Blob([JSON.stringify({
         periodical,
@@ -218,9 +219,12 @@ async function tryToSendCreateRequest(periodical) {
         type: 'application/json'
     })
     formData.append('json', dto_object);
-    formData.append('image', file_input.files[0]);
+    if (file_input.files.length > 0) {
+        formData.append('image', file_input.files[0]);
+    }
     try {
-        let response = await fetch('http://localhost:8080/periodicals/controller?cmd=CREATE_PERIODICAL', {
+        let response = await
+                fetch('http://localhost:8080/periodicals/controller?cmd=EDIT_PERIODICAL&id=' + id, {
             method: 'POST',
             body: formData,
         });
@@ -231,7 +235,7 @@ async function tryToSendCreateRequest(periodical) {
             success_block.style.display = 'flex';
         } else {
             alert_block.style.display = 'flex';
-            if (result === 565) {
+            if (result === 567) {
                 have_periodical.style.display = 'block';
             } else {
                 try_later.style.display = 'block';
@@ -258,29 +262,31 @@ function hideAlerts() {
     success.style.display = 'none';
 }
 
-function isInputValid(old_periodical, new_periodical) {
+function isInputValid(old_periodical, edited_periodical) {
     let isValid = true;
-    if (file_input.files[0].size > 307200) {
-        image_to_big.style.display = 'block';
-        return false;
+    if (file_input.files.length > 0) {
+        if (file_input.files[0].size > 307200) {
+            image_to_big.style.display = 'block';
+            return false;
+        }
     }
-    if (JSON.stringify(old_periodical) === JSON.stringify(new_periodical)) {
+    if (JSON.stringify(old_periodical) === JSON.stringify(edited_periodical)) {
         make_changes.style.display = 'block';
         return false;
     }
-    if (hasEmptyFields(new_periodical)) {
+    if (hasEmptyFields(edited_periodical)) {
         fill_all.style.display = 'block';
         return false;
     }
-    if (new_periodical.topic === 0 || isNaN(new_periodical.topic)) {
+    if (edited_periodical.topic === 0 || isNaN(edited_periodical.topic)) {
         no_topic.style.display = 'block';
         return false;
     }
-    if (new_periodical.price === 0 || isNaN(new_periodical.price)) {
+    if (edited_periodical.price === 0 || isNaN(edited_periodical.price)) {
         not_zero.style.display = 'block';
         return false;
     }
-    if (isNotSetRelease(new_periodical.release)) {
+    if (isNotSetRelease(edited_periodical.release)) {
         empty_release.style.display = 'block';
         return false;
     }

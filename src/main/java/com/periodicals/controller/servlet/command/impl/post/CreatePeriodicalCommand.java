@@ -21,7 +21,6 @@ import org.json.simple.parser.ParseException;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
@@ -160,17 +159,7 @@ public class CreatePeriodicalCommand implements FrontCommand {
         if (imagePart != null) {
             imageName = generateRandomImageName();
         }
-//        if (imagePart == null) {
-//            String defaultImageFileName = request.getSession()
-//                    .getServletContext()
-//                    .getInitParameter("defaultImageFileName");
-//            assert defaultImageFileName != null : "No default title image file name in web.xml. " +
-//                    "Check 'defaultImageFileName' context-param. ";
-//            imageName = defaultImageFileName;
-//        } else {
-//            imageName = generateRandomImageName();
-//        }
-        System.out.println(imageName);
+
         return imageName;
     }
 

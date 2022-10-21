@@ -218,7 +218,7 @@ async function tryToSendCreateRequest(periodical) {
         type: 'application/json'
     })
     formData.append('json', dto_object);
-    if (title_img.src.length > 0) {
+    if (file_input.files.length > 0) {
         formData.append('image', file_input.files[0]);
     }
 
@@ -263,7 +263,7 @@ function hideAlerts() {
 
 function isInputValid(old_periodical, new_periodical) {
     let isValid = true;
-    if (title_img.src.size > 0) {
+    if (file_input.files.length > 0) {
         if (file_input.files[0].size > 307200) {
             image_to_big.style.display = 'block';
             return false;
