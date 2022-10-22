@@ -140,6 +140,7 @@ h1 {
 }
 
 .info_footer {
+    text-transform: uppercase;
     position: absolute;
     bottom: 0;
     left: 0;

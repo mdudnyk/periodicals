@@ -17,7 +17,7 @@
 <%@ include file="fragment/Header.jspf" %>
 <div class="content">
     <div class="content_topper">
-        <a href="controller?cmd=PERIODICALS_PAGE&pageNumber=1" class="periodicals_page_link">
+        <a href="controller?cmd=PERIODICALS_PAGE" class="periodicals_page_link">
             <fmt:message key="new_periodical.periodicals"/>
         </a>
         <i class="small material-icons" style="margin: 0 10px; opacity: 70%;">navigate_next</i>
