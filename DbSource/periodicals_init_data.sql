@@ -80,7 +80,7 @@ INSERT INTO periodical values (DEFAULT, 5, 'Frankie', '166638179703638.jpeg', 20
 INSERT INTO periodical values (DEFAULT, 5, 'Designlines', '166637984667286.jpeg', 26010, '{"amount": 2, "period": "year"}', 6, true);
 INSERT INTO periodical values (DEFAULT, 5, 'Commercial Interior Design', '166638246308754.jpeg', 40590, '{"amount": 6, "period": "month"}', 2, true);
 
-INSERT INTO periodical values (DEFAULT, 6, 'Sale & Pepe', '166638214479864.jpeg', 14015, '{"amount": 1, "period": "month"}', 1, false);
+INSERT INTO periodical values (DEFAULT, 6, 'Sale & Pepe', '166638214479864.jpeg', 14015, '{"amount": 1, "period": "month"}', 1, true);
 INSERT INTO periodical values (DEFAULT, 6, 'Taste', '166637841584057.jpeg', 9999, '{"amount": 1, "period": "month"}', 1, true);
 INSERT INTO periodical values (DEFAULT, 6, 'Beer & Brewing', '166637643666325.jpeg', 28000, '{"amount": 3, "period": "year"}', 4, true);
 INSERT INTO periodical values (DEFAULT, 6, 'Gourmet', '166638287840873.jpeg', 32910, '{"amount": 3, "period": "year"}', 4, true);

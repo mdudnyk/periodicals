@@ -44,22 +44,21 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
 
     @Override
     public Periodical getEntityById(final Integer id, final Connection connection) throws DAOException {
-        Periodical periodical;
+        Periodical periodical = null;
         try (PreparedStatement ps = connection.prepareStatement(Queries.GET_PERIODICAL_BY_ID)) {
             ps.setInt(1, id);
-
             ResultSet rs = ps.executeQuery();
-            rs.next();
-            int topicId = rs.getInt(2);
-            String title = rs.getString(3);
-            String imageUrl = rs.getString(4);
-            int price = rs.getInt(5);
-            JSONObject frequency = (JSONObject) new JSONParser().parse(rs.getString(6));
-            int subPeriod = rs.getInt(7);
-            boolean status = rs.getBoolean(8);
+            if (rs.next()) {
+                int topicId = rs.getInt(2);
+                String title = rs.getString(3);
+                String imageUrl = rs.getString(4);
+                int price = rs.getInt(5);
+                JSONObject frequency = (JSONObject) new JSONParser().parse(rs.getString(6));
+                int subPeriod = rs.getInt(7);
+                boolean status = rs.getBoolean(8);
+                periodical = new Periodical(id, topicId, title, imageUrl, price, frequency, subPeriod, status);
+            }
             rs.close();
-
-            periodical = new Periodical(id, topicId, title, imageUrl, price, frequency, subPeriod, status);
         } catch (SQLException | ParseException e) {
             throw new DAOException("Error while trying to get periodical with id=" + id + ". " + e.getMessage());
         }
@@ -287,4 +286,3 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
         return exists;
     }
 }
-

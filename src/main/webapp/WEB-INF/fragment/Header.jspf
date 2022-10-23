@@ -160,7 +160,9 @@
             <span class="balance_block">
                     <i class="material-icons profile">account_balance_wallet</i>
                     <span class="balance_amount">
-                        <%=MoneyFormatter.toHumanReadable(user.getBalance())%>
+                        <span id="main_balance_field">
+                            <%=MoneyFormatter.toHumanReadable(user.getBalance())%>
+                        </span>
                         ${sessionScope.locale.getCurrency()}
                     </span>
                 </span>

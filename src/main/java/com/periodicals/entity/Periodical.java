@@ -3,6 +3,7 @@ package com.periodicals.entity;
 import org.json.simple.JSONObject;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -17,6 +18,10 @@ public class Periodical implements Serializable {
     private final boolean isActive;
     private Map<String, PeriodicalTranslate> translation;
     private Map<Integer, MonthSelector> releaseCalendar;
+
+    {
+        translation = new HashMap<>();
+    }
 
     public Periodical(final int topicID, final String title, final String titleImgLink,
                       final int price, final JSONObject frequency, final int subPeriod,
@@ -89,6 +94,10 @@ public class Periodical implements Serializable {
 
     public void setTranslation(final Map<String, PeriodicalTranslate> translation) {
         this.translation = translation;
+    }
+
+    public void setTranslation(final PeriodicalTranslate translation) {
+        this.translation.put(translation.getLocaleID(), translation);
     }
 
     public void setReleaseCalendar(final Map<Integer, MonthSelector> releaseCalendar) {

@@ -2,6 +2,7 @@ package com.periodicals.service;
 
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.entity.Topic;
+import com.periodicals.entity.TopicTranslate;
 
 import java.util.List;
 import java.util.Map;
@@ -33,5 +34,8 @@ public interface TopicService {
     void updateTopic(Topic t) throws DAOException, ServiceException;
 
     void deleteTopic(int topicID) throws DAOException, ServiceException;
+
+    TopicTranslate getTopicTranslateByIdAndLocale(int topicId, String currentLocale,
+                                                  String defaultLocale) throws DAOException;
 
 }

@@ -4,7 +4,6 @@ import com.periodicals.controller.servlet.command.FrontCommand;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.dao.manager.DAOManagerFactory;
 import com.periodicals.entity.LocaleCustom;
-import com.periodicals.entity.Periodical;
 import com.periodicals.entity.PeriodicalForHomePage;
 import com.periodicals.entity.Topic;
 import com.periodicals.service.PeriodicalService;
@@ -17,7 +16,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -40,8 +38,6 @@ public class HomePageCommand implements FrontCommand {
 
         request.setAttribute("topics", topics);
         request.setAttribute("periodicals", periodicals);
-
-//        periodicals.forEach((key, value) -> System.out.println("topicId: " + key + "\n" + Arrays.toString(value.toArray())));
 
         request.getRequestDispatcher("WEB-INF/HomePage.jsp").forward(request, response);
     }

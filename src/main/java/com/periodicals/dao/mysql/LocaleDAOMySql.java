@@ -43,11 +43,10 @@ public class LocaleDAOMySql implements LocaleDAO {
         try (PreparedStatement ps = connection.prepareStatement(Queries.GET_LOCALE_BY_ID)) {
             ps.setString(1, id);
             ResultSet rs = ps.executeQuery();
-            if (rs.isBeforeFirst()) {
-                rs.next();
+            if (rs.next()) {
                 locale = fillEntityFromResultSet(rs);
-                rs.close();
             }
+            rs.close();
         } catch (SQLException e) {
             throw new DAOException("Error while trying to get locale by it`s ID=" + id + ". " + e.getMessage());
         }

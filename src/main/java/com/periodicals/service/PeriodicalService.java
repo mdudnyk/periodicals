@@ -40,4 +40,7 @@ public interface PeriodicalService {
 
     Map<Integer, List<PeriodicalForHomePage>> getPeriodicalsForHomePage(List<Topic> topics) throws DAOException;
 
+    Periodical getPeriodicalByIdAndLocale(int id, String currentLocale,
+                                          String defaultLocale) throws DAOException, ServiceException;
+
 }

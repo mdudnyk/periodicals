@@ -30,7 +30,7 @@ public class ReleaseCalendarDAOMySql implements ReleaseCalendarDAO {
     public Map<Integer, MonthSelector> getCalendarByPeriodicalId(
             final int id, final Connection connection) throws DAOException {
         Map<Integer, MonthSelector> calendar = new HashMap<>();
-        try (PreparedStatement ps = connection.prepareStatement(Queries.GET_PERIODICAL_RELEASE_CALENDAR_BY_PERIODICAL_ID)) {
+        try (PreparedStatement ps = connection.prepareStatement(Queries.GET_PERIODICAL_RELEASE_CALENDAR_BY_ID)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -41,6 +41,26 @@ public class ReleaseCalendarDAOMySql implements ReleaseCalendarDAO {
         } catch (SQLException | ParseException e) {
             throw new DAOException("Error while trying to get release calendar for periodical with id="
                     + id + ". " + e.getMessage());
+        }
+        return calendar;
+    }
+
+    @Override
+    public MonthSelector getCalendarByPeriodicalIdAndYear(final int id, final int year,
+                                                                        final Connection connection) throws DAOException {
+        MonthSelector calendar = null;
+        try (PreparedStatement ps = connection
+                .prepareStatement(Queries.GET_PERIODICAL_RELEASE_CALENDAR_BY_ID_AND_YEAR)) {
+            ps.setInt(1, id);
+            ps.setInt(2, year);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                calendar = fillEntityFromResultSet(rs);
+            }
+            rs.close();
+        } catch (SQLException | ParseException e) {
+            throw new DAOException("Error while trying to get release calendar for periodical with id="
+                    + id + " and year=" + year + ". " + e.getMessage());
         }
         return calendar;
     }

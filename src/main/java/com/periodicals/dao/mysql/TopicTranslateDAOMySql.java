@@ -61,10 +61,8 @@ public class TopicTranslateDAOMySql implements TopicTranslateDAO {
             ps.setInt(1, parentObjID);
             ps.setString(2, localeID);
             ResultSet rs = ps.executeQuery();
-            if (rs.isBeforeFirst()) {
-                rs.next();
+            if (rs.next()) {
                 topicTranslate = fillEntityFromResultSet(rs);
-                rs.close();
             }
             rs.close();
         } catch (SQLException e) {

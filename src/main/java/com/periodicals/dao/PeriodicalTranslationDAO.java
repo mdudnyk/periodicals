@@ -13,6 +13,9 @@ public interface PeriodicalTranslationDAO {
 
     Map<String, PeriodicalTranslate> getTranslationsByPeriodicalId(int id, Connection connection) throws DAOException;
 
+    PeriodicalTranslate getTranslationByPeriodicalIdAndLocale(int id, String locale,
+                                                              Connection connection) throws DAOException;
+
     boolean checkIfTranslationExists(int id, String localeID, Connection connection) throws DAOException;
 
     void update(int id, PeriodicalTranslate pt, Connection connection) throws DAOException;

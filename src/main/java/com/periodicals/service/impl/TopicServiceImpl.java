@@ -71,14 +71,26 @@ public class TopicServiceImpl implements TopicService {
         if (id > 0) {
             topic = daoManger.getTopicDAOManager().getTopicById(id);
             if (topic == null) {
-                throw new ServiceException("There is nothing to edit. Topic with ID="
+                throw new ServiceException("Topic with ID="
                         + id + " is not existing. ");
             }
         } else {
-            throw new ServiceException("There is nothing to edit. Topic ID="
+            throw new ServiceException("Topic ID="
                     + id + " is not valid. ID should be > 1. ");
         }
         return topic;
+    }
+
+    @Override
+    public TopicTranslate getTopicTranslateByIdAndLocale(final int topicId, final String currentLocale,
+                                       final String defaultLocale) throws DAOException {
+        TopicTranslate topicTranslate = daoManger.getTopicDAOManager()
+                .getTranslationByIdAndLocale(topicId, currentLocale);
+        if (topicTranslate == null) {
+            topicTranslate = daoManger.getTopicDAOManager()
+                    .getTranslationByIdAndLocale(topicId, defaultLocale);
+        }
+        return topicTranslate;
     }
 
     @Override

@@ -13,6 +13,7 @@ import com.periodicals.entity.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -145,6 +146,33 @@ public class PeriodicalDAOManager  {
         if (periodical != null) {
             periodical.setTranslation(periodicalTranslationDAO.getTranslationsByPeriodicalId(id, connection));
             periodical.setReleaseCalendar(releaseCalendarDAO.getCalendarByPeriodicalId(id, connection));
+        }
+        conManager.close(connection);
+        return periodical;
+    }
+
+    public Periodical getPeriodicalById(final int id, final String currentLocale,
+                                        final String defaultLocale, final int currentYear) throws DAOException {
+        Connection connection = conManager.getConnection();
+        Periodical periodical = periodicalDAO.getEntityById(id, connection);
+        if (periodical != null) {
+            PeriodicalTranslate periodicalTranslate = periodicalTranslationDAO
+                    .getTranslationByPeriodicalIdAndLocale(id, currentLocale, connection);
+            if (periodicalTranslate == null) {
+                periodicalTranslate = periodicalTranslationDAO
+                        .getTranslationByPeriodicalIdAndLocale(id, defaultLocale, connection);
+            }
+            periodical.setTranslation(periodicalTranslate);
+
+            Map<Integer, MonthSelector> calendar = new HashMap<>();
+            for (int i = 0; i < 3; i++) {
+                MonthSelector months = releaseCalendarDAO
+                        .getCalendarByPeriodicalIdAndYear(id, currentYear + i, connection);
+                if (months != null) {
+                    calendar.put(months.getYear(), months);
+                }
+            }
+            periodical.setReleaseCalendar(calendar);
         }
         conManager.close(connection);
         return periodical;

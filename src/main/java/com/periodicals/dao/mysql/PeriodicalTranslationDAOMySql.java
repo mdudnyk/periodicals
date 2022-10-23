@@ -43,6 +43,26 @@ public class PeriodicalTranslationDAOMySql implements PeriodicalTranslationDAO {
     }
 
     @Override
+    public PeriodicalTranslate getTranslationByPeriodicalIdAndLocale(final int id, final String locale,
+                                                                     final Connection connection) throws DAOException {
+        PeriodicalTranslate translation = null;
+        try (PreparedStatement ps = connection
+                .prepareStatement(Queries.GET_PERIODICAL_TRANSLATION_BY_PERIODICAL_ID_AND_LOCALE)) {
+            ps.setInt(1, id);
+            ps.setString(2, locale);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                translation = fillEntityFromResultSet(rs);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            throw new DAOException("Error while trying to get translation for periodical with id="
+                    + id + " and locale=" + locale + ". " + e.getMessage());
+        }
+        return translation;
+    }
+
+    @Override
     public boolean checkIfTranslationExists(final int id,
                                             final String localeId, final Connection connection) throws DAOException {
         boolean exists = false;

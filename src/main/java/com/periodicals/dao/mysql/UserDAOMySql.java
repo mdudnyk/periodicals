@@ -50,12 +50,10 @@ public class UserDAOMySql implements UserDAO {
         try (PreparedStatement ps = connection.prepareStatement(Queries.GET_USER_BY_ID)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-
-            if (rs.isBeforeFirst()) {
-                rs.next();
+            if (rs.next()) {
                 user = fillEntityFromResultSet(rs);
-                rs.close();
             }
+            rs.close();
         } catch (SQLException e) {
             throw new DAOException("Error while trying to get user by it`s ID=" + id + ". " + e.getMessage());
         }
@@ -70,11 +68,10 @@ public class UserDAOMySql implements UserDAO {
         try (PreparedStatement ps = connection.prepareStatement(Queries.GET_USER_BY_EMAIL)) {
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
-            if (rs.isBeforeFirst()) {
-                rs.next();
+            if (rs.next()) {
                 user = fillEntityFromResultSet(rs);
-                rs.close();
             }
+            rs.close();
         } catch (SQLException e) {
             throw new DAOException("Error while trying to get user by it`s email: " + email + ". " + e.getMessage());
         }

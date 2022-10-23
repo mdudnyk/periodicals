@@ -128,11 +128,10 @@ public class TopicDAOMySql implements TopicDAO {
         try (PreparedStatement ps = connection.prepareStatement(Queries.GET_TOPIC_BY_ID)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            if (rs.isBeforeFirst()) {
-                rs.next();
+            if (rs.next()) {
                 topic = new Topic(rs.getInt(1));
-                rs.close();
             }
+            rs.close();
         } catch (SQLException e) {
             throw new DAOException();
         }

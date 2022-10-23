@@ -10,6 +10,7 @@ import com.periodicals.entity.Topic;
 import com.periodicals.service.PeriodicalService;
 import com.periodicals.service.ServiceException;
 
+import java.time.Year;
 import java.util.List;
 import java.util.Map;
 
@@ -94,11 +95,11 @@ public class PeriodicalServiceImpl implements PeriodicalService {
         if (id > 0) {
             periodical = daoManger.getPeriodicalDAOManager().getPeriodicalById(id);
             if (periodical == null) {
-                throw new ServiceException("There is nothing to edit. Periodical with ID="
+                throw new ServiceException("Periodical with ID="
                         + id + " is not exists. ");
             }
         } else {
-            throw new ServiceException("There is nothing to edit. Periodical ID="
+            throw new ServiceException("Periodical ID="
                     + id + " is not valid. ID should be > 1. ");
         }
         return periodical;
@@ -109,5 +110,26 @@ public class PeriodicalServiceImpl implements PeriodicalService {
             throws DAOException {
         PeriodicalDAOManager pdm = daoManger.getPeriodicalDAOManager();
         return pdm.getPeriodicalsForHomePage(topics);
+    }
+
+    @Override
+    public Periodical getPeriodicalByIdAndLocale(final int id,
+                                                 final String currentLocale,
+                                                 final String defaultLocale) throws DAOException, ServiceException {
+        Periodical periodical;
+        int currentYear = Year.now().getValue();
+
+        if (id > 0) {
+            periodical = daoManger.getPeriodicalDAOManager()
+                    .getPeriodicalById(id, currentLocale, defaultLocale, currentYear);
+            if (periodical == null) {
+                throw new ServiceException("Periodical with ID="
+                        + id + " is not exists. ");
+            }
+        } else {
+            throw new ServiceException("Periodical ID="
+                    + id + " is not valid. ID should be > 1. ");
+        }
+        return periodical;
     }
 }
