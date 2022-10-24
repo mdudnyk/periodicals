@@ -199,7 +199,7 @@ class Queries {
     //PERIODICAL_TRANSLATE
     public static final String CREATE_PERIODICAL_TRANSLATE = "INSERT INTO periodical_translate values (?, ?, ?, ?, ?)";
     public static final String GET_PERIODICAL_TRANSLATION_BY_PERIODICAL_ID =
-            "SELECT * FROM periodical_translate WHERE periodical_id=? LIMIT 1";
+            "SELECT * FROM periodical_translate WHERE periodical_id=?";
     public static final String GET_PERIODICAL_TRANSLATION_BY_PERIODICAL_ID_AND_LOCALE =
             "SELECT * FROM periodical_translate WHERE periodical_id=? AND locale_id=? LIMIT 1";
     public static final String PERIODICAL_TRANSLATE_EXISTS = "SELECT EXISTS(SELECT * FROM periodical_translate " +
@@ -211,7 +211,7 @@ class Queries {
     //PERIODICAL_RELEASE_CALENDAR
     public static final String CREATE_PERIODICAL_RELEASE_CALENDAR = "INSERT INTO release_calendar values (?, ?, ?)";
     public static final String GET_PERIODICAL_RELEASE_CALENDAR_BY_ID =
-            "SELECT * FROM release_calendar WHERE periodical_id=? LIMIT 1";
+            "SELECT * FROM release_calendar WHERE periodical_id=?";
     public static final String GET_PERIODICAL_RELEASE_CALENDAR_BY_ID_AND_YEAR =
             "SELECT * FROM release_calendar WHERE periodical_id=? AND year=? LIMIT 1";
     public static final String PERIODICAL_CALENDAR_EXISTS = "SELECT EXISTS(SELECT * FROM release_calendar " +

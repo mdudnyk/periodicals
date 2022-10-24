@@ -238,12 +238,22 @@
                     <div id="month_selector_container">
                         <ct:monthSelectorPerEdit calendar="${requestScope.periodical.getReleaseCalendar()}"/>
                     </div>
-                    <button onclick="addNextYear()" id="add_year_btn">
-                        <fmt:message key="new_periodical.release.add_year"/>
-                    </button>
-                    <button onclick="removeLastYear()" id="remove_year_btn" style="display: none;">
-                        <fmt:message key="new_periodical.release.remove_last"/>
-                    </button>
+                    <c:if test="${requestScope.periodical.getReleaseCalendar().size() < 2}">
+                        <button onclick="addNextYear()" id="add_year_btn">
+                            <fmt:message key="new_periodical.release.add_year"/>
+                        </button>
+                        <button onclick="removeLastYear()" id="remove_year_btn" style="display: none;">
+                            <fmt:message key="new_periodical.release.remove_last"/>
+                        </button>
+                    </c:if>
+                    <c:if test="${requestScope.periodical.getReleaseCalendar().size() > 1}">
+                        <button onclick="addNextYear()" id="add_year_btn" style="display: none;">
+                            <fmt:message key="new_periodical.release.add_year"/>
+                        </button>
+                        <button onclick="removeLastYear()" id="remove_year_btn">
+                            <fmt:message key="new_periodical.release.remove_last"/>
+                        </button>
+                    </c:if>
                 </div>
             </div>
             <div class="periodical_info_row" style="margin-top: 40px;">

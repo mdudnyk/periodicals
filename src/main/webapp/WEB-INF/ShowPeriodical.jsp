@@ -19,7 +19,7 @@
 <div class="body_container">
     <div class="body_top_block">
         <div class="top_block_img_container">
-            <img class="img_container_title" id="title_img"
+            <img class="img_container_title" id="title_img" alt=""
                  src="<ct:imageEncoderBase64 image_name="${requestScope.periodical.getTitleImgLink()}"/>">
         </div>
         <div class="top_block_text_block">
@@ -34,9 +34,17 @@
             <p>Language:
                 <span>${requestScope.periodical.getTranslation().values().iterator().next().getLanguage()}</span>
             </p>
-            <p>Publishing frequency: <span>1 per month</span></p>
+            <p>Publishing frequency:
+                <span>
+                    ${requestScope.periodical.getFrequency().get("amount")}
+                    <fmt:message key="new_periodical.per"/>
+                        <fmt:message key="new_periodical.frequency_${requestScope.periodical.getFrequency().get('period')}"/>
+                </span>
+            </p>
             <p class="text_block_price">Price for one copy:
-                <span id="price_per_one">${MoneyFormatter.toHumanReadable(requestScope.periodical.getPrice())} uah</span>
+                <span id="price_per_one">
+                    ${MoneyFormatter.toHumanReadable(requestScope.periodical.getPrice())}
+                    ${sessionScope.locale.getCurrency()}</span>
             </p>
             <p>Description:
                 <br>
@@ -65,189 +73,12 @@
         <div class="left_block">
             <p class="select_month_text">Select months in which you would like to receive this periodical</p>
             <div class="month_selector_block">
-                <div class="month_selector">
-                    <span class="month_selector_year" style="margin-right: 10px;">2022</span>
-                    <form action="#" class="month_form" style="display: flex;" year="2022">
-                        <p class="checkbox_block">
-                            Jan
-                            <label class="checkbox_label">
-                                <input onchange="countTotalPrice()" type="checkbox" class="filled-in checkbox-green" disabled/>
-                                <span></span>
-                            </label>
-                        </p>
-                        <p class="checkbox_block">
-                            Feb
-                            <label class="checkbox_label">
-                                <input onchange="countTotalPrice()" type="checkbox" class="filled-in checkbox-green" disabled/>
-                                <span></span>
-                            </label>
-                        </p>
-                        <p class="checkbox_block">
-                            Mar
-                            <label class="checkbox_label">
-                                <input onchange="countTotalPrice()" type="checkbox" class="filled-in checkbox-green" disabled/>
-                                <span></span>
-                            </label>
-                        </p>
-                        <p class="checkbox_block">
-                            Apr
-                            <label class="checkbox_label">
-                                <input onchange="countTotalPrice()" type="checkbox" class="filled-in checkbox-green" disabled/>
-                                <span></span>
-                            </label>
-                        </p>
-                        <p class="checkbox_block">
-                            May
-                            <label class="checkbox_label">
-                                <input onchange="countTotalPrice()" type="checkbox" class="filled-in checkbox-green" disabled/>
-                                <span></span>
-                            </label>
-                        </p>
-                        <p class="checkbox_block">
-                            Jun
-                            <label class="checkbox_label">
-                                <input onchange="countTotalPrice()" type="checkbox" class="filled-in checkbox-green" disabled/>
-                                <span></span>
-                            </label>
-                        </p>
-                        <p class="checkbox_block">
-                            Jul
-                            <label class="checkbox_label">
-                                <input onchange="countTotalPrice()" type="checkbox" class="filled-in checkbox-green" disabled/>
-                                <span></span>
-                            </label>
-                        </p>
-                        <p class="checkbox_block">
-                            Aug
-                            <label class="checkbox_label">
-                                <input onchange="countTotalPrice()" type="checkbox" class="filled-in checkbox-green" disabled/>
-                                <span></span>
-                            </label>
-                        </p>
-                        <p class="checkbox_block">
-                            Sep
-                            <label class="checkbox_label">
-                                <input onchange="countTotalPrice()" type="checkbox" class="filled-in checkbox-green" disabled/>
-                                <span></span>
-                            </label>
-                        </p>
-                        <p class="checkbox_block">
-                            Oct
-                            <label class="checkbox_label">
-                                <input onchange="countTotalPrice()" type="checkbox" class="filled-in checkbox-green" disabled/>
-                                <span></span>
-                            </label>
-                        </p>
-                        <p class="checkbox_block">
-                            Nov
-                            <label class="checkbox_label">
-                                <input onchange="countTotalPrice()" type="checkbox" class="filled-in checkbox-green"/>
-                                <span></span>
-                            </label>
-                        </p>
-                        <p class="checkbox_block">
-                            Dec
-                            <label class="checkbox_label">
-                                <input onchange="countTotalPrice()" type="checkbox" class="filled-in checkbox-green"/>
-                                <span></span>
-                            </label>
-                        </p>
-                    </form>
-                </div>
-                <div class="month_selector">
-                    <span class="month_selector_year" style="margin-right: 10px;">2023</span>
-                    <form action="#" class="month_form" style="display: flex;" year="2023">
-                        <p class="checkbox_block">
-                            Jan
-                            <label class="checkbox_label">
-                                <input onchange="countTotalPrice()" type="checkbox" class="filled-in checkbox-green"/>
-                                <span></span>
-                            </label>
-                        </p>
-                        <p class="checkbox_block">
-                            Feb
-                            <label class="checkbox_label">
-                                <input onchange="countTotalPrice()" type="checkbox" class="filled-in checkbox-green"/>
-                                <span></span>
-                            </label>
-                        </p>
-                        <p class="checkbox_block">
-                            Mar
-                            <label class="checkbox_label">
-                                <input onchange="countTotalPrice()" type="checkbox" class="filled-in checkbox-green"/>
-                                <span></span>
-                            </label>
-                        </p>
-                        <p class="checkbox_block">
-                            Apr
-                            <label class="checkbox_label">
-                                <input onchange="countTotalPrice()" type="checkbox" class="filled-in checkbox-green"/>
-                                <span></span>
-                            </label>
-                        </p>
-                        <p class="checkbox_block">
-                            May
-                            <label class="checkbox_label">
-                                <input onchange="countTotalPrice()" type="checkbox" class="filled-in checkbox-green"/>
-                                <span></span>
-                            </label>
-                        </p>
-                        <p class="checkbox_block">
-                            Jun
-                            <label class="checkbox_label">
-                                <input onchange="countTotalPrice()" type="checkbox" class="filled-in checkbox-green"/>
-                                <span></span>
-                            </label>
-                        </p>
-                        <p class="checkbox_block">
-                            Jul
-                            <label class="checkbox_label">
-                                <input onchange="countTotalPrice()" type="checkbox" class="filled-in checkbox-green"/>
-                                <span></span>
-                            </label>
-                        </p>
-                        <p class="checkbox_block">
-                            Aug
-                            <label class="checkbox_label">
-                                <input onchange="countTotalPrice()" type="checkbox" class="filled-in checkbox-green"/>
-                                <span></span>
-                            </label>
-                        </p>
-                        <p class="checkbox_block">
-                            Sep
-                            <label class="checkbox_label">
-                                <input onchange="countTotalPrice()" type="checkbox" class="filled-in checkbox-green"/>
-                                <span></span>
-                            </label>
-                        </p>
-                        <p class="checkbox_block">
-                            Oct
-                            <label class="checkbox_label">
-                                <input onchange="countTotalPrice()" type="checkbox" class="filled-in checkbox-green"/>
-                                <span></span>
-                            </label>
-                        </p>
-                        <p class="checkbox_block">
-                            Nov
-                            <label class="checkbox_label">
-                                <input onchange="countTotalPrice()" type="checkbox" class="filled-in checkbox-green"/>
-                                <span></span>
-                            </label>
-                        </p>
-                        <p class="checkbox_block">
-                            Dec
-                            <label class="checkbox_label">
-                                <input onchange="countTotalPrice()" type="checkbox" class="filled-in checkbox-green"/>
-                                <span></span>
-                            </label>
-                        </p>
-                    </form>
-                </div>
+                <ct:monthSelectorSubscribe calendar="${requestScope.periodical.getReleaseCalendar()}"/>
             </div>
         </div>
         <div class="right_block">
-            <p class="total_price_text">Totat price</p>
-            <p class="total_price_value"><span id="total_price_field">0</span> uah</p>
+            <p class="total_price_text">Total price</p>
+            <p class="total_price_value"><span id="total_price_field">0</span> ${sessionScope.locale.getCurrency()}</p>
             <button class="subscribe_btn" onclick="tryToSubscribe(1)">Subscribe</button>
             <!-- <a href="controller?cmd=EDIT_PERIODICAL_PAGE&id=1">
                 <button class="subscribe_btn">Edit</button>
@@ -255,10 +86,6 @@
         </div>
     </div>
 </div>
-
-
-
-</body>
 
 <script src="${pageContext.request.contextPath}/js/show_periodical.js"></script>
 </body>

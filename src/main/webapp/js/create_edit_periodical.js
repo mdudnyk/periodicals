@@ -66,15 +66,15 @@ function setFrequency(parameter, period) {
 }
 const frequency_digit = document.getElementById("frequency_digit");
 function up_frequency() {
-    let digit = frequency_digit.textContent;
+    let digit = parseInt(frequency_digit.textContent);
     if (digit < 12) {
-        frequency_digit.textContent = ++digit;
+        frequency_digit.textContent = (++digit).toString();
     }
 }
 function down_frequency() {
     let digit = frequency_digit.textContent;
     if (digit > 1) {
-        frequency_digit.textContent = --digit;
+        frequency_digit.textContent = (--digit).toString();
     }
 }
 
@@ -82,35 +82,38 @@ function down_frequency() {
 //Min. subscription period
 const period_digit = document.getElementById("period_digit");
 function up_period() {
-    let digit = period_digit.textContent;
+    let digit = parseInt(period_digit.textContent);
     if (digit < 12) {
-        period_digit.textContent = ++digit;
+        period_digit.textContent = (++digit).toString();
     }
 }
 function down_period() {
     let digit = period_digit.textContent;
     if (digit > 1) {
-        period_digit.textContent = --digit;
+        period_digit.textContent = (++digit).toString();
     }
 }
 
 
 //Release month
-const month_selector_first = document.querySelector('.month_selector');
 const month_selector_container = document.getElementById('month_selector_container');
+const month_selector_arr = month_selector_container.getElementsByClassName('month_selector');
 const remove_year_btn = document.getElementById('remove_year_btn');
 const add_year_btn = document.getElementById('add_year_btn');
 function addNextYear() {
-    const year = parseInt(month_selector_first.querySelector('.month_selector_year').textContent);
-    const newForm = month_selector_first.cloneNode('month_selector');
-    newForm.querySelector('.month_selector_year').textContent = year + 1;
-    newForm.querySelector('.month_form').setAttribute('year', year + 1);
-    month_selector_container.appendChild(newForm);
+    const last_selector_index = month_selector_arr.length - 1;
+    const last_selector = month_selector_arr[last_selector_index];
+    const year = parseInt(last_selector.querySelector('.month_selector_year').textContent);
+    const new_selector = last_selector.cloneNode(true);
+    new_selector.querySelector('.month_selector_year').textContent = year + 1;
+    new_selector.querySelector('.month_form').setAttribute('year', year + 1);
+    month_selector_container.appendChild(new_selector);
     add_year_btn.style.display = 'none';
     remove_year_btn.style.display = 'block';
 }
 function removeLastYear() {
-    month_selector_container.lastChild.remove();
+    const last_selector_index = month_selector_arr.length - 1;
+    month_selector_arr.item(last_selector_index).remove();
     remove_year_btn.style.display = 'none';
     add_year_btn.style.display = 'block';
 }

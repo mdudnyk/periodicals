@@ -165,7 +165,7 @@ public class PeriodicalDAOManager  {
             periodical.setTranslation(periodicalTranslate);
 
             Map<Integer, MonthSelector> calendar = new HashMap<>();
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 2; i++) {
                 MonthSelector months = releaseCalendarDAO
                         .getCalendarByPeriodicalIdAndYear(id, currentYear + i, connection);
                 if (months != null) {
