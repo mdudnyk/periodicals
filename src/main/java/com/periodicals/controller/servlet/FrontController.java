@@ -1,7 +1,9 @@
 package com.periodicals.controller.servlet;
 
 import com.periodicals.controller.servlet.command.CommandFactory;
+import com.periodicals.controller.servlet.command.FrontCommand;
 import com.periodicals.dao.manager.DAOManagerFactory;
+import com.periodicals.util.CommandAccessChecker;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -12,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(name = "FrontController", value = "/controller")
-@MultipartConfig(location="C:\\Users\\mdudnyk\\Desktop", fileSizeThreshold=1024*1024,
+@MultipartConfig(fileSizeThreshold=1024*1024,
         maxFileSize=1024*1024*5, maxRequestSize=1024*1024*5*5)
 public class FrontController extends HttpServlet {
 
@@ -32,7 +34,13 @@ public class FrontController extends HttpServlet {
                     (DAOManagerFactory) request
                     .getServletContext()
                     .getAttribute("DAOManagerFactory");
-            CommandFactory.getCommand(request).execute(request, response, daoFactory);
+            FrontCommand command = CommandFactory.getCommand(request);
+            if (CommandAccessChecker.isAccessAllowed(command, request)) {
+                command.execute(request, response, daoFactory);
+            } else {
+                response.setStatus(567);
+                request.getRequestDispatcher("WEB-INF/error/ErrorAuthorization.jsp").forward(request, response);
+            }
         } catch (Exception e) {
             //TODO logging
             throw new ServletException(e);

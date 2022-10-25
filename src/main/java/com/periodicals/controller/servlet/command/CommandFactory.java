@@ -9,7 +9,7 @@ public final class CommandFactory {
 
     public static FrontCommand getCommand(HttpServletRequest request) {
         String commandFromRequest = request.getParameter("cmd");
-        FrontCommand frontCommand = null;
+        FrontCommand frontCommand;
 
         if (commandFromRequest != null) {
             try {
