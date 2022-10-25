@@ -1,6 +1,6 @@
 package com.periodicals.entity.enums;
 
-public enum Role {
+public enum UserRole {
     CUSTOMER,
-    ADMIN,
+    ADMIN;
 }

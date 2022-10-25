@@ -1,6 +1,6 @@
 package com.periodicals.entity;
 
-import com.periodicals.entity.enums.Role;
+import com.periodicals.entity.enums.UserRole;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -12,34 +12,34 @@ public class User implements Serializable {
     private final String lastname;
     private final String password;
     private final String email;
-    private final Role role;
+    private final UserRole userRole;
     private final int balance;
     private final boolean isActive;
     private Address address;
 
     public User(final String localeId, final String firstname, final String lastname,
-                final String password, final String email, final Role role, final int balance,
+                final String password, final String email, final UserRole userRole, final int balance,
                 final boolean isActive) {
         this.localeId = localeId;
         this.firstname = firstname;
         this.lastname = lastname;
         this.password = password;
         this.email = email;
-        this.role = role;
+        this.userRole = userRole;
         this.balance = balance;
         this.isActive = isActive;
     }
 
     public User(final int id, final String localeId, final String firstname, final String lastname,
                 final String password, final String email,
-                final Role role, final int balance, final boolean isActive) {
+                final UserRole userRole, final int balance, final boolean isActive) {
         this.id = id;
         this.localeId = localeId;
         this.firstname = firstname;
         this.lastname = lastname;
         this.password = password;
         this.email = email;
-        this.role = role;
+        this.userRole = userRole;
         this.balance = balance;
         this.isActive = isActive;
     }
@@ -68,8 +68,8 @@ public class User implements Serializable {
         return email;
     }
 
-    public Role getRole() {
-        return role;
+    public UserRole getRole() {
+        return userRole;
     }
 
     public int getBalance() {
@@ -104,12 +104,12 @@ public class User implements Serializable {
         return id == user.id && balance == user.balance && isActive == user.isActive
                 && localeId.equals(user.localeId) && firstname.equals(user.firstname)
                 && lastname.equals(user.lastname) && password.equals(user.password)
-                && email.equals(user.email) && role == user.role && Objects.equals(address, user.address);
+                && email.equals(user.email) && userRole == user.userRole && Objects.equals(address, user.address);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, localeId, firstname, lastname, password, email, role, balance, isActive, address);
+        return Objects.hash(id, localeId, firstname, lastname, password, email, userRole, balance, isActive, address);
     }
 
     @Override
@@ -121,7 +121,7 @@ public class User implements Serializable {
                 ", lastname='" + lastname + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", role=" + role +
+                ", role=" + userRole +
                 ", balance=" + balance +
                 ", isActive=" + isActive +
                 ", address=" + address +

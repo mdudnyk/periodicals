@@ -11,6 +11,8 @@ import com.periodicals.service.ServiceException;
 import com.periodicals.service.TopicService;
 import com.periodicals.service.impl.PeriodicalServiceImpl;
 import com.periodicals.service.impl.TopicServiceImpl;
+import com.periodicals.util.MoneyFormatter;
+import com.periodicals.util.PriceDeterminant;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -45,9 +47,12 @@ public class ShowPeriodicalCommand implements FrontCommand {
                 .getPeriodicalByIdAndLocale(periodicalId, currentLocale, defaultLocale);
         TopicTranslate topicTranslate = topicService
                 .getTopicTranslateByIdAndLocale(periodical.getTopicID(), currentLocale, defaultLocale);
+        PriceDeterminant priceDeterminant = new PriceDeterminant(periodical.getPrice(), periodical.getFrequency());
 
         request.setAttribute("periodical", periodical);
         request.setAttribute("topicTranslate", topicTranslate);
+        request.setAttribute("price", MoneyFormatter.toHumanReadable(priceDeterminant.getPrice()));
+        request.setAttribute("isLessThanMonth", priceDeterminant.isPeriodLessThanMonth());
 
         request.getRequestDispatcher("WEB-INF/ShowPeriodical.jsp").forward(request, response);
     }

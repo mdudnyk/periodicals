@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `periodicals_db`.`user` (
   `lastname` VARCHAR(50) NOT NULL,
   `password` VARCHAR(100) NOT NULL,
   `email` VARCHAR(50) NOT NULL,
-  `role` ENUM('CUSTOMER', 'ADMIN') NULL DEFAULT 'CUSTOMER',
+  `userRole` ENUM('CUSTOMER', 'ADMIN') NULL DEFAULT 'CUSTOMER',
   `balance` INT NULL DEFAULT 0,
   `is_blocked` TINYINT(1) NOT NULL,
   PRIMARY KEY (`id`),

@@ -3,7 +3,7 @@ package com.periodicals.dao.mysql;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.dao.UserDAO;
 import com.periodicals.entity.User;
-import com.periodicals.entity.enums.Role;
+import com.periodicals.entity.enums.UserRole;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -122,10 +122,10 @@ public class UserDAOMySql implements UserDAO {
         String lastName = resultSet.getString(4);
         String password = resultSet.getString(5);
         String email = resultSet.getString(6);
-        Role role = Role.valueOf(resultSet.getString(7));
+        UserRole userRole = UserRole.valueOf(resultSet.getString(7));
         int balance = resultSet.getInt(8);
         boolean isActive = resultSet.getBoolean(9);
 
-        return new User(id, localeId, firstName, lastName, password, email, role, balance, isActive);
+        return new User(id, localeId, firstName, lastName, password, email, userRole, balance, isActive);
     }
 }

@@ -5,6 +5,7 @@ import com.periodicals.dao.exception.DAOException;
 import com.periodicals.dao.manager.DAOManagerFactory;
 import com.periodicals.entity.LocaleCustom;
 import com.periodicals.entity.User;
+import com.periodicals.entity.enums.UserRole;
 import com.periodicals.service.UserService;
 import com.periodicals.service.impl.LocaleServiceImpl;
 import com.periodicals.service.impl.UserServiceImpl;
@@ -29,6 +30,9 @@ public class SignInCommand implements FrontCommand {
         LocaleCustom userLocale = new LocaleServiceImpl(daoFactory)
                 .getLocaleByShortName(user.getLocaleId());
             HttpSession session = request.getSession();
+            if (user.getRole() == UserRole.ADMIN) {
+                System.out.println("ADMIN");
+            }
             session.setAttribute("user", user);
             session.setAttribute("locale", userLocale);
             response.addCookie(new Cookie("lang", user.getLocaleId()));
