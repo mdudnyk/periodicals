@@ -7,7 +7,7 @@ import com.periodicals.entity.LocaleCustom;
 import com.periodicals.entity.Periodical;
 import com.periodicals.entity.TopicTranslate;
 import com.periodicals.service.PeriodicalService;
-import com.periodicals.service.ServiceException;
+import com.periodicals.service.exceptions.ServiceException;
 import com.periodicals.service.TopicService;
 import com.periodicals.service.impl.PeriodicalServiceImpl;
 import com.periodicals.service.impl.TopicServiceImpl;

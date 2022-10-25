@@ -9,9 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CommandAccessChecker {
-    private static Map<String, Boolean> accessCustomerMap = new HashMap<>();
-    private static Map<String, Boolean> accessAdminMap = new HashMap<>();
-    private static Map<String, Boolean> accessGuestMap = new HashMap<>();
+    private static final Map<String, Boolean> accessCustomerMap = new HashMap<>();
+    private static final Map<String, Boolean> accessAdminMap = new HashMap<>();
+    private static final Map<String, Boolean> accessGuestMap = new HashMap<>();
 
     static {
         accessCustomerMap.put("HomePageCommand", true);

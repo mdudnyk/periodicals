@@ -7,7 +7,7 @@ import com.periodicals.entity.MonthSelector;
 import com.periodicals.entity.Periodical;
 import com.periodicals.entity.PeriodicalTranslate;
 import com.periodicals.service.PeriodicalService;
-import com.periodicals.service.ServiceException;
+import com.periodicals.service.exceptions.ServiceException;
 import com.periodicals.service.impl.PeriodicalServiceImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

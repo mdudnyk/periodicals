@@ -6,7 +6,7 @@ import com.periodicals.dao.manager.DAOManagerFactory;
 import com.periodicals.entity.LocaleCustom;
 import com.periodicals.entity.PeriodicalForTable;
 import com.periodicals.service.PeriodicalService;
-import com.periodicals.service.ServiceException;
+import com.periodicals.service.exceptions.ServiceException;
 import com.periodicals.service.impl.PeriodicalServiceImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

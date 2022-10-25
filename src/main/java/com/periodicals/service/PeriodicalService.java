@@ -5,6 +5,7 @@ import com.periodicals.entity.Periodical;
 import com.periodicals.entity.PeriodicalForHomePage;
 import com.periodicals.entity.PeriodicalForTable;
 import com.periodicals.entity.Topic;
+import com.periodicals.service.exceptions.ServiceException;
 
 import java.util.List;
 import java.util.Map;

@@ -17,7 +17,7 @@ public class PriceDeterminant {
         if (!period.equals("week") && !period.equals("month") && !period.equals("year")) {
             throw new IllegalArgumentException("Not valid 'period' field in 'frequency' JSON object. ");
         }
-        if (amount < 1 || amount > 11) {
+        if (amount < 1 || amount > 12) {
             throw new IllegalArgumentException("Not valid 'amount' field in 'frequency' JSON object. ");
         }
     }

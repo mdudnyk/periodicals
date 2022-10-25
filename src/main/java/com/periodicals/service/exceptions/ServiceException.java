@@ -1,4 +1,4 @@
-package com.periodicals.service;
+package com.periodicals.service.exceptions;
 
 import java.sql.SQLException;
 

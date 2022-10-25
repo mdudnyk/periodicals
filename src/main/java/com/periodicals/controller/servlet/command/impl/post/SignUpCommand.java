@@ -6,7 +6,7 @@ import com.periodicals.dao.manager.DAOManagerFactory;
 import com.periodicals.entity.LocaleCustom;
 import com.periodicals.entity.User;
 import com.periodicals.entity.enums.UserRole;
-import com.periodicals.service.ServiceException;
+import com.periodicals.service.exceptions.ServiceException;
 import com.periodicals.service.UserService;
 import com.periodicals.service.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;

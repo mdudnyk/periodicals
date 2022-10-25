@@ -4,7 +4,7 @@ import com.periodicals.dao.exception.DAOException;
 import com.periodicals.dao.manager.DAOManagerFactory;
 import com.periodicals.dao.manager.UserDAOManager;
 import com.periodicals.entity.User;
-import com.periodicals.service.ServiceException;
+import com.periodicals.service.exceptions.ServiceException;
 import com.periodicals.service.UserService;
 
 public class UserServiceImpl implements UserService {

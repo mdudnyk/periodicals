@@ -5,7 +5,7 @@ import com.periodicals.dao.manager.DAOManagerFactory;
 import com.periodicals.dao.manager.TopicDAOManager;
 import com.periodicals.entity.Topic;
 import com.periodicals.entity.TopicTranslate;
-import com.periodicals.service.ServiceException;
+import com.periodicals.service.exceptions.ServiceException;
 import com.periodicals.service.TopicService;
 
 import java.util.List;

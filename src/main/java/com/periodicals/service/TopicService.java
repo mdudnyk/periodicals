@@ -3,6 +3,7 @@ package com.periodicals.service;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.entity.Topic;
 import com.periodicals.entity.TopicTranslate;
+import com.periodicals.service.exceptions.ServiceException;
 
 import java.util.List;
 import java.util.Map;

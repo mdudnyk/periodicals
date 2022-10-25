@@ -8,7 +8,7 @@ import com.periodicals.entity.PeriodicalForHomePage;
 import com.periodicals.entity.PeriodicalForTable;
 import com.periodicals.entity.Topic;
 import com.periodicals.service.PeriodicalService;
-import com.periodicals.service.ServiceException;
+import com.periodicals.service.exceptions.ServiceException;
 
 import java.time.Year;
 import java.util.List;

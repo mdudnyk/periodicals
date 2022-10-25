@@ -13,7 +13,7 @@ public class User implements Serializable {
     private final String password;
     private final String email;
     private final UserRole userRole;
-    private final int balance;
+    private int balance;
     private final boolean isActive;
     private Address address;
 
@@ -86,6 +86,10 @@ public class User implements Serializable {
 
     public void setId(final int id) {
         this.id = id;
+    }
+
+    public void setBalance(int newBalance) {
+        balance = newBalance;
     }
 
     public void setLocaleId(final String localeId) {
