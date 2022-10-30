@@ -55,59 +55,59 @@ INSERT INTO periodicals_db.topic_translate values (12, 'ua', 'Подорожі')
 
 
 
-INSERT INTO periodical values (DEFAULT, 1, 'Top Gear', '166643252774218.jpeg', 16300, '{"amount": 1, "period": "month"}', 1, true);
-INSERT INTO periodical values (DEFAULT, 1, 'Autosport', '166637602575348.jpeg', 15400, '{"amount": 4, "period": "month"}', 1, true);
-INSERT INTO periodical values (DEFAULT, 1, 'Evo', '166638052794748.jpeg', 12460, '{"amount": 1, "period": "month"}', 1, true);
-INSERT INTO periodical values (DEFAULT, 1, 'Classic Driver', '166637753059175.jpeg', 17590,'{"amount": 6, "period": "year"}', 2, true);
+INSERT INTO periodical values (DEFAULT, 1, 'Top Gear', '166643252774218.jpeg', 16300, '{"amount": 1, "period": "month"}', true);
+INSERT INTO periodical values (DEFAULT, 1, 'Autosport', '166637602575348.jpeg', 15400, '{"amount": 4, "period": "month"}', true);
+INSERT INTO periodical values (DEFAULT, 1, 'Evo', '166638052794748.jpeg', 12460, '{"amount": 1, "period": "month"}', true);
+INSERT INTO periodical values (DEFAULT, 1, 'Classic Driver', '166637753059175.jpeg', 17590,'{"amount": 6, "period": "year"}', true);
 
-INSERT INTO periodical values (DEFAULT, 2, 'Forbes', '166638127316649.jpeg', 25090,'{"amount": 6, "period": "year"}', 2, true);
-INSERT INTO periodical values (DEFAULT, 2, 'Агробізнес сьогодні', '166643194368971.jpeg', 11000, '{"amount": 12, "period": "year"}', 1, true);
-INSERT INTO periodical values (DEFAULT, 2, 'Fast Company', '166638080272127.jpeg', 18460, '{"amount": 1, "period": "month"}', 1, true);
-INSERT INTO periodical values (DEFAULT, 2, 'Business Traveler', '166637683464287.jpeg', 14999, '{"amount": 1, "period": "month"}', 1, true);
+INSERT INTO periodical values (DEFAULT, 2, 'Forbes', '166638127316649.jpeg', 25090,'{"amount": 6, "period": "year"}', true);
+INSERT INTO periodical values (DEFAULT, 2, 'Агробізнес сьогодні', '166643194368971.jpeg', 11000, '{"amount": 12, "period": "year"}', true);
+INSERT INTO periodical values (DEFAULT, 2, 'Fast Company', '166638080272127.jpeg', 18460, '{"amount": 1, "period": "month"}', true);
+INSERT INTO periodical values (DEFAULT, 2, 'Business Traveler', '166637683464287.jpeg', 14999, '{"amount": 1, "period": "month"}', true);
 
-INSERT INTO periodical values (DEFAULT, 3, 'Science Illustrated', '166642987402456.jpeg', 35700, '{"amount": 4, "period": "year"}', 3, true);
-INSERT INTO periodical values (DEFAULT, 3, 'Popular Science', '166638645086891.jpeg', 29999, '{"amount": 4, "period": "year"}', 3, true);
-INSERT INTO periodical values (DEFAULT, 3, 'Android Advisor', '166637543272311.jpeg', 22360, '{"amount": 6, "period": "year"}', 2, true);
-INSERT INTO periodical values (DEFAULT, 3, 'Macworld', '166638435359194.jpeg', 18320, '{"amount": 1, "period": "month"}', 1, true);
+INSERT INTO periodical values (DEFAULT, 3, 'Science Illustrated', '166642987402456.jpeg', 35700, '{"amount": 4, "period": "year"}', true);
+INSERT INTO periodical values (DEFAULT, 3, 'Popular Science', '166638645086891.jpeg', 29999, '{"amount": 4, "period": "year"}', true);
+INSERT INTO periodical values (DEFAULT, 3, 'Android Advisor', '166637543272311.jpeg', 22360, '{"amount": 6, "period": "year"}', true);
+INSERT INTO periodical values (DEFAULT, 3, 'Macworld', '166638435359194.jpeg', 18320, '{"amount": 1, "period": "month"}', true);
 
-INSERT INTO periodical values (DEFAULT, 4, 'The Knitter', '166643221996340.jpeg', 13999, '{"amount": 1, "period": "month"}', 1, true);
-INSERT INTO periodical values (DEFAULT, 4, 'Mollie Magazine', '166643397916850.jpeg', 19099, '{"amount": 1, "period": "month"}', 1, true);
-INSERT INTO periodical values (DEFAULT, 4, 'Crochet!', '166637946244915.jpeg', 7965, '{"amount": 4, "period": "year"}', 3, true);
-INSERT INTO periodical values (DEFAULT, 4, 'Simply Sewing', '166643023414125.jpeg', 16620, '{"amount": 1, "period": "month"}', 1, true);
+INSERT INTO periodical values (DEFAULT, 4, 'The Knitter', '166643221996340.jpeg', 13999, '{"amount": 1, "period": "month"}', true);
+INSERT INTO periodical values (DEFAULT, 4, 'Mollie Magazine', '166643397916850.jpeg', 19099, '{"amount": 1, "period": "month"}', true);
+INSERT INTO periodical values (DEFAULT, 4, 'Crochet!', '166637946244915.jpeg', 7965, '{"amount": 4, "period": "year"}', true);
+INSERT INTO periodical values (DEFAULT, 4, 'Simply Sewing', '166643023414125.jpeg', 16620, '{"amount": 1, "period": "month"}', true);
 
-INSERT INTO periodical values (DEFAULT, 5, 'ARQ', '166637572894475.jpeg', 12099, '{"amount": 12, "period": "year"}', 1, true);
-INSERT INTO periodical values (DEFAULT, 5, 'Frankie', '166638179703638.jpeg', 20685, '{"amount": 3, "period": "year"}', 4, true);
-INSERT INTO periodical values (DEFAULT, 5, 'Designlines', '166637984667286.jpeg', 26010, '{"amount": 2, "period": "year"}', 6, true);
-INSERT INTO periodical values (DEFAULT, 5, 'Commercial Interior Design', '166638246308754.jpeg', 40590, '{"amount": 6, "period": "month"}', 2, true);
+INSERT INTO periodical values (DEFAULT, 5, 'ARQ', '166637572894475.jpeg', 12099, '{"amount": 12, "period": "year"}', true);
+INSERT INTO periodical values (DEFAULT, 5, 'Frankie', '166638179703638.jpeg', 20685, '{"amount": 3, "period": "year"}', true);
+INSERT INTO periodical values (DEFAULT, 5, 'Designlines', '166637984667286.jpeg', 26010, '{"amount": 2, "period": "year"}', true);
+INSERT INTO periodical values (DEFAULT, 5, 'Commercial Interior Design', '166638246308754.jpeg', 40590, '{"amount": 6, "period": "month"}', true);
 
-INSERT INTO periodical values (DEFAULT, 6, 'Sale & Pepe', '166638214479864.jpeg', 14015, '{"amount": 1, "period": "month"}', 1, true);
-INSERT INTO periodical values (DEFAULT, 6, 'Taste', '166637841584057.jpeg', 9999, '{"amount": 1, "period": "month"}', 1, true);
-INSERT INTO periodical values (DEFAULT, 6, 'Beer & Brewing', '166637643666325.jpeg', 28000, '{"amount": 3, "period": "year"}', 4, true);
-INSERT INTO periodical values (DEFAULT, 6, 'Gourmet', '166638287840873.jpeg', 32910, '{"amount": 3, "period": "year"}', 4, true);
+INSERT INTO periodical values (DEFAULT, 6, 'Sale & Pepe', '166638214479864.jpeg', 14015, '{"amount": 1, "period": "month"}', true);
+INSERT INTO periodical values (DEFAULT, 6, 'Taste', '166637841584057.jpeg', 9999, '{"amount": 1, "period": "month"}', true);
+INSERT INTO periodical values (DEFAULT, 6, 'Beer & Brewing', '166637643666325.jpeg', 28000, '{"amount": 3, "period": "year"}', true);
+INSERT INTO periodical values (DEFAULT, 6, 'Gourmet', '166638287840873.jpeg', 32910, '{"amount": 3, "period": "year"}', true);
 
-INSERT INTO periodical values (DEFAULT, 7, 'Retro Gamer', '166638390935291.jpeg', 12099, '{"amount": 1, "period": "month"}', 1, true);
-INSERT INTO periodical values (DEFAULT, 7, 'Level', '166638322133126.jpeg', 20900, '{"amount": 4, "period": "year"}', 3, true);
-INSERT INTO periodical values (DEFAULT, 7, 'Play', '166638344958660.jpeg', 9999, '{"amount": 1, "period": "month"}', 1, true);
-INSERT INTO periodical values (DEFAULT, 7, 'Edge', '166638368728051.jpeg', 16090, '{"amount": 1, "period": "month"}', 1, true);
+INSERT INTO periodical values (DEFAULT, 7, 'Retro Gamer', '166638390935291.jpeg', 12099, '{"amount": 1, "period": "month"}', true);
+INSERT INTO periodical values (DEFAULT, 7, 'Level', '166638322133126.jpeg', 20900, '{"amount": 4, "period": "year"}', true);
+INSERT INTO periodical values (DEFAULT, 7, 'Play', '166638344958660.jpeg', 9999, '{"amount": 1, "period": "month"}', true);
+INSERT INTO periodical values (DEFAULT, 7, 'Edge', '166638368728051.jpeg', 16090, '{"amount": 1, "period": "month"}', true);
 
-INSERT INTO periodical values (DEFAULT, 8, 'Men\'s Health', '166638534814490.jpeg', 19020, '{"amount": 1, "period": "month"}', 1, true);
-INSERT INTO periodical values (DEFAULT, 8, 'MindFood', '166638554298917.jpeg', 8900, '{"amount": 1, "period": "month"}', 1, true);
-INSERT INTO periodical values (DEFAULT, 8, '220 Triathlon', '166643291975888.jpeg', 12099, '{"amount": 6, "period": "year"}', 2, true);
-INSERT INTO periodical values (DEFAULT, 8, 'Anatomica', '166637491521659.jpeg', 14000, '{"amount": 1, "period": "month"}', 1, true);
+INSERT INTO periodical values (DEFAULT, 8, 'Men\'s Health', '166638534814490.jpeg', 19020, '{"amount": 1, "period": "month"}', true);
+INSERT INTO periodical values (DEFAULT, 8, 'MindFood', '166638554298917.jpeg', 8900, '{"amount": 1, "period": "month"}', true);
+INSERT INTO periodical values (DEFAULT, 8, '220 Triathlon', '166643291975888.jpeg', 12099, '{"amount": 6, "period": "year"}', true);
+INSERT INTO periodical values (DEFAULT, 8, 'Anatomica', '166637491521659.jpeg', 14000, '{"amount": 1, "period": "month"}', true);
 
-INSERT INTO periodical values (DEFAULT, 9, 'Canadian Geographic', '166637722828442.jpeg', 21010, '{"amount": 6, "period": "year"}', 2, true);
-INSERT INTO periodical values (DEFAULT, 9, 'All About Space', '166637447978859.jpeg', 30900, '{"amount": 4, "period": "year"}', 3, true);
-INSERT INTO periodical values (DEFAULT, 9, 'How It Works', '166643051183797.jpeg', 19999, '{"amount": 1, "period": "month"}', 1, true);
-INSERT INTO periodical values (DEFAULT, 9, 'National Geographic', '166638590539446.jpeg', 23035, '{"amount": 1, "period": "month"}', 1, true);
+INSERT INTO periodical values (DEFAULT, 9, 'Canadian Geographic', '166637722828442.jpeg', 21010, '{"amount": 6, "period": "year"}', true);
+INSERT INTO periodical values (DEFAULT, 9, 'All About Space', '166637447978859.jpeg', 30900, '{"amount": 4, "period": "year"}', true);
+INSERT INTO periodical values (DEFAULT, 9, 'How It Works', '166643051183797.jpeg', 19999, '{"amount": 1, "period": "month"}', true);
+INSERT INTO periodical values (DEFAULT, 9, 'National Geographic', '166638590539446.jpeg', 23035, '{"amount": 1, "period": "month"}', true);
 
-INSERT INTO periodical values (DEFAULT, 11, 'The Guardian', '166643122978015.jpeg', 5099, '{"amount": 7, "period": "week"}', 1, true);
-INSERT INTO periodical values (DEFAULT, 11, 'The Daily Telegraph', '166643085236514.jpeg', 4990, '{"amount": 7, "period": "week"}', 1, true);
-INSERT INTO periodical values (DEFAULT, 11, 'El Universo', '166638021593019.jpeg', 5820, '{"amount": 5, "period": "week"}', 1, false);
-INSERT INTO periodical values (DEFAULT, 11, 'The Week', '166638624034815.jpeg', 4070, '{"amount": 1, "period": "week"}', 1, true);
-INSERT INTO periodical values (DEFAULT, 11, 'Газета по-українськи', '166643359501537.jpeg', 5450, '{"amount": 4, "period": "month"}', 1, true);
+INSERT INTO periodical values (DEFAULT, 11, 'The Guardian', '166643122978015.jpeg', 5099, '{"amount": 7, "period": "week"}', true);
+INSERT INTO periodical values (DEFAULT, 11, 'The Daily Telegraph', '166643085236514.jpeg', 4990, '{"amount": 7, "period": "week"}', true);
+INSERT INTO periodical values (DEFAULT, 11, 'El Universo', '166638021593019.jpeg', 5820, '{"amount": 5, "period": "week"}', false);
+INSERT INTO periodical values (DEFAULT, 11, 'The Week', '166638624034815.jpeg', 4070, '{"amount": 1, "period": "week"}', true);
+INSERT INTO periodical values (DEFAULT, 11, 'Газета по-українськи', '166643359501537.jpeg', 5450, '{"amount": 4, "period": "month"}', true);
 
-INSERT INTO periodical values (DEFAULT, 10, 'Elle Ukraine', '166643469288751.jpeg', 11900, '{"amount": 4, "period": "year"}', 3, true);
-INSERT INTO periodical values (DEFAULT, 10, 'Vogue UA', '166643550829927.jpeg', 15000, '{"amount": 1, "period": "month"}', 1, true);
+INSERT INTO periodical values (DEFAULT, 10, 'Elle Ukraine', '166643469288751.jpeg', 11900, '{"amount": 4, "period": "year"}', true);
+INSERT INTO periodical values (DEFAULT, 10, 'Vogue UA', '166643550829927.jpeg', 15000, '{"amount": 1, "period": "month"}', true);
 
 
 

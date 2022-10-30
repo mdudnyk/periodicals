@@ -122,11 +122,11 @@ class Queries {
     public static final String TOPIC_TRANSLATE_EXISTS = "SELECT EXISTS(SELECT * FROM topic_translate WHERE topic_id=? AND locale_id=?)";
 
     //PERIODICAL
-    public static final String CREATE_PERIODICAL = "INSERT INTO periodical values (DEFAULT, ?, ?, ?, ?, ?, ?, ?)";
+    public static final String CREATE_PERIODICAL = "INSERT INTO periodical values (DEFAULT, ?, ?, ?, ?, ?, ?)";
     public static final String UPDATE_PERIODICAL = "UPDATE periodical " +
-            "SET topic_id=?, title=?, title_img_name=?, price=?, publication_frequency=?, subscription_period=?, is_active=? WHERE id=?";
+            "SET topic_id=?, title=?, title_img_name=?, price=?, publication_frequency=?, is_active=? WHERE id=?";
     public static final String UPDATE_PERIODICAL_WITHOUT_IMAGE = "UPDATE periodical " +
-            "SET topic_id=?, title=?, price=?, publication_frequency=?, subscription_period=?, is_active=? WHERE id=?";
+            "SET topic_id=?, title=?, price=?, publication_frequency=?, is_active=? WHERE id=?";
     public static final String GET_PERIODICAL_BY_ID = "SELECT * FROM periodical WHERE id=?";
     public static final String GET_PERIODICALS_FOR_TABLE_PAGINATION_ASC = """
         SELECT DISTINCT id, title, COALESCE(

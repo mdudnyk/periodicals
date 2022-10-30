@@ -161,22 +161,6 @@
                 </div>
                 <div>
                     <div class="periodical_info_block">
-                        <div class="info_block_header"><fmt:message key="new_periodical.subscription_period"/></div>
-                        <div style="display: flex; align-items: center; justify-content: center; padding-top: 5px;">
-                            <div class="month_amount">
-                                <div class="month_amount_btn" style="border-radius: 10px 10px 0 0;" onclick="up_period()">
-                                    <i class="material-icons" style="color: white;">arrow_drop_up</i>
-                                </div>
-                                <div class="month_amount_digit" id="period_digit">1</div>
-                                <div class="month_amount_btn" style="border-radius: 0 0 10px 10px;" onclick="down_period()">
-                                    <i class="material-icons" style="color: white;">arrow_drop_down</i>
-                                </div>
-                            </div>
-                            <div style="margin: 0 10px; color: rgb(121, 121, 121); font-size: 14pt; font-weight: 300;">
-                                <fmt:message key="new_periodical.subscription_period_month"/></div>
-                        </div>
-                    </div>
-                    <div class="periodical_info_block">
                         <div class="info_block_header"><fmt:message key="new_periodical.price"/>
                             <span style="font-size: 10.5pt; margin-left: 4px; margin-top: 7px;"><fmt:message key="new_periodical.price_addition"/></span>
                         </div>

@@ -79,22 +79,6 @@ function down_frequency() {
 }
 
 
-//Min. subscription period
-const period_digit = document.getElementById("period_digit");
-function up_period() {
-    let digit = parseInt(period_digit.textContent);
-    if (digit < 12) {
-        period_digit.textContent = (++digit).toString();
-    }
-}
-function down_period() {
-    let digit = period_digit.textContent;
-    if (digit > 1) {
-        period_digit.textContent = (++digit).toString();
-    }
-}
-
-
 //Release month
 const month_selector_container = document.getElementById('month_selector_container');
 const month_selector_arr = month_selector_container.getElementsByClassName('month_selector');
@@ -139,7 +123,6 @@ const title_name = document.getElementById('title_input');
 const topic_id = document.getElementById('show_all_topics_text');
 const frequency_number = document.getElementById('frequency_digit');
 const frequency_period = document.getElementById('selected_frequency_text');
-const sub_period = document.getElementById('period_digit');
 const hryvnias = document.getElementById('hryvnias');
 const kopecks = document.getElementById('kopecks');
 const switch_block = document.getElementById('switch_block');
@@ -163,7 +146,6 @@ class Periodical {
             amount : parseInt(frequency_number.textContent),
             period : frequency_period.getAttribute('period'),
         };
-        this.subscription_period = parseInt(sub_period.textContent);
         this.price = parseInt(hryvnias.value + kopecks.value);
         this.status_value = switch_block.checked;
         this.release = getReleaseMonthObj(month_selectors);

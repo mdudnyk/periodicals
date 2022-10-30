@@ -48,7 +48,7 @@
                 </c:if>
             </div>
             <div>
-                <span class="home_top_block_stat"><fmt:message key="home.total_publications"/>:
+                <span class="home_top_block_stat"><fmt:message key="home.total_publications"/>
 <%--                    <span class="home_top_block_stat_count">--%>
 <%--                        24--%>
 <%--                    </span>--%>

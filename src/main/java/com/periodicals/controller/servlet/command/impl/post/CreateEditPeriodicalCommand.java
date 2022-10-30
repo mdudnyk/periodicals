@@ -85,10 +85,6 @@ public class CreateEditPeriodicalCommand implements FrontCommand {
             assert o != null;
             JSONObject frequency = (JSONObject) o;
 
-            o = json.get("subscription_period");
-            assert o != null;
-            long subPeriod = (Long) o;
-
             o = json.get("status_value");
             assert o != null;
             boolean isActive = (boolean) o;
@@ -97,7 +93,7 @@ public class CreateEditPeriodicalCommand implements FrontCommand {
             Map<Integer, MonthSelector> releaseCalendar = getReleaseCalendarFromJSON(json);
             periodical =
                     new Periodical((int) topic, title, imageURL,
-                            (int) price, frequency, (int) subPeriod, isActive);
+                            (int) price, frequency, isActive);
             periodical.setTranslation(translations);
             periodical.setReleaseCalendar(releaseCalendar);
         } catch (Exception e) {

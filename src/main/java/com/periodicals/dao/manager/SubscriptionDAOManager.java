@@ -10,6 +10,7 @@ import com.periodicals.dao.SubscriptionCalendarDAO;
 import com.periodicals.dao.SubscriptionDAO;
 import com.periodicals.dao.mysql.SubscriptionDAOMySql;
 
+import java.sql.Connection;
 import java.util.List;
 
 public class SubscriptionDAOManager {
@@ -31,6 +32,10 @@ public class SubscriptionDAOManager {
 
     public void subscribeUserToPeriodical(final User user, final int periodicalId,
                                           final List<MonthSelector> calendar, final int price) throws DAOException {
+        Connection connection = conManager.getConnectionForTransaction();
 
+//        try {
+//            SubscriptionDAO.create(u)
+//        }
     }
 }

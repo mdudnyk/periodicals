@@ -22,8 +22,7 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
             ps.setString(3, entity.getTitleImgLink());
             ps.setInt(4, entity.getPrice());
             ps.setString(5, entity.getFrequency().toJSONString());
-            ps.setInt(6, entity.getSubPeriod());
-            ps.setBoolean(7, entity.isActive());
+            ps.setBoolean(6, entity.isActive());
             if (ps.executeUpdate() > 0) {
                 try (ResultSet rs = ps.getGeneratedKeys()) {
                     if (rs.next()) {
@@ -54,9 +53,8 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
                 String imageUrl = rs.getString(4);
                 int price = rs.getInt(5);
                 JSONObject frequency = (JSONObject) new JSONParser().parse(rs.getString(6));
-                int subPeriod = rs.getInt(7);
-                boolean status = rs.getBoolean(8);
-                periodical = new Periodical(id, topicId, title, imageUrl, price, frequency, subPeriod, status);
+                boolean status = rs.getBoolean(7);
+                periodical = new Periodical(id, topicId, title, imageUrl, price, frequency, status);
             }
             rs.close();
         } catch (SQLException | ParseException e) {
@@ -73,9 +71,8 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
             ps.setString(3, entity.getTitleImgLink());
             ps.setInt(4, entity.getPrice());
             ps.setString(5, entity.getFrequency().toJSONString());
-            ps.setInt(6, entity.getSubPeriod());
-            ps.setBoolean(7, entity.isActive());
-            ps.setInt(8, entity.getId());
+            ps.setBoolean(6, entity.isActive());
+            ps.setInt(7, entity.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Can not update periodical with id="
@@ -90,9 +87,8 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
             ps.setString(2, entity.getTitle());
             ps.setInt(3, entity.getPrice());
             ps.setString(4, entity.getFrequency().toJSONString());
-            ps.setInt(5, entity.getSubPeriod());
-            ps.setBoolean(6, entity.isActive());
-            ps.setInt(7, entity.getId());
+            ps.setBoolean(5, entity.isActive());
+            ps.setInt(6, entity.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Can not update periodical(without image) with id="
