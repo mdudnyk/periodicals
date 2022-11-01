@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.util.Map;
 
 public interface ReleaseCalendarDAO {
+
     void create(final int periodicalId, final MonthSelector entity,
                 final Connection connection) throws DAOException;
 

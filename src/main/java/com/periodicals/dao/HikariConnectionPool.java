@@ -62,6 +62,15 @@ public class HikariConnectionPool implements ConnectionManager {
     }
 
     @Override
+    public void rollback(Connection con) throws DAOException {
+        try {
+            con.rollback();
+        } catch (SQLException ex) {
+            throw new DAOException("Something went wrong while trying to rollback. " + ex.getMessage());
+        }
+    }
+
+    @Override
     public void close(Connection connection) throws DAOException {
         try {
             if (!connection.getAutoCommit()) {

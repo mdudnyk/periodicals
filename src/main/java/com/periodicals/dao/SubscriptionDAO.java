@@ -1,5 +1,7 @@
 package com.periodicals.dao;
 
-public interface SubscriptionDAO {
+import com.periodicals.entity.Subscription;
+
+public interface SubscriptionDAO extends GeneralDAO<Subscription, Integer> {
 
 }

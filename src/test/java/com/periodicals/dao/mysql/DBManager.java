@@ -72,6 +72,11 @@ public class DBManager implements ConnectionManager {
     }
 
     @Override
+    public void rollback(final Connection connection) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void close(final Connection connection) throws DAOException {
         try {
             if (!connection.getAutoCommit()) {

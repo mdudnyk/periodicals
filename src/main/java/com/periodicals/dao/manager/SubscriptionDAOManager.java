@@ -1,17 +1,19 @@
 package com.periodicals.dao.manager;
 
-import com.periodicals.dao.*;
+import com.periodicals.dao.ConnectionManager;
+import com.periodicals.dao.UserDAO;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.dao.mysql.SubscriptionCalendarDAOMySql;
 import com.periodicals.dao.mysql.UserDAOMySql;
 import com.periodicals.entity.MonthSelector;
-import com.periodicals.entity.User;
+import com.periodicals.entity.Subscription;
 import com.periodicals.dao.SubscriptionCalendarDAO;
 import com.periodicals.dao.SubscriptionDAO;
 import com.periodicals.dao.mysql.SubscriptionDAOMySql;
+import com.periodicals.entity.User;
 
 import java.sql.Connection;
-import java.util.List;
+import java.sql.SQLException;
 
 public class SubscriptionDAOManager {
     private ConnectionManager conManager;
@@ -30,12 +32,21 @@ public class SubscriptionDAOManager {
     }
 
 
-    public void subscribeUserToPeriodical(final User user, final int periodicalId,
-                                          final List<MonthSelector> calendar, final int price) throws DAOException {
+    public void subscribeUserToPeriodical(final Subscription subscription, User user) throws DAOException {
         Connection connection = conManager.getConnectionForTransaction();
-
-//        try {
-//            SubscriptionDAO.create(u)
-//        }
+        try {
+            subscriptionDAO.create(subscription, connection);
+            for (MonthSelector m : subscription.getSubscriptionCalendar().values()) {
+                subscriptionCalendarDAO.create(subscription.getId(), m, connection);
+            }
+            userDAO.update(user, connection);
+            connection.commit();
+        } catch (SQLException e) {
+            conManager.rollback(connection);
+            throw new DAOException("Unable to finish transaction of creating subscription " +
+                    "for periodical with title=" + subscription.getPeriodicalTitle() + ". " + e.getMessage());
+        } finally {
+            conManager.close(connection);
+        }
     }
 }

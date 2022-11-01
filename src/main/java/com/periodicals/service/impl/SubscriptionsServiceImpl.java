@@ -7,14 +7,18 @@ import com.periodicals.dao.manager.SubscriptionDAOManager;
 import com.periodicals.dao.manager.UserDAOManager;
 import com.periodicals.entity.MonthSelector;
 import com.periodicals.entity.Periodical;
+import com.periodicals.entity.Subscription;
 import com.periodicals.entity.User;
+import com.periodicals.service.SubscriptionsService;
 import com.periodicals.service.exceptions.ServiceException;
 import com.periodicals.util.PriceDeterminant;
+
+import java.time.LocalDateTime;
 
 import java.util.List;
 import java.util.Map;
 
-public class SubscriptionsServiceImpl implements com.periodicals.service.SubscriptionsService {
+public class SubscriptionsServiceImpl implements SubscriptionsService {
     private final DAOManagerFactory daoManger;
 
     public SubscriptionsServiceImpl(DAOManagerFactory daoManger) {
@@ -22,7 +26,7 @@ public class SubscriptionsServiceImpl implements com.periodicals.service.Subscri
     }
 
     @Override
-    public void createSubscription(final int userId, final int periodicalId, final List<MonthSelector> calendar)
+    public void createSubscription(User user, final int periodicalId, final List<MonthSelector> calendar)
             throws DAOException, ServiceException {
         PeriodicalDAOManager periodicalDAOManager = daoManger.getPeriodicalDAOManager();
         UserDAOManager userDAOManager = daoManger.getUserDAOManager();
@@ -36,16 +40,25 @@ public class SubscriptionsServiceImpl implements com.periodicals.service.Subscri
         int basePrice = pd.getPrice();
         int totalPrice = countTotalPrice(basePrice, calendar);
 
-        User user = userDAOManager.getUserById(userId);
-        int userBalance = user.getBalance();
+        User userFromDB = userDAOManager.getUserById(user.getId());
+        int userBalance = userFromDB.getBalance();
         if (userBalance < totalPrice) {
             throw new ServiceException("Subscription is denied. Not enough money. ");
         } else {
-            user.setBalance(userBalance - totalPrice);
+            userFromDB.setBalance(userBalance - totalPrice);
         }
 
+        Subscription subscription = new Subscription(
+                user.getId(),
+                periodicalId,
+                periodical.getTitle(),
+                totalPrice,
+                LocalDateTime.now());
+        subscription.addSubscriptionYearList(calendar);
+
         SubscriptionDAOManager subscriptionDAOManager = daoManger.getSubscriptionDAOManager();
-        subscriptionDAOManager.subscribeUserToPeriodical(user, periodicalId, calendar, totalPrice);
+        subscriptionDAOManager.subscribeUserToPeriodical(subscription, userFromDB);
+        user.setBalance(userFromDB.getBalance());
 
     }
 

@@ -3,8 +3,8 @@ INSERT INTO periodicals_db.locale values('en', 'english', 'uah', '/img/en_flag.p
 
 
 
-INSERT INTO periodicals_db.user values(1, 'ua', 'admin', 'admin', 'qwerty123', 'admin@gmail.com', 'ADMIN', 100000, false);
-INSERT INTO periodicals_db.user values(DEFAULT, 'ua', 'Myroslav', 'Dudnyk', 'qwerty123', 'mdudnyk.sps@gmail.com', 'CUSTOMER', 0, false);
+INSERT INTO periodicals_db.user values(1, 'ua', 'admin', 'admin', 'qwerty123', 'admin@gmail.com', 'ADMIN', 1000000, false);
+INSERT INTO periodicals_db.user values(DEFAULT, 'ua', 'Myroslav', 'Dudnyk', 'qwerty123', 'mdudnyk.sps@gmail.com', 'CUSTOMER', 500000, false);
 INSERT INTO periodicals_db.user values(DEFAULT, 'ua', 'Petro', 'Bamper', 'qwerty123', 'petro_bamper@gmail.com', 'CUSTOMER', 1000, false);
 INSERT INTO periodicals_db.user values(DEFAULT, 'en', 'John', 'Redneck', 'qwerty123', 'johny_boy_from_texas@gmail.com', 'CUSTOMER', 1000, true);
 INSERT INTO periodicals_db.user values(DEFAULT, 'en', 'Бабушка', 'Міша', 'qwerty123', 'babushka_misha@gmail.com', 'CUSTOMER', 2340, false);

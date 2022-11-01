@@ -10,6 +10,8 @@ public interface ConnectionManager {
 
     Connection getConnectionForTransaction() throws DAOException;
 
+    void rollback(Connection connection) throws DAOException;
+
     void close(Connection connection) throws DAOException;
 
     void closeDataSource();

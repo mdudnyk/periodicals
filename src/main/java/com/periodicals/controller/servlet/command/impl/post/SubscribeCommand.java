@@ -32,19 +32,17 @@ public class SubscribeCommand implements FrontCommand {
 
         try {
             JSONArray jsonArray = (JSONArray) new JSONParser().parse(request.getReader());
-            List<MonthSelector> calendar = new ArrayList<>();
+            List<MonthSelector> subscriptionCalendar = new ArrayList<>();
             for (Object o : jsonArray) {
                 JSONObject jso = (JSONObject) o;
                 long year = (Long) jso.get("year");
                 JSONArray months = (JSONArray) jso.get("month");
                 MonthSelector monthSelector = new MonthSelector((int) year, months);
-                calendar.add(monthSelector);
+                subscriptionCalendar.add(monthSelector);
             }
             SubscriptionsService subscriptionsService = new SubscriptionsServiceImpl(daoManager);
-            UserService userService = new UserServiceImpl(daoManager);
             try {
-                subscriptionsService.createSubscription(user.getId(), Integer.parseInt(periodicalId), calendar);
-//                request.getSession().setAttribute("user", userService.getUser(user.getId()));
+                subscriptionsService.createSubscription(user, Integer.parseInt(periodicalId), subscriptionCalendar);
             } catch (ServiceException e) {
                 response.setStatus(568);
             }

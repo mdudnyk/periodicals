@@ -8,6 +8,7 @@ class Queries {
     public static final String UPDATE_LOCALE = "UPDATE locale SET lang_name_original=?, currency=?, flag_icon_url=? WHERE short_name_id=?";
     public static final String DELETE_LOCALE = "DELETE FROM locale WHERE short_name_id=?";
 
+
     //USER
     public static final String CREATE_USER = "INSERT INTO user values (DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?)";
     public static final String GET_ALL_USERS = "SELECT * FROM user";
@@ -16,6 +17,7 @@ class Queries {
     public static final String UPDATE_USER = "UPDATE user SET locale_id=?, firstname=?, lastname=?, password=?, " +
             "email=?, role=?, balance=?, is_blocked=? WHERE id=?";
     public static final String DELETE_USER = "DELETE FROM user WHERE id=?";
+
 
     //TOPIC
     public static final String CREATE_TOPIC = "INSERT INTO topic values (DEFAULT)";
@@ -112,7 +114,6 @@ class Queries {
             """;
     public static final String DELETE_TOPIC = "DELETE FROM topic WHERE id=?";
 
-
     //TOPIC_TRANSLATE
     public static final String CREATE_TOPIC_TRANSLATE = "INSERT INTO topic_translate values (?, ?, ?)";
     public static final String GET_ALL_TOPIC_TRANSLATES = "SELECT * FROM topic_translate WHERE topic_id=?";
@@ -120,6 +121,7 @@ class Queries {
     public static final String UPDATE_TOPIC_TRANSLATE = "UPDATE topic_translate SET name=? WHERE topic_id=? AND locale_id=?";
     public static final String DELETE_TOPIC_TRANSLATE = "DELETE FROM user WHERE topic_id=? AND locale_id=?";
     public static final String TOPIC_TRANSLATE_EXISTS = "SELECT EXISTS(SELECT * FROM topic_translate WHERE topic_id=? AND locale_id=?)";
+
 
     //PERIODICAL
     public static final String CREATE_PERIODICAL = "INSERT INTO periodical values (DEFAULT, ?, ?, ?, ?, ?, ?)";
@@ -219,4 +221,12 @@ class Queries {
     public static final String UPDATE_PERIODICAL_CALENDAR =
             "UPDATE release_calendar SET month=?" +
                     "WHERE periodical_id=? AND year=?";
+
+
+    //SUBSCRIPTION
+    public static final String CREATE_SUBSCRIPTION = "INSERT INTO subscription values (DEFAULT, ?, ?, ?, ?, ?)";
+
+    //SUBSCRIPTION_CALENDAR
+    public static final String CREATE_SUBSCRIPTION_CALENDAR = "INSERT INTO subscription_calendar values (?, ?, ?)";
+
 }

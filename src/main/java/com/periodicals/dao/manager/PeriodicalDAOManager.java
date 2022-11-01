@@ -13,7 +13,6 @@ import com.periodicals.entity.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -98,7 +97,7 @@ public class PeriodicalDAOManager  {
             }
             connection.commit();
         } catch (SQLException e) {
-            rollback(connection);
+            conManager.rollback(connection);
             throw new DAOException("Unable to finish transaction of updating Topic with ID="
                     + periodical.getId() + ". " + e.getMessage());
         } finally {
@@ -132,7 +131,7 @@ public class PeriodicalDAOManager  {
             }
             connection.commit();
         } catch (SQLException e) {
-            rollback(connection);
+            conManager.rollback(connection);
             throw new DAOException("Unable to finish transaction of updating Topic with ID="
                     + periodical.getId() + ". " + e.getMessage());
         } finally {
@@ -182,20 +181,12 @@ public class PeriodicalDAOManager  {
             throws DAOException {
         Connection connection = conManager.getConnection();
         Map<Integer, List<PeriodicalForHomePage>> periodicals = new HashMap<>();
-        List<PeriodicalForHomePage> list = new ArrayList<>();
+        List<PeriodicalForHomePage> list;
         for (Topic t : topics) {
             list = periodicalDAO.getPeriodicalsForHomePage(t.getId(), connection);
             periodicals.put(t.getId(), list);
         }
         conManager.close(connection);
         return periodicals;
-    }
-
-    private void rollback(final Connection con) throws DAOException {
-        try {
-            con.rollback();
-        } catch (SQLException ex) {
-            throw new DAOException("Something went wrong while trying to rollback. " + ex.getMessage());
-        }
     }
 }
