@@ -8,7 +8,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 
 public class GetResultsCommand implements FrontCommand {
@@ -16,6 +19,9 @@ public class GetResultsCommand implements FrontCommand {
     public void execute(final HttpServletRequest request, final HttpServletResponse response,
                         final DAOManagerFactory daoManager)
             throws DAOException, ServletException, IOException, ServiceException {
-        System.out.println("Response from API");
+        String data = request.getParameter("data");
+        byte[] decodedBytes = Base64.getDecoder().decode(data);
+        System.out.println(new String(decodedBytes, StandardCharsets.UTF_8));
+
     }
 }
