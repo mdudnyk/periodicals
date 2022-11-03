@@ -54,6 +54,7 @@ public class HikariConnectionPool implements ConnectionManager {
 
         try {
             connection.setAutoCommit(false);
+            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
         } catch (SQLException e) {
             throw new DAOException("Unable to set 'false' on auto commit property of the connection. ", e);
         }

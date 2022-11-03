@@ -28,6 +28,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: javax.xml.bind:jaxb-api:2.3.1" level="project" />
+    <orderEntry type="library" name="Maven: javax.activation:javax.activation-api:1.2.0" level="project" />
+    <orderEntry type="library" name="Maven: com.liqpay:liqpay-sdk:0.7-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: jakarta.servlet:jakarta.servlet-api:5.0.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: jakarta.servlet.jsp:jakarta.servlet.jsp-api:3.1.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: jakarta.el:jakarta.el-api:4.0.0" level="project" />

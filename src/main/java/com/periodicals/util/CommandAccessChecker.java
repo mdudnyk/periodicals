@@ -32,6 +32,8 @@ public class CommandAccessChecker {
         accessCustomerMap.put("DeletePeriodicalCommand", false);
         accessCustomerMap.put("ShowPeriodicalCommand", true);
         accessCustomerMap.put("SubscribeCommand", true);
+        accessCustomerMap.put("TopUpBalanceCommand", true);
+        accessCustomerMap.put("GetResultsCommand", true);
         accessCustomerMap.put("ErrorPageCommand", true);
 
 
@@ -53,6 +55,8 @@ public class CommandAccessChecker {
         accessAdminMap.put("DeletePeriodicalCommand", true);
         accessAdminMap.put("ShowPeriodicalCommand", true);
         accessAdminMap.put("SubscribeCommand", false);
+        accessAdminMap.put("TopUpBalanceCommand", false);
+        accessAdminMap.put("GetResultsCommand", false);
         accessAdminMap.put("ErrorPageCommand", true);
 
 
@@ -74,6 +78,8 @@ public class CommandAccessChecker {
         accessGuestMap.put("DeletePeriodicalCommand", false);
         accessGuestMap.put("ShowPeriodicalCommand", true);
         accessGuestMap.put("SubscribeCommand", false);
+        accessGuestMap.put("TopUpBalanceCommand", false);
+        accessGuestMap.put("GetResultsCommand", true);
         accessGuestMap.put("ErrorPageCommand", true);
     }
 
@@ -81,18 +87,24 @@ public class CommandAccessChecker {
         String cmdName = command.getClass().getSimpleName();
         User user = (User) request.getSession().getAttribute("user");
         UserRole role = UserRole.GUEST;
+        Boolean result = null;
+
         if (user != null) {
             role = user.getRole();
         }
 
         if (role == UserRole.ADMIN) {
-            return accessAdminMap.get(cmdName);
+            result = accessAdminMap.get(cmdName);
         }
         if (role == UserRole.CUSTOMER) {
-            return accessCustomerMap.get(cmdName);
+            result = accessCustomerMap.get(cmdName);
         }
         if (role == UserRole.GUEST) {
-            return accessGuestMap.get(cmdName);
+            result = accessGuestMap.get(cmdName);
+        }
+
+        if (result != null) {
+            return result;
         }
 
         return false;

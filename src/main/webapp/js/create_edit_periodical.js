@@ -208,9 +208,9 @@ async function tryToSendCreateRequest(periodical, id) {
 
     let requestStr;
     if (id < 1) {
-        requestStr = 'http://localhost:8080/periodicals/controller?cmd=CREATE_EDIT_PERIODICAL';
+        requestStr = 'controller?cmd=CREATE_EDIT_PERIODICAL';
     } else {
-        requestStr = 'http://localhost:8080/periodicals/controller?cmd=CREATE_EDIT_PERIODICAL&id=' + id;
+        requestStr = 'controller?cmd=CREATE_EDIT_PERIODICAL&id=' + id;
     }
 
     try {

@@ -15,7 +15,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- Schema periodicals_db
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `periodicals_db` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
-USE `periodicals_db` ;
+USE `periodicals_db`;
 
 -- -----------------------------------------------------
 -- Table `periodicals_db`.`locale`

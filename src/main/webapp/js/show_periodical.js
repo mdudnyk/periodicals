@@ -11,7 +11,7 @@ function tryToSubscribe(id) {
 
 async function sendSubscribeRequest(id) {
     try {
-        let response = await fetch('http://localhost:8080/periodicals/controller?cmd=SUBSCRIBE&id=' + id, {
+        let response = await fetch('controller?cmd=SUBSCRIBE&id=' + id, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

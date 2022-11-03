@@ -23,6 +23,8 @@ public enum CommandEnum {
     DELETE_PERIODICAL(new DeletePeriodicalCommand()),
     SHOW_PERIODICAL(new ShowPeriodicalCommand()),
     SUBSCRIBE(new SubscribeCommand()),
+    TOP_UP_BALANCE(new TopUpBalanceCommand()),
+    GET_RESULTS(new GetResultsCommand()),
     ERROR_PAGE(new ErrorPageCommand());
 
     private final FrontCommand frontCommand;
