@@ -191,7 +191,7 @@
                             <span><fmt:message key="header.link.subscriptions"/></span>
                         </li>
                     </a>
-                    <a href="${pageContext.request.contextPath}/controller?cmd=TOP_UP_BALANCE">
+                    <a href="${pageContext.request.contextPath}/controller?cmd=TOP_UP_PAGE">
                         <li>
                             <i class="material-icons profile">account_balance_wallet</i>
                             <span><fmt:message key="header.link.top_up_wallet"/></span>
