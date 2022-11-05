@@ -158,7 +158,8 @@
                 </div>
             </c:if>
             <c:if test="${sessionScope.user != null}">
-            <span class="balance_block">
+                <c:if test="${sessionScope.user.getRole() == UserRole.CUSTOMER}">
+                <span class="balance_block">
                     <i class="material-icons profile">account_balance_wallet</i>
                     <span class="balance_amount">
                         <span id="main_balance_field">
@@ -167,6 +168,7 @@
                         ${sessionScope.locale.getCurrency()}
                     </span>
                 </span>
+                </c:if>
                 <div class="profile_block" onclick="open_profile_modal()">
                     <c:if test="${sessionScope.user.getRole() == UserRole.ADMIN}">
                         <span class="profile_name_adm"><fmt:message key="header.admin"/></span>

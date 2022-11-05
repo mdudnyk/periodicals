@@ -17,8 +17,8 @@ public class MoneyFormatter {
 
     public static int toIntegerFormat(String value) {
         int intValue = -1;
+        int delimiterIndex = -1;
         if (isValidMoneyFormat(value)) {
-            int delimiterIndex = -1;
             for (int i = 0; i < value.length(); i++) {
                 char ch = value.charAt(i);
                 if (ch == ',' || ch == '.') {
@@ -41,8 +41,13 @@ public class MoneyFormatter {
         }
         if (intValue < 0) {
             throw new IllegalArgumentException("Not valid money format: " + value);
+        } else {
+            if (delimiterIndex == -1) {
+                intValue *= 100;
+            }
         }
-        return intValue * 100;
+
+        return intValue;
     }
 
     private static boolean isValidMoneyFormat(final String value) {
