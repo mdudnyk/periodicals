@@ -1,18 +1,14 @@
 package com.periodicals;
 
+import com.periodicals.dao.exception.DAOException;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.periodicals.entity.User;
+import com.periodicals.entity.enums.UserRole;
+import com.periodicals.service.exceptions.ServiceException;
 
 public class Main {
-    public static void main(String[] args) throws ParseException {
-        String s = "{\"1\" : \"ііііфвфіє\"}";
-        JSONParser sd = new JSONParser();
-        JSONObject js = (JSONObject) sd.parse(s);
-        System.out.println(js);
+    public static void main(String[] args) throws DAOException, ServiceException {
+        User user = new User("ua", "Myroslav", "Dudnyk", "sdsdds", "sdsd", UserRole.CUSTOMER, 100, true);
+        System.out.println(user.getFirstname().charAt(0) + user.getLastname().charAt(0));
     }
 }

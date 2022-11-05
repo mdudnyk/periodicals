@@ -378,3 +378,4 @@ INSERT INTO periodical_translate VALUES (42, 'ua', 'Україна', 'Украї
 
 INSERT INTO periodical_translate VALUES (43, 'en', 'Ukraine', 'Ukrainian', 'Vogue Ukraine is the Ukrainian edition of the American monthly fashion and lifestyle magazine Vogue. The magazine has been published since March 2013, becoming the twenty-first local edition of Vogue');
 INSERT INTO periodical_translate VALUES (43, 'ua', 'Україна', 'Українська', 'Vogue Україна (англ. Vogue Ukraine) — українське видання американського щомісячного журналу про моду та стиль життя Vogue. Журнал виходить з березня 2013 року, ставши двадцять першим місцевим виданням Vogue');
+

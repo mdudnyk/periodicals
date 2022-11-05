@@ -229,4 +229,8 @@ class Queries {
     //SUBSCRIPTION_CALENDAR
     public static final String CREATE_SUBSCRIPTION_CALENDAR = "INSERT INTO subscription_calendar values (?, ?, ?)";
 
+    //PAYMENT
+    public static final String CREATE_PAYMENT = "INSERT INTO payment values (?, ?, ?, ?, ?)";
+    public static final String GET_PAYMENT_BY_ID = "SELECT * FROM payment WHERE id=?";
+    public static final String UPDATE_PAYMENT_STATUS = "UPDATE payment SET status=? WHERE id=?";
 }

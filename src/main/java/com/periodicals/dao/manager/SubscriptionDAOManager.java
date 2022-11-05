@@ -27,7 +27,7 @@ public class SubscriptionDAOManager {
     public SubscriptionDAOManager(ConnectionManager connectionManager) {
         this.conManager = connectionManager;
         subscriptionDAO = new SubscriptionDAOMySql();
-        subscriptionCalendarDAO =  new SubscriptionCalendarDAOMySql();
+        subscriptionCalendarDAO = new SubscriptionCalendarDAOMySql();
         userDAO = new UserDAOMySql();
     }
 

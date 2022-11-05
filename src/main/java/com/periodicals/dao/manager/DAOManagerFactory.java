@@ -13,6 +13,7 @@ public class DAOManagerFactory {
     private final TopicDAOManager topicDAOManager;
     private final PeriodicalDAOManager periodicalDAOManager;
     private final SubscriptionDAOManager subscriptionDAOManager;
+    private final PaymentDAOManager paymentDAOManager;
 
 
     private DAOManagerFactory() throws DAOException {
@@ -22,6 +23,7 @@ public class DAOManagerFactory {
         topicDAOManager = new TopicDAOManager(connectionManager);
         periodicalDAOManager = new PeriodicalDAOManager(connectionManager);
         subscriptionDAOManager = new SubscriptionDAOManager(connectionManager);
+        paymentDAOManager = new PaymentDAOManager(connectionManager);
     }
 
     public static synchronized DAOManagerFactory getInstance() throws DAOException {
@@ -49,6 +51,10 @@ public class DAOManagerFactory {
 
     public SubscriptionDAOManager getSubscriptionDAOManager() {
         return subscriptionDAOManager;
+    }
+
+    public PaymentDAOManager getPaymentDAOManager() {
+        return paymentDAOManager;
     }
 
     public void closeDAO() {

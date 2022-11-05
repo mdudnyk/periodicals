@@ -1,13 +1,14 @@
-<%@ page import="com.periodicals.entity.User" %>
 <%@ page import="com.periodicals.util.MoneyFormatter" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="com.periodicals.entity.enums.UserRole" %>
 
-<fmt:setLocale value = "${sessionScope.locale.getShortNameId()}"/>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="ct" tagdir="/WEB-INF/tags" %>
+
+<fmt:setLocale value="${sessionScope.locale.getShortNameId()}"/>
 <fmt:setBundle basename="messages"/>
-<%
-    User user = (User) session.getAttribute("user");
-%>
+<ct:updateUserEntity user="${sessionScope.user}"/>
+
 <header>
     <div class="container">
         <div class="logo_block">
@@ -20,230 +21,220 @@
                 <form action="${pageContext.request.contextPath}/controller">
                     <input type="hidden" name="cmd" value="SEARCH_BY_TITLE">
                     <input type="text" name="search_string"
-                           placeholder="<fmt:message key="header.search_by_title"/>" spellcheck="false" autocomplete="off">
+                           placeholder="<fmt:message key="header.search_by_title"/>" spellcheck="false"
+                           autocomplete="off">
                     <button class="search_btn" type="submit">
                         <i class="material-icons search">search</i>
                     </button>
                 </form>
             </div>
-        <%
-            if (user == null) {
-        %>
-            <button class="sign_in_btn" onclick="open_sign_in_modal()"><fmt:message key="header.sign_in"/></button>
-            <div class="enter_modal" id="sign_in_modal">
-                <div class="modal_block">
-                    <div class="modal_header">
-                        <span class="header_string"><fmt:message key="header.modal.welcome"/></span>
-                        <span class="close_icon" onclick="clearSignInInput(); clearSignInModalAlerts(); close_modals()">
+            <c:if test="${sessionScope.user == null}">
+                <button class="sign_in_btn" onclick="open_sign_in_modal()"><fmt:message key="header.sign_in"/></button>
+                <div class="enter_modal" id="sign_in_modal">
+                    <div class="modal_block">
+                        <div class="modal_header">
+                            <span class="header_string"><fmt:message key="header.modal.welcome"/></span>
+                            <span class="close_icon"
+                                  onclick="clearSignInInput(); clearSignInModalAlerts(); close_modals()">
                             &#x2715
                         </span>
-                    </div>
-                    <div class="modal_content">
-                        <div class="modal_alert_block" id="si_alert_block" style="display: none;">
-                            <i class="material-icons warning">error</i>
-                            <div class="modal_alert_msgs">
-                                <span class="modal_alert_msg" id="si_wrong_email_password"
-                                    style="display: none;"><fmt:message key="header.alert.wrong_email_password"/>
-                                </span>
-                                <span class="modal_alert_msg" id="si_fill_all"
-                                    style="display: none;"><fmt:message key="header.alert.fill_all_fields"/>
-                                </span>
-                                <span class="modal_alert_msg" id="si_email_not_valid"
-                                    style="display: none;"><fmt:message key="header.alert.email_not_valid"/>
-                                </span>
-                                <span class="modal_alert_msg" id="si_password_not_valid"
-                                    style="display: none;"><fmt:message key="header.alert.password_not_valid"/>
-                                </span>
-                                <span class="modal_alert_msg" id="si_try_later"
-                                    style="display: none;"><fmt:message key="header.alert.try_later"/>
-                                </span>
-                            </div>
                         </div>
-                        <form>
-                            <div class="input_text_block">
-                                <input type="text" autocomplete="email" id="sign_in_email"
-                                       placeholder="<fmt:message key="header.placeholder.email"/>">
-                                <input type="password" autocomplete="off" id="sign_in_password"
-                                       placeholder="<fmt:message key="header.placeholder.password"/>">
+                        <div class="modal_content">
+                            <div class="modal_alert_block" id="si_alert_block" style="display: none;">
+                                <i class="material-icons warning">error</i>
+                                <div class="modal_alert_msgs">
+                                <span class="modal_alert_msg" id="si_wrong_email_password"
+                                      style="display: none;"><fmt:message key="header.alert.wrong_email_password"/>
+                                </span>
+                                    <span class="modal_alert_msg" id="si_fill_all"
+                                          style="display: none;"><fmt:message key="header.alert.fill_all_fields"/>
+                                </span>
+                                    <span class="modal_alert_msg" id="si_email_not_valid"
+                                          style="display: none;"><fmt:message key="header.alert.email_not_valid"/>
+                                </span>
+                                    <span class="modal_alert_msg" id="si_password_not_valid"
+                                          style="display: none;"><fmt:message key="header.alert.password_not_valid"/>
+                                </span>
+                                    <span class="modal_alert_msg" id="si_try_later"
+                                          style="display: none;"><fmt:message key="header.alert.try_later"/>
+                                </span>
+                                </div>
                             </div>
-                            <button class="modal_btn" type="button" onclick="tryToSignIn()">
-                                <fmt:message key="header.sign_in"/>
-                            </button>
-                        </form>
-                    </div>
-                    <div class="modal_footer">
+                            <form>
+                                <div class="input_text_block">
+                                    <input type="text" autocomplete="email" id="sign_in_email"
+                                           placeholder="<fmt:message key="header.placeholder.email"/>">
+                                    <input type="password" autocomplete="off" id="sign_in_password"
+                                           placeholder="<fmt:message key="header.placeholder.password"/>">
+                                </div>
+                                <button class="modal_btn" type="button" onclick="tryToSignIn()">
+                                    <fmt:message key="header.sign_in"/>
+                                </button>
+                            </form>
+                        </div>
+                        <div class="modal_footer">
                         <span><fmt:message key="header.modal.new_user"/>
                             <span class="footer_link" onclick="close_modals(); open_sign_up_modal()">
                                 <fmt:message key="header.modal.sign_up_now"/>
                             </span>
                         </span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <button class="sign_up_btn" onclick="open_sign_up_modal()"><fmt:message key="header.sign_up"/></button>
-            <div class="enter_modal" id="sign_up_modal">
-                <div class="modal_block">
-                    <div class="modal_header">
-                        <span class="header_string"><fmt:message key="header.modal.welcome"/></span>
-                        <span class="close_icon" onclick="clearSignUpInput(); clearSignUpModalAlerts(); close_modals()">
+                <button class="sign_up_btn" onclick="open_sign_up_modal()"><fmt:message key="header.sign_up"/></button>
+                <div class="enter_modal" id="sign_up_modal">
+                    <div class="modal_block">
+                        <div class="modal_header">
+                            <span class="header_string"><fmt:message key="header.modal.welcome"/></span>
+                            <span class="close_icon"
+                                  onclick="clearSignUpInput(); clearSignUpModalAlerts(); close_modals()">
                             &#x2715
                         </span>
-                    </div>
-                    <div class="modal_content">
-                        <div class="modal_alert_block" id="su_alert_block" style="display: none;">
-                            <i class="material-icons warning">error</i>
-                            <div class="modal_alert_msgs">
-                                <span class="modal_alert_msg" id="su_fill_all"
-                                    style="display: none;"><fmt:message key="header.alert.fill_all_fields"/>
-                                </span>
-                                <span class="modal_alert_msg" id="su_firstname_not_valid"
-                                    style="display: none;"><fmt:message key="header.alert.firstname_not_valid"/>
-                                </span>
-                                <span class="modal_alert_msg" id="su_lastname_not_valid"
-                                    style="display: none;"><fmt:message key="header.alert.lastname_not_valid"/>
-                                </span>
-                                <span class="modal_alert_msg" id="su_email_not_valid"
-                                    style="display: none;"><fmt:message key="header.alert.email_not_valid"/>
-                                </span>
-                                <span class="modal_alert_msg" id="su_password_not_valid"
-                                    style="display: none;"><fmt:message key="header.alert.password_not_valid"/>
-                                </span>
-                                <span class="modal_alert_msg" id="su_pass_identical"
-                                    style="display: none;"><fmt:message key="header.alert.identical_passwords"/>
-                                </span>
-                                <span class="modal_alert_msg" id="su_user_exists"
-                                    style="display: none;"><fmt:message key="header.alert.user_exists"/>
-                                </span>
-                                <span class="modal_alert_msg" id="su_try_later"
-                                    style="display: none;"><fmt:message key="header.alert.try_later"/>
-                                </span>
-                            </div>
                         </div>
-                        <div class="modal_success_block" id="su_success_block" style="display: none;">
-                            <i class="material-icons warning">check_circle</i>
-                            <div class="modal_alert_msgs">
+                        <div class="modal_content">
+                            <div class="modal_alert_block" id="su_alert_block" style="display: none;">
+                                <i class="material-icons warning">error</i>
+                                <div class="modal_alert_msgs">
+                                <span class="modal_alert_msg" id="su_fill_all"
+                                      style="display: none;"><fmt:message key="header.alert.fill_all_fields"/>
+                                </span>
+                                    <span class="modal_alert_msg" id="su_firstname_not_valid"
+                                          style="display: none;"><fmt:message key="header.alert.firstname_not_valid"/>
+                                </span>
+                                    <span class="modal_alert_msg" id="su_lastname_not_valid"
+                                          style="display: none;"><fmt:message key="header.alert.lastname_not_valid"/>
+                                </span>
+                                    <span class="modal_alert_msg" id="su_email_not_valid"
+                                          style="display: none;"><fmt:message key="header.alert.email_not_valid"/>
+                                </span>
+                                    <span class="modal_alert_msg" id="su_password_not_valid"
+                                          style="display: none;"><fmt:message key="header.alert.password_not_valid"/>
+                                </span>
+                                    <span class="modal_alert_msg" id="su_pass_identical"
+                                          style="display: none;"><fmt:message key="header.alert.identical_passwords"/>
+                                </span>
+                                    <span class="modal_alert_msg" id="su_user_exists"
+                                          style="display: none;"><fmt:message key="header.alert.user_exists"/>
+                                </span>
+                                    <span class="modal_alert_msg" id="su_try_later"
+                                          style="display: none;"><fmt:message key="header.alert.try_later"/>
+                                </span>
+                                </div>
+                            </div>
+                            <div class="modal_success_block" id="su_success_block" style="display: none;">
+                                <i class="material-icons warning">check_circle</i>
+                                <div class="modal_alert_msgs">
                                 <span class="modal_alert_msg" id="su_please_login"
                                       style="display: none;"><fmt:message key="header.success.please_login"/>
                                 </span>
+                                </div>
                             </div>
+                            <form>
+                                <div class="input_text_block">
+                                    <input type="text" id="sign_up_firstname"
+                                           placeholder="<fmt:message key="header.placeholder.firstname"/>">
+                                    <input type="text" id="sign_up_lastname"
+                                           placeholder="<fmt:message key="header.placeholder.lastname"/>">
+                                    <input type="text" autocomplete="email" id="sign_up_email"
+                                           placeholder="<fmt:message key="header.placeholder.email"/>">
+                                    <input type="password" id="sign_up_password_1"
+                                           placeholder="<fmt:message key="header.placeholder.password"/>">
+                                    <input type="password" id="sign_up_password_2"
+                                           placeholder="<fmt:message key="header.placeholder.confirm_password"/>">
+                                </div>
+                                <button class="modal_btn" type="button" onclick="tryToSignUp()">
+                                    <fmt:message key="header.sign_up"/>
+                                </button>
+                            </form>
                         </div>
-                        <form>
-                            <div class="input_text_block">
-                                <input  type="text" id="sign_up_firstname"
-                                        placeholder="<fmt:message key="header.placeholder.firstname"/>">
-                                <input type="text" id="sign_up_lastname"
-                                       placeholder="<fmt:message key="header.placeholder.lastname"/>">
-                                <input type="text" autocomplete="email" id="sign_up_email"
-                                       placeholder="<fmt:message key="header.placeholder.email"/>">
-                                <input type="password" id="sign_up_password_1"
-                                       placeholder="<fmt:message key="header.placeholder.password"/>">
-                                <input type="password" id="sign_up_password_2"
-                                       placeholder="<fmt:message key="header.placeholder.confirm_password"/>">
-                            </div>
-                            <button class="modal_btn" type="button" onclick="tryToSignUp()">
-                                <fmt:message key="header.sign_up"/>
-                            </button>
-                        </form>
-                    </div>
-                    <div class="modal_footer">
+                        <div class="modal_footer">
                         <span><fmt:message key="header.modal.existing_user"/>
                             <span class="footer_link" onclick="close_modals(); open_sign_in_modal()">
                                 <fmt:message key="header.modal.please_sign_in"/>
                             </span>
                         </span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <%
-                } else {
-            %>
+            </c:if>
+            <c:if test="${sessionScope.user != null}">
             <span class="balance_block">
                     <i class="material-icons profile">account_balance_wallet</i>
                     <span class="balance_amount">
                         <span id="main_balance_field">
-                            <%=MoneyFormatter.toHumanReadable(user.getBalance())%>
+                                ${MoneyFormatter.toHumanReadable(sessionScope.user.getBalance())}
                         </span>
                         ${sessionScope.locale.getCurrency()}
                     </span>
                 </span>
-            <div class="profile_block" onclick="open_profile_modal()">
-                <%
-                    if(user.getRole().name().equals("ADMIN")) {
-                %>
-                <span class="profile_name_adm">ADMIN</span>
-                <%
-                    } else {
-                    String initials = "" + user.getFirstname().charAt(0) + user.getLastname().charAt(0);
-                %>
-                    <span class="profile_name"><%=initials%></span>
-                <%
-                    };
-                %>
-            </div>
-            <div class="profile_modal" id="profile_modal">
-                <ul>
-                    <%
-                        if(!user.getRole().name().equals("ADMIN")) {
-                    %>
-                    <a href="#">
-                        <li>
-                            <i class="material-icons profile">library_books</i>
-                            <span><fmt:message key="header.link.subscriptions"/></span>
-                        </li>
-                    </a>
-                    <a href="${pageContext.request.contextPath}/controller?cmd=TOP_UP_PAGE">
-                        <li>
-                            <i class="material-icons profile">account_balance_wallet</i>
-                            <span><fmt:message key="header.link.top_up_wallet"/></span>
-                        </li>
-                    </a>
-                    <%
-                        } else {
-                    %>
-                    <a href="#">
-                        <li>
-                            <i class="material-icons profile">poll</i>
-                            <span><fmt:message key="header.link.statistics"/></span>
-                        </li>
-                    </a>
-                    <a href="${pageContext.request.contextPath}/controller?cmd=TOPICS_PAGE&pageNumber=1">
-                        <li>
-                            <i class="material-icons profile">format_list_bulleted</i>
-                            <span><fmt:message key="header.link.topics"/></span>
-                        </li>
-                    </a>
-                    <a href="${pageContext.request.contextPath}/controller?cmd=PERIODICALS_PAGE&pageNumber=1">
-                        <li>
-                            <i class="material-icons profile">library_books</i>
-                            <span><fmt:message key="header.link.publications"/></span>
-                        </li>
-                    </a>
-                    <a href="#">
-                        <li>
-                            <i class="material-icons profile">supervisor_account</i>
-                            <span><fmt:message key="header.link.customers"/></span>
-                        </li>
-                    </a>
-                    <%
-                        };
-                    %>
-                    <a href="#">
-                        <li>
-                            <i class="material-icons profile">settings</i>
-                            <span><fmt:message key="header.link.manage_account"/></span>
-                        </li>
-                    </a>
-                    <a href="${pageContext.request.contextPath}/controller?cmd=SIGN_OUT">
-                        <li>
-                            <i class="material-icons profile">power_settings_new</i>
-                            <span><fmt:message key="header.link.sign_out"/></span>
-                        </li>
-                    </a>
-                </ul>
-            </div>
-        <%
-            };
-        %>
+                <div class="profile_block" onclick="open_profile_modal()">
+                    <c:if test="${sessionScope.user.getRole() == UserRole.ADMIN}">
+                        <span class="profile_name_adm"><fmt:message key="header.admin"/></span>
+                    </c:if>
+                    <c:if test="${sessionScope.user.getRole() == UserRole.CUSTOMER}">
+                    <span class="profile_name">
+                            ${sessionScope.user.getFirstname().charAt(0)}${sessionScope.user.getLastname().charAt(0)}
+                    </span>
+                    </c:if>
+                </div>
+                <div class="profile_modal" id="profile_modal">
+                    <ul>
+                        <c:if test="${sessionScope.user.getRole() == UserRole.CUSTOMER}">
+                            <a href="#">
+                                <li>
+                                    <i class="material-icons profile">library_books</i>
+                                    <span><fmt:message key="header.link.subscriptions"/></span>
+                                </li>
+                            </a>
+                            <a href="${pageContext.request.contextPath}/controller?cmd=TOP_UP_PAGE">
+                                <li>
+                                    <i class="material-icons profile">account_balance_wallet</i>
+                                    <span><fmt:message key="header.link.top_up_wallet"/></span>
+                                </li>
+                            </a>
+                        </c:if>
+                        <c:if test="${sessionScope.user.getRole() == UserRole.ADMIN}">
+                            <a href="#">
+                                <li>
+                                    <i class="material-icons profile">poll</i>
+                                    <span><fmt:message key="header.link.statistics"/></span>
+                                </li>
+                            </a>
+                            <a href="${pageContext.request.contextPath}/controller?cmd=TOPICS_PAGE&pageNumber=1">
+                                <li>
+                                    <i class="material-icons profile">format_list_bulleted</i>
+                                    <span><fmt:message key="header.link.topics"/></span>
+                                </li>
+                            </a>
+                            <a href="${pageContext.request.contextPath}/controller?cmd=PERIODICALS_PAGE&pageNumber=1">
+                                <li>
+                                    <i class="material-icons profile">library_books</i>
+                                    <span><fmt:message key="header.link.publications"/></span>
+                                </li>
+                            </a>
+                            <a href="#">
+                                <li>
+                                    <i class="material-icons profile">supervisor_account</i>
+                                    <span><fmt:message key="header.link.customers"/></span>
+                                </li>
+                            </a>
+                        </c:if>
+                        <a href="#">
+                            <li>
+                                <i class="material-icons profile">settings</i>
+                                <span><fmt:message key="header.link.manage_account"/></span>
+                            </li>
+                        </a>
+                        <a href="${pageContext.request.contextPath}/controller?cmd=SIGN_OUT">
+                            <li>
+                                <i class="material-icons profile">power_settings_new</i>
+                                <span><fmt:message key="header.link.sign_out"/></span>
+                            </li>
+                        </a>
+                    </ul>
+                </div>
+            </c:if>
+
         </div>
         <img class="flag_img" src="${pageContext.request.contextPath}${sessionScope.locale.getFlagIconURL()}"
              alt="${sessionScope.locale.getShortNameId()}" height="30px">
@@ -254,7 +245,7 @@
                     <c:forEach var="lang" items="${applicationScope.locales}">
                         <a href="${pageContext.request.contextPath}/controller?cmd=SET_LOCALE&lang=${lang.key}">
                             <li>
-                                <p><c:out value="${lang.key}" /></p>
+                                <p><c:out value="${lang.key}"/></p>
                             </li>
                         </a>
                     </c:forEach>

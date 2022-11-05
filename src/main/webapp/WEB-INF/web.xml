@@ -25,10 +25,15 @@
     </context-param>
     <context-param>
         <param-name>imagesFolder</param-name>
-        <param-value>C:\\Users\\mdudnyk\\Desktop\\periodicals\\image_storage\\</param-value>
+        <param-value>C:\\Users\\mdudnyk\\Desktop\\periodicals\\imageStorage\\</param-value>
     </context-param>
     <context-param>
         <param-name>defaultTitleImagePath</param-name>
         <param-value>/img/no_image.svg</param-value>
+    </context-param>
+    <!--IP needs for LiqPay API-->
+    <context-param>
+        <param-name>publicIP</param-name>
+        <param-value>45.158.51.89</param-value>
     </context-param>
 </web-app>
