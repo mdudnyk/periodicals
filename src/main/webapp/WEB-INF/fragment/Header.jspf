@@ -182,7 +182,7 @@
                 <div class="profile_modal" id="profile_modal">
                     <ul>
                         <c:if test="${sessionScope.user.getRole() == UserRole.CUSTOMER}">
-                            <a href="#">
+                            <a href="${pageContext.request.contextPath}/controller?cmd=MY_SUBSCRIPTIONS">
                                 <li>
                                     <i class="material-icons profile">library_books</i>
                                     <span><fmt:message key="header.link.subscriptions"/></span>
@@ -190,7 +190,7 @@
                             </a>
                             <a href="${pageContext.request.contextPath}/controller?cmd=TOP_UP_PAGE">
                                 <li>
-                                    <i class="material-icons profile">account_balance_wallet</i>
+                                    <i class="material-icons profile">credit_card</i>
                                     <span><fmt:message key="header.link.top_up_wallet"/></span>
                                 </li>
                             </a>

@@ -35,6 +35,7 @@ public class CommandAccessChecker {
         accessCustomerMap.put("TopUpPageCommand", true);
         accessCustomerMap.put("TopUpBalanceCommand", true);
         accessCustomerMap.put("GetPaymentResultCommand", false);
+        accessCustomerMap.put("MySubscriptionsCommand", true);
         accessCustomerMap.put("ErrorPageCommand", true);
 
 
@@ -59,6 +60,7 @@ public class CommandAccessChecker {
         accessAdminMap.put("TopUpPageCommand", false);
         accessAdminMap.put("TopUpBalanceCommand", false);
         accessAdminMap.put("GetPaymentResultCommand", false);
+        accessAdminMap.put("MySubscriptionsCommand", false);
         accessAdminMap.put("ErrorPageCommand", true);
 
 
@@ -83,6 +85,7 @@ public class CommandAccessChecker {
         accessGuestMap.put("TopUpPageCommand", false);
         accessGuestMap.put("TopUpBalanceCommand", false);
         accessGuestMap.put("GetPaymentResultCommand", true);
+        accessGuestMap.put("MySubscriptionsCommand", false);
         accessGuestMap.put("ErrorPageCommand", true);
     }
 
