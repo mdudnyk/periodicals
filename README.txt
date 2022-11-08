@@ -24,44 +24,41 @@ The system administrator has the rights:
 
 Project requirements:
 
-1. На основі сутностей предметної області створити класи, які їм відповідають.
-2. Класи і методи повинні мати назви, що відображають їх функціональність, і повинні бути
-рознесені по пакетам.
-3. Оформлення коду має відповідати Java Code Convention.
-4. Інформацію щодо предметної області зберігати у реляційній базі даних (в якості СУБД
-рекомендується використовувати MySQL або PostgreSQL).
-5. Для доступу до даних використовувати JDBC API із застосуванням готового або ж
-розробленого самостійно пулу з'єднань.
-6. Застосунок має підтримувати роботу з кирилицею (бути багатомовним), в тому числі при
-зберіганні інформації в базі даних:
-a. повинна бути можливість перемикання мови інтерфейсу;
-b. повинна бути підтримка введення, виведення і зберігання інформації (в базі даних),
-записаної на різних мовах;
-c. в якості мов обрати мінімум дві: одна на основі кирилиці (українська або російська),
-інша на основі латиниці (англійська).
-7. Архітектура застосунка повинна відповідати шаблону MVC.
-8. При реалізації бізнес-логіки необхідно використовувати шаблони проектування: Команда,
-Стратегія, Фабрика, Будівельник, Сінглтон, Фронт-контролер, Спостерігач, Адаптер та ін.
-9. Використовуючи сервлети і JSP, реалізувати функціональність, наведену в постановці
-завдання.
-10. Використовувати Apache Tomcat у якості контейнера сервлетів.
-11. На сторінках JSP застосовувати теги з бібліотеки JSTL та розроблені власні теги (мінімум: один
-тег custom tag library і один тег tag file).
-12. Реалізувати захист від повторної відправки даних на сервер при оновленні сторінки
-(реалізувати PRG).
-13. При розробці використовувати сесії, фільтри, слухачі.
-14. У застосунку повинні бути реалізовані аутентифікація і авторизація, розмежування прав
-доступу користувачів системи до компонентів програми. Шифрування паролів заохочується.
-15. Впровадити у проект журнал подій із використанням бібліотеки log4j.
-16. Код повинен містити коментарі документації (всі класи верхнього рівня, нетривіальні методи
-і конструктори).
-17. Застосунок має бути покритим модульними тестами (мінімальний відсоток покриття 40%).
-Написання інтеграційних тестів заохочуються.
-18. Реалізувати механізм пагінації сторінок з даними.
-19. Всі поля введення повинні бути із валідацією даних.
-20. Застосунок має коректно реагувати на помилки та виключні ситуації різного роду (кінцевий
-користувач не повинен бачити stack trace на стороні клієнта).
-21. Самостійне розширення постановки задачі по функціональності заохочується! (додавання
-капчі, формування звітів у різних форматах, тощо)
-22. Використання HTML, CSS, JS фреймворків для інтерфейсу користувача (Bootstrap, Materialize,
-ін.)заохочується!
+1. Based on the entities of the subject area, create classes that correspond to them.
+2. Classes and methods should have names that reflect their functionality, and should be
+   divided into packages.
+3. The design of the code must comply with the Java Code Convention.
+4. Store information about the subject area in a relational database (as a DBMS
+   it is recommended to use MySQL or PostgreSQL).
+5. To access data, use the JDBC API using a ready-made or
+   self-developed connection pool.
+6. The application must support work with the Cyrillic alphabet (be multilingual), including at
+   storing information in the database:
+   a. it should be possible to switch the interface language;
+   b. there should be support for input, output and storage of information (in the database),
+      recorded in different languages;
+   c. choose at least two languages: one based on the Cyrillic alphabet (Ukrainian or Russian),
+      the other based on Latin (English).
+7. The application architecture should follow the MVC pattern.
+8. When implementing business logic, it is necessary to use design templates: Team,
+   Strategy, Factory, Builder, Singleton, Front Controller, Observer, Adapter, etc.
+9. Using servlets and JSP, implement the functionality given in the statement task.
+10. Use Apache Tomcat as a servlet container.
+11. On JSP pages, apply tags from the JSTL library and developed own tags (minimum: one
+    custom tag library tag and one tag file tag).
+12. Implement protection against resending data to the server when updating the page (implement PRG).
+13. When developing, use sessions, filters, listeners.
+14. The application must implement authentication and authorization, separation of rights
+    access of system users to program components. Password encryption is encouraged.
+15. Implement an event log into the project using the log4j library.
+16. The code must contain documentation comments (all top-level classes, non-trivial methods
+    and constructors).
+17. The application must be covered by unit tests (minimum coverage percentage of 40%).
+    Writing integration tests is encouraged.
+18. Implement a pagination mechanism for pages with data.
+19. All input fields must have data validation.
+20. The application must respond correctly to errors and exceptional situations of various kinds (final
+    the user should not see the stack trace on the client side).
+21. Independent expansion of the statement of the task in terms of functionality is encouraged! (addition
+    captchas, generating reports in various formats, etc.)
+22. Use of HTML, CSS, JS frameworks for the user interface (Bootstrap, Materialize,etc.) is encouraged!
