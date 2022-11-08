@@ -17,6 +17,7 @@ public class SubscriptionDAOMySql implements SubscriptionDAO {
             ps.setString(3, entity.getPeriodicalTitle());
             ps.setInt(4, entity.getPrice());
             ps.setTimestamp(5, Timestamp.valueOf(entity.getCreatedAt()));
+            ps.setTimestamp(6, Timestamp.valueOf(entity.getExpiredAt().atStartOfDay()));
             if (ps.executeUpdate() > 0) {
                 try (ResultSet rs = ps.getGeneratedKeys()) {
                     if (rs.next()) {

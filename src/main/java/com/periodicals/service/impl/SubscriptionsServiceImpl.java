@@ -13,6 +13,7 @@ import com.periodicals.service.SubscriptionsService;
 import com.periodicals.service.exceptions.ServiceException;
 import com.periodicals.util.PriceDeterminant;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import java.util.List;
@@ -53,7 +54,8 @@ public class SubscriptionsServiceImpl implements SubscriptionsService {
                 periodicalId,
                 periodical.getTitle(),
                 totalPrice,
-                LocalDateTime.now());
+                LocalDateTime.now(),
+                MonthSelector.getLastMonth(calendar));
         subscription.addSubscriptionYearList(calendar);
 
         SubscriptionDAOManager subscriptionDAOManager = daoManger.getSubscriptionDAOManager();

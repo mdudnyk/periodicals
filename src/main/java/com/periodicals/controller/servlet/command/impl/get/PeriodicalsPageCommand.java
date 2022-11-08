@@ -66,13 +66,13 @@ public class PeriodicalsPageCommand implements FrontCommand {
     }
 
     private void setPeriodicalsTotal(final HttpServletRequest request,
-                               final PeriodicalService periodicalService) throws DAOException {
+                                     final PeriodicalService periodicalService) throws DAOException {
         String searchQuery = (String) request.getSession().getAttribute("periodicalsSearchString");
         int amountOnPage = (Integer) request.getSession().getAttribute("periodicalsAmountOnPage");
         int periodicalsTotal;
         int totalPages;
 
-        if(searchQuery.equals("")) {
+        if (searchQuery.equals("")) {
             periodicalsTotal = periodicalService.getPeriodicalsTotal();
         } else {
             periodicalsTotal = periodicalService.getPeriodicalsTotalSearchMode(searchQuery);
@@ -90,7 +90,7 @@ public class PeriodicalsPageCommand implements FrontCommand {
 
     private void setSearchString(final HttpServletRequest request) {
         String searchQuery = request.getParameter("searchString");
-        if(searchQuery != null) {
+        if (searchQuery != null) {
             request.getSession().setAttribute("periodicalsSearchString", searchQuery);
         }
     }

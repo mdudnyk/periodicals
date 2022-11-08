@@ -3,6 +3,10 @@ package com.periodicals.entity;
 import org.json.simple.JSONArray;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
 
 public class MonthSelector implements Serializable {
@@ -41,5 +45,26 @@ public class MonthSelector implements Serializable {
                 "year=" + year +
                 ", month=" + month +
                 '}';
+    }
+
+    public static LocalDate getLastMonth(List<MonthSelector> list) {
+        LocalDate date = LocalDate.of(2000, 1, 1);
+
+        if (list != null && list.size() > 0) {
+            list.sort(Comparator.comparingInt(MonthSelector::getYear));
+            MonthSelector monthSelector = list.get(list.size() - 1);
+            int maxMonth = 1;
+            if (monthSelector != null) {
+                for (int i = 0; i < 12; i++) {
+                    boolean activeMonth = (boolean) monthSelector.getMonth().get(i);
+                    if (activeMonth && i > maxMonth) {
+                        maxMonth = i;
+                    }
+                }
+                date = LocalDate.of(monthSelector.getYear(), maxMonth, 1);
+                date = date.with(TemporalAdjusters.lastDayOfMonth());
+            }
+        }
+        return date;
     }
 }

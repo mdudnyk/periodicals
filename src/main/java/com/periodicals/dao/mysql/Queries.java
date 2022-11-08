@@ -224,7 +224,7 @@ class Queries {
 
 
     //SUBSCRIPTION
-    public static final String CREATE_SUBSCRIPTION = "INSERT INTO subscription values (DEFAULT, ?, ?, ?, ?, ?)";
+    public static final String CREATE_SUBSCRIPTION = "INSERT INTO subscription values (DEFAULT, ?, ?, ?, ?, ?, ?)";
 
     //SUBSCRIPTION_CALENDAR
     public static final String CREATE_SUBSCRIPTION_CALENDAR = "INSERT INTO subscription_calendar values (?, ?, ?)";
