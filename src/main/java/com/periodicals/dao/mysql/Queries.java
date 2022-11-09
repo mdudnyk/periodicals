@@ -225,6 +225,34 @@ class Queries {
 
     //SUBSCRIPTION
     public static final String CREATE_SUBSCRIPTION = "INSERT INTO subscription values (DEFAULT, ?, ?, ?, ?, ?, ?)";
+    public static final String GET_SUBSCRIPTIONS_COUNT_BY_USER_ID = "SELECT COUNT(*) FROM subscription " +
+            "WHERE user_id=?";
+    public static final String GET_SUBSCRIPTIONS_COUNT_BY_USER_ID_SEARCH_MODE = "SELECT COUNT(*) FROM subscription " +
+            "WHERE user_id=? AND periodical_title LIKE CONCAT( '%',?,'%')";
+    public static final String GET_SUBSCRIPTIONS_BY_USER_ID_PAGINATION_ASC = """
+        SELECT * FROM subscription
+        WHERE user_id=?
+        ORDER BY ?, 4
+        LIMIT ? OFFSET ?;
+                """;
+    public static final String GET_SUBSCRIPTIONS_BY_USER_ID_PAGINATION_DESC = """
+        SELECT * FROM subscription
+        WHERE user_id=?
+        ORDER BY ? DESC, 4
+        LIMIT ? OFFSET ?;
+                """;
+    public static final String GET_SUBSCRIPTIONS_BY_USER_ID_AND_TITLE_PAGINATION_ASC = """
+        SELECT * FROM subscription
+        WHERE user_id=? AND periodical_title LIKE CONCAT( '%',?,'%')
+        ORDER BY ?, 4
+        LIMIT ? OFFSET ?;
+                """;
+    public static final String GET_SUBSCRIPTIONS_BY_USER_ID_AND_TITLE_PAGINATION_DESC = """
+        SELECT * FROM subscription
+        WHERE user_id=? AND periodical_title LIKE CONCAT( '%',?,'%')
+        ORDER BY ? DESC, 4
+        LIMIT ? OFFSET ?;
+                """;
 
     //SUBSCRIPTION_CALENDAR
     public static final String CREATE_SUBSCRIPTION_CALENDAR = "INSERT INTO subscription_calendar values (?, ?, ?)";

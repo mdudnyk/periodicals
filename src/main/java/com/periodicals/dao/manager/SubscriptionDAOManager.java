@@ -14,6 +14,7 @@ import com.periodicals.entity.User;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 public class SubscriptionDAOManager {
     private ConnectionManager conManager;
@@ -48,5 +49,43 @@ public class SubscriptionDAOManager {
         } finally {
             conManager.close(connection);
         }
+    }
+
+    public int getSubscriptionsTotal(final int userId) throws DAOException {
+        Connection connection = conManager.getConnection();
+        int result = subscriptionDAO.getTotalAmountByUserId(userId, connection);
+        conManager.close(connection);
+        return result;
+    }
+
+    public int getSubscriptionsTotal(final int userId, final String searchQuery) throws DAOException {
+        Connection connection = conManager.getConnection();
+        int result = subscriptionDAO.getTotalAmountByUserIdAndSearchQuery(userId, searchQuery, connection);
+        conManager.close(connection);
+        return result;
+    }
+
+    public List<Subscription> getSubscriptionsByUserIdPagination(final int userId, final int positionsToSkip,
+                                                                 final int amountOnPage,
+                                                                 final String subscriptionsSortBy,
+                                                                 final String subscriptionsSortOrder) throws DAOException {
+        Connection connection = conManager.getConnection();
+        List<Subscription> result = subscriptionDAO
+                .getSubscriptionsByUserIdPagination(userId, positionsToSkip, amountOnPage,
+                        subscriptionsSortBy, subscriptionsSortOrder, connection);
+        conManager.close(connection);
+        return result;
+    }
+
+    public List<Subscription> getSubscriptionsByUserIdPagination(final int userId, final String searchString,
+                                                                 final int positionsToSkip, final int amountOnPage,
+                                                                 final String subscriptionsSortBy,
+                                                                 final String subscriptionsSortOrder) throws DAOException {
+        Connection connection = conManager.getConnection();
+        List<Subscription> result = subscriptionDAO
+                .getSubscriptionsByUserIdPagination(userId, searchString, positionsToSkip,
+                        amountOnPage, subscriptionsSortBy, subscriptionsSortOrder, connection);
+        conManager.close(connection);
+        return result;
     }
 }

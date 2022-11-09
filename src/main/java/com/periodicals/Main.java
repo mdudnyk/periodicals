@@ -1,21 +1,23 @@
 package com.periodicals;
 
 import com.periodicals.dao.exception.DAOException;
-
-
+import com.periodicals.dao.manager.DAOManagerFactory;
+import com.periodicals.entity.Subscription;
+import com.periodicals.service.SubscriptionsService;
 import com.periodicals.service.exceptions.ServiceException;
+import com.periodicals.service.impl.SubscriptionsServiceImpl;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAdjusters;
-import java.util.Locale;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws DAOException, ServiceException {
-        LocalDate date = LocalDate.of(2023, 2, 1);
-        date = date.with(TemporalAdjusters.lastDayOfMonth());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLL yyyy", Locale.forLanguageTag("uk"));
+        DAOManagerFactory daoF = DAOManagerFactory.getInstance();
+        SubscriptionsService service = new SubscriptionsServiceImpl(daoF);
 
-        System.out.println(date.format(formatter));
+        List<Subscription> list = service.getSubscriptionsByUserIdPagination(
+                2, "Beer",0, 3, "status",
+                "DESC");
+        System.out.println(list.get(1).getExpiredAt().isAfter(LocalDate.now()));
     }
 }

@@ -4,6 +4,7 @@ import com.periodicals.controller.servlet.command.FrontCommand;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.dao.manager.DAOManagerFactory;
 import com.periodicals.entity.Subscription;
+import com.periodicals.entity.User;
 import com.periodicals.service.SubscriptionsService;
 import com.periodicals.service.exceptions.ServiceException;
 import com.periodicals.service.impl.SubscriptionsServiceImpl;
@@ -21,16 +22,17 @@ public class MySubscriptionsCommand implements FrontCommand {
                         final DAOManagerFactory daoManager)
             throws DAOException, ServiceException, ServletException, IOException {
         SubscriptionsService service = new SubscriptionsServiceImpl(daoManager);
-        initSessionAttributes(request.getSession());
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        initSessionAttributes(session);
 
         setSortingParameters(request);
         setAmountOnPage(request);
         setSearchString(request);
-        setSubscriptionsTotal(request, service);
+        setSubscriptionsTotal(request, service, user.getId());
         setCurrentPage(request);
 
-        request.setAttribute("subscriptions", getSubscriptionsList(request, service));
-
+        request.setAttribute("subscriptions", getSubscriptionsList(request, service, user.getId()));
         request.getRequestDispatcher("WEB-INF/MySubscriptions.jsp").forward(request, response);
     }
 
@@ -60,16 +62,17 @@ public class MySubscriptionsCommand implements FrontCommand {
     }
 
     private void setSubscriptionsTotal(final HttpServletRequest request,
-                                     final SubscriptionsService service) throws DAOException {
+                                     final SubscriptionsService service, final int userId)
+            throws DAOException, ServiceException {
         String searchQuery = (String) request.getSession().getAttribute("subscriptionsSearchString");
         int amountOnPage = (Integer) request.getSession().getAttribute("subscriptionsAmountOnPage");
         int subscriptionsTotal = 9;
         int totalPages;
 
         if(searchQuery.equals("")) {
-//            subscriptionsTotal = service.getSubscriptionsTotal();
+            subscriptionsTotal = service.getSubscriptionsTotal(userId);
         } else {
-//            subscriptionsTotal = service.getSubscriptionsTotalSearchMode(searchQuery);
+            subscriptionsTotal = service.getSubscriptionsTotal(userId, searchQuery);
         }
 
         totalPages = subscriptionsTotal / amountOnPage + 1;
@@ -130,27 +133,30 @@ public class MySubscriptionsCommand implements FrontCommand {
     }
 
     private List<Subscription> getSubscriptionsList(final HttpServletRequest request,
-                                                          final SubscriptionsService service) throws DAOException {
+                                                    final SubscriptionsService service,
+                                                    final int userId) throws DAOException, ServiceException {
         int amountOnPage = (Integer) request.getSession().getAttribute("subscriptionsAmountOnPage");
         int pageNumber = (Integer) request.getSession().getAttribute("subscriptionsPageNumber");
         String searchString = (String) request.getSession().getAttribute("subscriptionsSearchString");
         int positionsToSkip = pageNumber * amountOnPage - amountOnPage;
-        List<Subscription> subscriptions = null;
+        List<Subscription> subscriptions;
 
-//        if (searchString.equals("")) {
-//            subscriptions = service.getSubscriptionsByUserIdPagination(
-//                    positionsToSkip,
-//                    amountOnPage,
-//                    (String) request.getSession().getAttribute("periodicalsSortBy"),
-//                    (String) request.getSession().getAttribute("periodicalsSortOrder"));
-//        } else {
-//            subscriptions = service.getSubscriptionsByUserIdPaginationAndSearch(
-//                    positionsToSkip,
-//                    amountOnPage,
-//                    (String) request.getSession().getAttribute("periodicalsSortBy"),
-//                    (String) request.getSession().getAttribute("periodicalsSortOrder"),
-//                    searchString);
-//        }
+        if (searchString.equals("")) {
+            subscriptions = service.getSubscriptionsByUserIdPagination(
+                    userId,
+                    positionsToSkip,
+                    amountOnPage,
+                    (String) request.getSession().getAttribute("subscriptionsSortBy"),
+                    (String) request.getSession().getAttribute("subscriptionsSortOrder"));
+        } else {
+            subscriptions = service.getSubscriptionsByUserIdPagination(
+                    userId,
+                    searchString,
+                    positionsToSkip,
+                    amountOnPage,
+                    (String) request.getSession().getAttribute("subscriptionsSortBy"),
+                    (String) request.getSession().getAttribute("subscriptionsSortOrder"));
+        }
         return subscriptions;
     }
 }

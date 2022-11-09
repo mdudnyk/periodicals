@@ -182,7 +182,7 @@
                 <div class="profile_modal" id="profile_modal">
                     <ul>
                         <c:if test="${sessionScope.user.getRole() == UserRole.CUSTOMER}">
-                            <a href="${pageContext.request.contextPath}/controller?cmd=MY_SUBSCRIPTIONS">
+                            <a href="${pageContext.request.contextPath}/controller?cmd=MY_SUBSCRIPTIONS&pageNumber=1">
                                 <li>
                                     <i class="material-icons profile">library_books</i>
                                     <span><fmt:message key="header.link.subscriptions"/></span>

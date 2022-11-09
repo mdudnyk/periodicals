@@ -266,7 +266,7 @@
                     <c:forEach var="periodical" items="${requestScope.periodicals}">
                         <c:set var="rowIndex" scope="request" value="${rowIndex + 1}"/>
                         <tr>
-                            <td><c:out value="${rowIndex}"/></td>
+                            <td>${rowIndex}</td>
                             <td class="periodical_column">${periodical.getTitle()}</td>
                             <td class="periodical_column">
                                     <c:if test="${periodical.getTopicName() == null}">

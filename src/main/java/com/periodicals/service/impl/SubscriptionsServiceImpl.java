@@ -13,7 +13,6 @@ import com.periodicals.service.SubscriptionsService;
 import com.periodicals.service.exceptions.ServiceException;
 import com.periodicals.util.PriceDeterminant;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import java.util.List;
@@ -50,6 +49,7 @@ public class SubscriptionsServiceImpl implements SubscriptionsService {
         }
 
         Subscription subscription = new Subscription(
+                1,
                 user.getId(),
                 periodicalId,
                 periodical.getTitle(),
@@ -63,6 +63,51 @@ public class SubscriptionsServiceImpl implements SubscriptionsService {
         user.setBalance(userFromDB.getBalance());
 
     }
+
+    @Override
+    public int getSubscriptionsTotal(final int userId) throws DAOException, ServiceException {
+        userIdValidation(userId);
+        return daoManger.getSubscriptionDAOManager().getSubscriptionsTotal(userId);
+    }
+
+    @Override
+    public int getSubscriptionsTotal(final int userId, final String searchQuery)
+            throws DAOException, ServiceException {
+        userIdValidation(userId);
+        searchStringValidation(searchQuery);
+        return daoManger.getSubscriptionDAOManager().getSubscriptionsTotal(userId, searchQuery);
+    }
+
+    @Override
+    public List<Subscription> getSubscriptionsByUserIdPagination(final int userId, int positionsToSkip,
+                                                                 int amountOnPage, final String subscriptionsSortBy,
+                                                                 final String subscriptionsSortOrder)
+            throws ServiceException, DAOException {
+        userIdValidation(userId);
+        positionsToSkip = Math.max(positionsToSkip, 0);
+        amountOnPage = Math.max(amountOnPage, 1);
+        return daoManger
+                .getSubscriptionDAOManager()
+                .getSubscriptionsByUserIdPagination(userId, positionsToSkip, amountOnPage,
+                        subscriptionsSortBy, subscriptionsSortOrder);
+    }
+
+    @Override
+    public List<Subscription> getSubscriptionsByUserIdPagination(final int userId, final String searchString,
+                                                                 int positionsToSkip, int amountOnPage,
+                                                                 final String subscriptionsSortBy,
+                                                                 final String subscriptionsSortOrder)
+            throws ServiceException, DAOException {
+        userIdValidation(userId);
+        searchStringValidation(searchString);
+        positionsToSkip = Math.max(positionsToSkip, 0);
+        amountOnPage = Math.max(amountOnPage, 1);
+        return daoManger
+                .getSubscriptionDAOManager()
+                .getSubscriptionsByUserIdPagination(userId, searchString, positionsToSkip, amountOnPage,
+                        subscriptionsSortBy, subscriptionsSortOrder);
+    }
+
 
     private int countTotalPrice(final int basePrice, final List<MonthSelector> calendar) {
         int price = 0;
@@ -94,5 +139,17 @@ public class SubscriptionsServiceImpl implements SubscriptionsService {
             }
         }
         return true;
+    }
+
+    private void userIdValidation(final int id) throws ServiceException {
+        if (id < 1) {
+            throw new ServiceException("Invalid user id: " + id);
+        }
+    }
+
+    private void searchStringValidation(final String searchString) throws ServiceException {
+        if (searchString == null || searchString.isBlank()) {
+            throw new ServiceException("Invalid search string. ");
+        }
     }
 }

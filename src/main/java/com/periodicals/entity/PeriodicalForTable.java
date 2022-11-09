@@ -1,5 +1,4 @@
 package com.periodicals.entity;
-
 import com.periodicals.util.MoneyFormatter;
 
 import java.io.Serializable;

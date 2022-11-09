@@ -32,8 +32,9 @@ public class Subscription implements Serializable {
         this.subscriptionCalendar = subscriptionCalendar;
     }
 
-    public Subscription(final int userId, final int periodicalId, final String periodicalTitle,
+    public Subscription(final int id, final int userId, final int periodicalId, final String periodicalTitle,
                         final int price, final LocalDateTime createdAt, final LocalDate expiredAt) {
+        this.id = id;
         this.userId = userId;
         this.periodicalId = periodicalId;
         this.periodicalTitle = periodicalTitle;
@@ -104,5 +105,19 @@ public class Subscription implements Serializable {
     public int hashCode() {
         return Objects.hash(id, userId, periodicalId, periodicalTitle,
                 price, createdAt, expiredAt, subscriptionCalendar);
+    }
+
+    @Override
+    public String toString() {
+        return "Subscription{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", periodicalId=" + periodicalId +
+                ", periodicalTitle='" + periodicalTitle + '\'' +
+                ", price=" + price +
+                ", createdAt=" + createdAt +
+                ", expiredAt=" + expiredAt +
+                ", subscriptionCalendar=" + subscriptionCalendar +
+                '}';
     }
 }
