@@ -13,6 +13,7 @@ import com.periodicals.service.SubscriptionsService;
 import com.periodicals.service.exceptions.ServiceException;
 import com.periodicals.util.PriceDeterminant;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import java.util.List;
@@ -108,6 +109,20 @@ public class SubscriptionsServiceImpl implements SubscriptionsService {
                         subscriptionsSortBy, subscriptionsSortOrder);
     }
 
+    @Override
+    public void deleteMySubscriptionById(final int subscriptionId, final int userId)
+            throws DAOException, ServiceException {
+        userIdValidation(userId);
+        subscriptionIdValidation(subscriptionId);
+        Subscription subscription = daoManger.getSubscriptionDAOManager().getSubscriptionById(subscriptionId);
+        if (subscription.getUserId() != userId) {
+            throw new ServiceException("Don't enough rights to delete this subscription.");
+        } else if (subscription.getExpiredAt().isAfter(LocalDate.now())) {
+            throw new ServiceException("Can't delete not expired subscription.");
+        }
+        daoManger.getSubscriptionDAOManager().deleteSubscription(subscriptionId);
+    }
+
 
     private int countTotalPrice(final int basePrice, final List<MonthSelector> calendar) {
         int price = 0;
@@ -144,6 +159,12 @@ public class SubscriptionsServiceImpl implements SubscriptionsService {
     private void userIdValidation(final int id) throws ServiceException {
         if (id < 1) {
             throw new ServiceException("Invalid user id: " + id);
+        }
+    }
+
+    private void subscriptionIdValidation(final int id) throws ServiceException {
+        if (id < 1) {
+            throw new ServiceException("Invalid subscription id: " + id);
         }
     }
 

@@ -88,4 +88,17 @@ public class SubscriptionDAOManager {
         conManager.close(connection);
         return result;
     }
+
+    public Subscription getSubscriptionById(final int subscriptionId) throws DAOException {
+        Connection connection = conManager.getConnection();
+        Subscription subscription = subscriptionDAO.getEntityById(subscriptionId, connection);
+        conManager.close(connection);
+        return subscription;
+    }
+
+    public void deleteSubscription(final int subscriptionId) throws DAOException {
+        Connection connection = conManager.getConnection();
+        subscriptionDAO.delete(subscriptionId, connection);
+        conManager.close(connection);
+    }
 }

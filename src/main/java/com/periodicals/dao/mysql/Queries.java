@@ -225,6 +225,7 @@ class Queries {
 
     //SUBSCRIPTION
     public static final String CREATE_SUBSCRIPTION = "INSERT INTO subscription values (DEFAULT, ?, ?, ?, ?, ?, ?)";
+    public static final String GET_SUBSCRIPTION_BY_ID = "SELECT * FROM subscription WHERE id=?";
     public static final String GET_SUBSCRIPTIONS_COUNT_BY_USER_ID = "SELECT COUNT(*) FROM subscription " +
             "WHERE user_id=?";
     public static final String GET_SUBSCRIPTIONS_COUNT_BY_USER_ID_SEARCH_MODE = "SELECT COUNT(*) FROM subscription " +
@@ -253,6 +254,7 @@ class Queries {
         ORDER BY ? DESC, 4
         LIMIT ? OFFSET ?;
                 """;
+    public static final String DELETE_SUBSCRIPTION = "DELETE FROM subscription WHERE id=?";
 
     //SUBSCRIPTION_CALENDAR
     public static final String CREATE_SUBSCRIPTION_CALENDAR = "INSERT INTO subscription_calendar values (?, ?, ?)";

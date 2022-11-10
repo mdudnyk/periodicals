@@ -25,4 +25,7 @@ public interface SubscriptionsService {
                                                           int amountOnPage, String subscriptionsSortBy,
                                                           String subscriptionsSortOrder)
             throws ServiceException, DAOException;
+
+    void deleteMySubscriptionById(int subscriptionId, int id) throws DAOException, ServiceException;
+
 }

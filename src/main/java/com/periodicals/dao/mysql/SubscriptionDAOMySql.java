@@ -2,9 +2,12 @@ package com.periodicals.dao.mysql;
 
 import com.periodicals.dao.SubscriptionDAO;
 import com.periodicals.dao.exception.DAOException;
+import com.periodicals.entity.Periodical;
 import com.periodicals.entity.Subscription;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +41,21 @@ public class SubscriptionDAOMySql implements SubscriptionDAO {
 
     @Override
     public Subscription getEntityById(final Integer id, final Connection connection) throws DAOException {
-        return null;
+        Subscription subscription = null;
+
+        try (PreparedStatement ps = connection.prepareStatement(Queries.GET_SUBSCRIPTION_BY_ID)){
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                subscription = fillEntityFromResultSet(rs);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            throw new DAOException("Error while trying to get subscription with id="
+                    + id + ". " + e.getMessage());
+        }
+
+        return subscription;
     }
 
     @Override
@@ -99,15 +116,7 @@ public class SubscriptionDAOMySql implements SubscriptionDAO {
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                subscriptions.add(new Subscription(
-                        rs.getInt(1),
-                        rs.getInt(2),
-                        rs.getInt(3),
-                        rs.getString(4),
-                        rs.getInt(5),
-                        rs.getTimestamp(6).toLocalDateTime(),
-                        rs.getTimestamp(7).toLocalDateTime().toLocalDate()
-                ));
+                subscriptions.add(fillEntityFromResultSet(rs));
             }
             rs.close();
         } catch (SQLException e) {
@@ -141,15 +150,7 @@ public class SubscriptionDAOMySql implements SubscriptionDAO {
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                subscriptions.add(new Subscription(
-                        rs.getInt(1),
-                        rs.getInt(2),
-                        rs.getInt(3),
-                        rs.getString(4),
-                        rs.getInt(5),
-                        rs.getTimestamp(6).toLocalDateTime(),
-                        rs.getTimestamp(7).toLocalDateTime().toLocalDate()
-                ));
+                subscriptions.add(fillEntityFromResultSet(rs));
             }
             rs.close();
         } catch (SQLException e) {
@@ -161,11 +162,30 @@ public class SubscriptionDAOMySql implements SubscriptionDAO {
 
     @Override
     public void update(final Subscription entity, final Connection connection) throws DAOException {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void delete(final Integer id, final Connection connection) throws DAOException {
+        try (PreparedStatement ps = connection.prepareStatement(Queries.DELETE_SUBSCRIPTION)) {
+            ps.setInt(1, id);
+            if (ps.executeUpdate() < 1) {
+                throw new DAOException("We don`t have such subscription.");
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Can not delete subscription with id=" + id
+                    + "from database. " + e.getMessage());
+        }
+    }
 
+    private Subscription fillEntityFromResultSet(ResultSet resultSet) throws SQLException {
+        int id = resultSet.getInt(1);
+        int userId = resultSet.getInt(2);
+        int periodicalId = resultSet.getInt(3);
+        String title = resultSet.getString(4);
+        int price = resultSet.getInt(5);
+        LocalDateTime createdAt = resultSet.getTimestamp(6).toLocalDateTime();
+        LocalDate expiredAt = resultSet.getTimestamp(7).toLocalDateTime().toLocalDate();
+        return new Subscription(id, userId, periodicalId, title, price, createdAt, expiredAt);
     }
 }

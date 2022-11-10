@@ -50,21 +50,23 @@
                     <div class="amount_number">${amountOnPage}</div>
                     <i class="material-icons" id="amount_modal_icon">expand_more</i>
                     <div class="amount_modal" id="amount_modal">
-                        <c:if test="${amountOnPage != 5}">
-                            <a href="${pageContext.request.contextPath}/controller?cmd=MY_SUBSCRIPTIONS&amount=5">
-                                <li>5</li>
-                            </a>
-                        </c:if>
-                        <c:if test="${amountOnPage != 10}">
-                            <a href="${pageContext.request.contextPath}/controller?cmd=MY_SUBSCRIPTIONS&amount=10">
-                                <li>10</li>
-                            </a>
-                        </c:if>
-                        <c:if test="${amountOnPage != 15}">
-                            <a href="${pageContext.request.contextPath}/controller?cmd=MY_SUBSCRIPTIONS&amount=15">
-                                <li>15</li>
-                            </a>
-                        </c:if>
+                        <ul>
+                            <c:if test="${amountOnPage != 5}">
+                                <a href="${pageContext.request.contextPath}/controller?cmd=MY_SUBSCRIPTIONS&amount=5">
+                                    <li>5</li>
+                                </a>
+                            </c:if>
+                            <c:if test="${amountOnPage != 10}">
+                                <a href="${pageContext.request.contextPath}/controller?cmd=MY_SUBSCRIPTIONS&amount=10">
+                                    <li>10</li>
+                                </a>
+                            </c:if>
+                            <c:if test="${amountOnPage != 15}">
+                                <a href="${pageContext.request.contextPath}/controller?cmd=MY_SUBSCRIPTIONS&amount=15">
+                                    <li>15</li>
+                                </a>
+                            </c:if>
+                        </ul>
                     </div>
                 </div>
                 <div class="close_search_block">
@@ -290,7 +292,7 @@
                 <div class="under_table_block">
                     <ct:paginationBar page="${pageNumber}"
                                       total="${requestScope.totalPages}"
-                                      command="SUBSCRIPTIONS_PAGE"/>
+                                      command="MY_SUBSCRIPTIONS"/>
                 </div>
                     </c:when>
                     <c:otherwise>

@@ -27,6 +27,7 @@ public enum CommandEnum {
     TOP_UP_BALANCE(new TopUpBalanceCommand()),
     GET_PAYMENT_RESULT(new GetPaymentResultCommand()),
     MY_SUBSCRIPTIONS(new MySubscriptionsCommand()),
+    DELETE_MY_SUBSCRIPTION(new DeleteMySubscriptionCommand()),
     ERROR_PAGE(new ErrorPageCommand());
 
     private final FrontCommand frontCommand;

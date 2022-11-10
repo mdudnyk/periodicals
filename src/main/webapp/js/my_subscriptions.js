@@ -44,7 +44,7 @@ async function deleteSubscriptionById(id) {
 }
 
 function openAlertModal(alert_msg) {
-    alert_msg.display = "block";
+    alert_msg.style.display = "block";
     alert_modal.style.display = "flex";
 }
 
