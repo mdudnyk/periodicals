@@ -257,7 +257,10 @@ class Queries {
     public static final String DELETE_SUBSCRIPTION = "DELETE FROM subscription WHERE id=?";
 
     //SUBSCRIPTION_CALENDAR
-    public static final String CREATE_SUBSCRIPTION_CALENDAR = "INSERT INTO subscription_calendar values (?, ?, ?)";
+    public static final String CREATE_SUBSCRIPTION_CALENDAR =
+            "INSERT INTO subscription_calendar values (?, ?, ?)";
+    public static final String GET_SUBSCRIPTION_CALENDAR_BY_ID =
+            "SELECT * FROM subscription_calendar WHERE subscription_id=?";
 
     //PAYMENT
     public static final String CREATE_PAYMENT = "INSERT INTO payment values (?, ?, ?, ?, ?)";

@@ -55,11 +55,14 @@ public class TopicDAOManager {
         return topic;
     }
 
-    public Topic getTopicByIdAndLocale(int topicId, String localeId) throws DAOException {
+    public Topic getTopicByIdAndLocale(int topicId, String localeId, String defaultLocale) throws DAOException {
         Connection connection = conManager.getConnection();
         Topic topic = topicDAO.getEntityById(topicId, connection);
         if (topic != null) {
             topic.addTranslate(topicTranslateDAO.getTranslateByLocale(topicId, localeId, connection));
+            if (topic.getAllTranslates().size() == 0) {
+                topic.addTranslate(topicTranslateDAO.getTranslateByLocale(topicId, defaultLocale, connection));
+            }
         }
         conManager.close(connection);
         return topic;

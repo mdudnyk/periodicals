@@ -3,6 +3,7 @@ package com.periodicals.service;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.entity.MonthSelector;
 import com.periodicals.entity.Subscription;
+import com.periodicals.entity.SubscriptionDetails;
 import com.periodicals.entity.User;
 import com.periodicals.service.exceptions.ServiceException;
 
@@ -26,6 +27,9 @@ public interface SubscriptionsService {
                                                           String subscriptionsSortOrder)
             throws ServiceException, DAOException;
 
-    void deleteMySubscriptionById(int subscriptionId, int id) throws DAOException, ServiceException;
+    void deleteMySubscriptionById(int subscriptionId, int userId) throws DAOException, ServiceException;
+
+    SubscriptionDetails getSubscriptionDetailsById(int subscriptionId, int id, String currentLocale,
+                                                   String defaultLocale) throws DAOException, ServiceException;
 
 }

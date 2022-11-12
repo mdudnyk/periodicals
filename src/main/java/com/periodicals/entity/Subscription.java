@@ -79,6 +79,10 @@ public class Subscription implements Serializable {
         return subscriptionCalendar;
     }
 
+    public void setSubscriptionCalendar(final Map<Integer, MonthSelector> subscriptionCalendar) {
+        this.subscriptionCalendar = subscriptionCalendar;
+    }
+
     public void addSubscriptionYearList(List<MonthSelector> list) {
         for (MonthSelector m : list) {
             for (Object b : m.getMonth()) {

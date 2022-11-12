@@ -2,7 +2,7 @@
 <head>
     <title>PressReader | Access Denied</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}css/error.css">
+    <link rel="stylesheet" href="css/error.css">
     <meta http-equiv="refresh" content="6; url=<%=request.getHeader("referer")%>">
 </head>
 <body>

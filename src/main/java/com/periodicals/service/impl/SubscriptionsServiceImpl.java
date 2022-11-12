@@ -5,10 +5,8 @@ import com.periodicals.dao.manager.DAOManagerFactory;
 import com.periodicals.dao.manager.PeriodicalDAOManager;
 import com.periodicals.dao.manager.SubscriptionDAOManager;
 import com.periodicals.dao.manager.UserDAOManager;
-import com.periodicals.entity.MonthSelector;
-import com.periodicals.entity.Periodical;
-import com.periodicals.entity.Subscription;
-import com.periodicals.entity.User;
+import com.periodicals.entity.*;
+import com.periodicals.entity.enums.UserRole;
 import com.periodicals.service.SubscriptionsService;
 import com.periodicals.service.exceptions.ServiceException;
 import com.periodicals.util.PriceDeterminant;
@@ -123,6 +121,58 @@ public class SubscriptionsServiceImpl implements SubscriptionsService {
         daoManger.getSubscriptionDAOManager().deleteSubscription(subscriptionId);
     }
 
+    @Override
+    public SubscriptionDetails getSubscriptionDetailsById(final int subscriptionId, final int userId,
+                                                          final String currentLocale, final String defaultLocale)
+            throws DAOException, ServiceException {
+        userIdValidation(userId);
+        subscriptionIdValidation(subscriptionId);
+
+        Subscription subscription = daoManger.getSubscriptionDAOManager().getSubscriptionById(subscriptionId);
+        if (subscription == null) {
+            throw new ServiceException("Can't find this subscription.");
+        }
+        SubscriptionDetails subscriptionDetails = new SubscriptionDetails(
+                subscription.getPeriodicalTitle(),
+                subscription.getSubscriptionCalendar());
+
+        User user = daoManger.getUserDAOManager().getUserById(userId);
+        if (subscription.getUserId() != userId
+                && user != null
+                && user.getRole() != UserRole.ADMIN) {
+            throw new ServiceException("Don't enough rights to delete this subscription.");
+        }
+
+        if (subscription.getPeriodicalId() != 0) {
+            Periodical periodical = daoManger
+                    .getPeriodicalDAOManager()
+                    .getPeriodicalById(
+                            subscription.getPeriodicalId(),
+                            currentLocale,
+                            defaultLocale,
+                            LocalDate.now().getYear());
+            if (periodical != null && periodical.getTopicID() != 0) {
+                subscriptionDetails.setTitleImgLink(periodical.getTitleImgLink());
+                subscriptionDetails.setPublishingFrequency(periodical.getFrequency());
+
+                PeriodicalTranslate periodicalTranslate = periodical.getTranslation().values().iterator().next();
+                subscriptionDetails.setOriginCountry(periodicalTranslate.getCountry());
+                subscriptionDetails.setPublishingLanguage(periodicalTranslate.getLanguage());
+                Topic topic = daoManger
+                        .getTopicDAOManager()
+                        .getTopicByIdAndLocale(
+                                periodical.getTopicID(),
+                                currentLocale,
+                                defaultLocale);
+                if (topic != null) {
+                    TopicTranslate topicTranslate = topic.getAllTranslates().values().iterator().next();
+                    subscriptionDetails.setTopicName(topicTranslate.getName());
+                }
+            }
+        }
+
+        return subscriptionDetails;
+    }
 
     private int countTotalPrice(final int basePrice, final List<MonthSelector> calendar) {
         int price = 0;

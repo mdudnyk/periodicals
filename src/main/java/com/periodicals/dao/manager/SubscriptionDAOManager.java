@@ -38,7 +38,8 @@ public class SubscriptionDAOManager {
         try {
             subscriptionDAO.create(subscription, connection);
             for (MonthSelector m : subscription.getSubscriptionCalendar().values()) {
-                subscriptionCalendarDAO.create(subscription.getId(), m, connection);
+                subscriptionCalendarDAO
+                        .create(subscription.getId(), m, connection);
             }
             userDAO.update(user, connection);
             connection.commit();
@@ -53,14 +54,16 @@ public class SubscriptionDAOManager {
 
     public int getSubscriptionsTotal(final int userId) throws DAOException {
         Connection connection = conManager.getConnection();
-        int result = subscriptionDAO.getTotalAmountByUserId(userId, connection);
+        int result = subscriptionDAO
+                .getTotalAmountByUserId(userId, connection);
         conManager.close(connection);
         return result;
     }
 
     public int getSubscriptionsTotal(final int userId, final String searchQuery) throws DAOException {
         Connection connection = conManager.getConnection();
-        int result = subscriptionDAO.getTotalAmountByUserIdAndSearchQuery(userId, searchQuery, connection);
+        int result = subscriptionDAO
+                .getTotalAmountByUserIdAndSearchQuery(userId, searchQuery, connection);
         conManager.close(connection);
         return result;
     }
@@ -91,7 +94,10 @@ public class SubscriptionDAOManager {
 
     public Subscription getSubscriptionById(final int subscriptionId) throws DAOException {
         Connection connection = conManager.getConnection();
-        Subscription subscription = subscriptionDAO.getEntityById(subscriptionId, connection);
+        Subscription subscription = subscriptionDAO
+                .getEntityById(subscriptionId, connection);
+        subscription.setSubscriptionCalendar(subscriptionCalendarDAO
+                .getCalendarBySubscriptionId(subscriptionId, connection));
         conManager.close(connection);
         return subscription;
     }

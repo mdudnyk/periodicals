@@ -3,7 +3,7 @@
 <head>
     <title>PressReader | Error</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}css/error.css">
+    <link rel="stylesheet" href="css/error.css">
     <meta http-equiv="refresh" content="5; url=/periodicals">
 </head>
 <body>
