@@ -27,7 +27,12 @@
             <h1 class="text_block_title">${requestScope.periodical.getTitle()}</h1>
             <c:set var="topicName" scope="request" value="${requestScope.topicTranslate.getName()}"/>
             <p><fmt:message key="new_periodical.topic"/>:
-                <span>${topicName == null ? 'no topic' : topicName}</span>
+                <c:if test="${topicName != null}">
+                    <span>${topicName}</span>
+                </c:if>
+                <c:if test="${topicName == null}">
+                    <span><fmt:message key="subscription_details.no_info"/></span>
+                </c:if>
             </p>
             <p><fmt:message key="new_periodical.publishing_country"/>:
                 <span>${requestScope.periodical.getTranslation().values().iterator().next().getCountry()}</span>
@@ -39,7 +44,7 @@
                 <span>
                     ${requestScope.periodical.getFrequency().get("amount")}
                     <fmt:message key="new_periodical.per"/>
-                        <fmt:message key="new_periodical.frequency_${requestScope.periodical.getFrequency().get('period')}"/>
+                    <fmt:message key="new_periodical.frequency_${requestScope.periodical.getFrequency().get('period')}"/>
                 </span>
             </p>
             <p class="text_block_price">
@@ -51,7 +56,8 @@
                 </c:if>
                 <span id="price_per_one">
                     ${requestScope.price}
-                    ${sessionScope.locale.getCurrency()}</span>
+                    ${sessionScope.locale.getCurrency()}
+                </span>
             </p>
             <p><fmt:message key="new_periodical.publishing_description"/>:
                 <br>
