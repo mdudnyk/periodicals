@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ct" tagdir="/WEB-INF/tags" %>
 <%@ page import="java.time.LocalDate" %>
@@ -277,7 +277,7 @@
                                     </c:if>
                                 </td>
                                 <td>
-                                    <a href="${pageContext.request.contextPath}/controller?cmd=SHOW_SUBSCRIPTION_DETAILS&id=${subscription.getId()}">
+                                    <a href="${pageContext.request.contextPath}/controller?cmd=SUBSCRIPTION_DETAILS&id=${subscription.getId()}">
                                         <i class="material-icons edit">zoom_in</i>
                                     </a>
                                 </td>
@@ -298,7 +298,7 @@
                     <c:otherwise>
                             </tbody>
                         </table>
-                        <span class="no_periodicals_to_show"><fmt:message key="periodicals.no_periodicals_to_show"/></span>
+                        <span class="no_subscriptions_to_show"><fmt:message key="my_subscriptions.no_subscriptions_to_show"/></span>
                     </c:otherwise>
                 </c:choose>
         </div>

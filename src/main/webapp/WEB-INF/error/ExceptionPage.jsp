@@ -7,7 +7,7 @@
     <head>
         <meta charset="UTF-8">
         <title>PressReader | Error</title>
-        <link rel="stylesheet" href="css/error.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}css/error.css">
     </head>
     <body>
         <h1>Oops! Something went wrong</h1>

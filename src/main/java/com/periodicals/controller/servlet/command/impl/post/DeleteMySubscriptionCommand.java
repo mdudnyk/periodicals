@@ -3,7 +3,6 @@ package com.periodicals.controller.servlet.command.impl.post;
 import com.periodicals.controller.servlet.command.FrontCommand;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.dao.manager.DAOManagerFactory;
-import com.periodicals.entity.Subscription;
 import com.periodicals.entity.User;
 import com.periodicals.service.SubscriptionsService;
 import com.periodicals.service.exceptions.ServiceException;

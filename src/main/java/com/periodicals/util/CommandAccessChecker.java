@@ -1,6 +1,7 @@
 package com.periodicals.util;
 
 import com.periodicals.controller.servlet.command.FrontCommand;
+import com.periodicals.controller.servlet.command.impl.get.SubscriptionDetailsCommand;
 import com.periodicals.entity.User;
 import com.periodicals.entity.enums.UserRole;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,6 +37,7 @@ public class CommandAccessChecker {
         accessCustomerMap.put("TopUpBalanceCommand", true);
         accessCustomerMap.put("GetPaymentResultCommand", false);
         accessCustomerMap.put("MySubscriptionsCommand", true);
+        accessCustomerMap.put("SubscriptionDetailsCommand", true);
         accessCustomerMap.put("DeleteMySubscriptionCommand", true);
         accessCustomerMap.put("ErrorPageCommand", true);
 
@@ -62,6 +64,7 @@ public class CommandAccessChecker {
         accessAdminMap.put("TopUpBalanceCommand", false);
         accessAdminMap.put("GetPaymentResultCommand", false);
         accessAdminMap.put("MySubscriptionsCommand", false);
+        accessAdminMap.put("SubscriptionDetailsCommand", true);
         accessAdminMap.put("DeleteMySubscriptionCommand", false);
         accessAdminMap.put("ErrorPageCommand", true);
 
@@ -88,6 +91,7 @@ public class CommandAccessChecker {
         accessGuestMap.put("TopUpBalanceCommand", false);
         accessGuestMap.put("GetPaymentResultCommand", true);
         accessGuestMap.put("MySubscriptionsCommand", false);
+        accessGuestMap.put("SubscriptionDetailsCommand", false);
         accessGuestMap.put("DeleteMySubscriptionCommand", false);
         accessGuestMap.put("ErrorPageCommand", true);
     }
