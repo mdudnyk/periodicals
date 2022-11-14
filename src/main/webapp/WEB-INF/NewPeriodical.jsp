@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page import="com.periodicals.util.DateFormatter" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -197,90 +198,15 @@
                             </span>
                             <form action="#" class="month_form" style="display: flex;"
                                   year="<fmt:formatDate pattern="yyyy" value="${now}"/>">
-                                <p class="checkbox_block">
-                                    <fmt:message key="periodical.jan"/>
-                                    <label class="checkbox_label">
-                                        <input type="checkbox" class="filled-in checkbox-green"/>
-                                        <span></span>
-                                    </label>
-                                </p>
-                                <p class="checkbox_block">
-                                    <fmt:message key="periodical.feb"/>
-                                    <label class="checkbox_label">
-                                        <input type="checkbox" class="filled-in checkbox-green"/>
-                                        <span></span>
-                                    </label>
-                                </p>
-                                <p class="checkbox_block">
-                                    <fmt:message key="periodical.mar"/>
-                                    <label class="checkbox_label">
-                                        <input type="checkbox" class="filled-in checkbox-green"/>
-                                        <span></span>
-                                    </label>
-                                </p>
-                                <p class="checkbox_block">
-                                    <fmt:message key="periodical.apr"/>
-                                    <label class="checkbox_label">
-                                        <input type="checkbox" class="filled-in checkbox-green"/>
-                                        <span></span>
-                                    </label>
-                                </p>
-                                <p class="checkbox_block">
-                                    <fmt:message key="periodical.may"/>
-                                    <label class="checkbox_label">
-                                        <input type="checkbox" class="filled-in checkbox-green"/>
-                                        <span></span>
-                                    </label>
-                                </p>
-                                <p class="checkbox_block">
-                                    <fmt:message key="periodical.jun"/>
-                                    <label class="checkbox_label">
-                                        <input type="checkbox" class="filled-in checkbox-green"/>
-                                        <span></span>
-                                    </label>
-                                </p>
-                                <p class="checkbox_block">
-                                    <fmt:message key="periodical.jul"/>
-                                    <label class="checkbox_label">
-                                        <input type="checkbox" class="filled-in checkbox-green"/>
-                                        <span></span>
-                                    </label>
-                                </p>
-                                <p class="checkbox_block">
-                                    <fmt:message key="periodical.aug"/>
-                                    <label class="checkbox_label">
-                                        <input type="checkbox" class="filled-in checkbox-green"/>
-                                        <span></span>
-                                    </label>
-                                </p>
-                                <p class="checkbox_block">
-                                    <fmt:message key="periodical.sep"/>
-                                    <label class="checkbox_label">
-                                        <input type="checkbox" class="filled-in checkbox-green"/>
-                                        <span></span>
-                                    </label>
-                                </p>
-                                <p class="checkbox_block">
-                                    <fmt:message key="periodical.oct"/>
-                                    <label class="checkbox_label">
-                                        <input type="checkbox" class="filled-in checkbox-green"/>
-                                        <span></span>
-                                    </label>
-                                </p>
-                                <p class="checkbox_block">
-                                    <fmt:message key="periodical.nov"/>
-                                    <label class="checkbox_label">
-                                        <input type="checkbox" class="filled-in checkbox-green"/>
-                                        <span></span>
-                                    </label>
-                                </p>
-                                <p class="checkbox_block">
-                                    <fmt:message key="periodical.dec"/>
-                                    <label class="checkbox_label">
-                                        <input type="checkbox" class="filled-in checkbox-green"/>
-                                        <span></span>
-                                    </label>
-                                </p>
+                                <c:forEach var="month" begin="1" end="12">
+                                    <p class="checkbox_block">
+                                        ${DateFormatter.getShortMonthName(month, sessionScope.locale.getShortNameId())}
+                                        <label class="checkbox_label">
+                                            <input type="checkbox" class="filled-in checkbox-green"/>
+                                            <span></span>
+                                        </label>
+                                    </p>
+                                </c:forEach>
                             </form>
                         </div>
                     </div>
