@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ct" tagdir="/WEB-INF/tags" %>
 <%@ page import="java.time.LocalDate" %>
-<%@ page import="com.periodicals.util.DateForTable" %>
+<%@ page import="com.periodicals.util.DateFormatter" %>
 
 <html lang="${sessionScope.locale.getShortNameId()}">
 <head>
@@ -171,43 +171,6 @@
                             </div>
                         </th>
                         <th>
-                            <div class="sortable_column">
-                                <fmt:message key="my_subscriptions.expiration_date"/>
-                                <div class="sorting_block">
-                                    <c:choose>
-                                        <c:when test="${sortBy.equals('expiredAt')}">
-                                            <c:choose>
-                                                <c:when test="${sortOrder.equals('ASC')}">
-                                                    <a href="${pageContext.request.contextPath}/controller?cmd=MY_SUBSCRIPTIONS&sortBy=expiredAt&sorting=DESC">
-                                                        <i class="material-icons sort">arrow_drop_up</i>
-                                                    </a>
-                                                    <a href="">
-                                                        <i class="material-icons sort disabled">arrow_drop_down</i>
-                                                    </a>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <a href="">
-                                                        <i class="material-icons sort disabled">arrow_drop_up</i>
-                                                    </a>
-                                                    <a href="${pageContext.request.contextPath}/controller?cmd=MY_SUBSCRIPTIONS&sortBy=expiredAt&sorting=ASC">
-                                                        <i class="material-icons sort">arrow_drop_down</i>
-                                                    </a>
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <a href="${pageContext.request.contextPath}/controller?cmd=MY_SUBSCRIPTIONS&sortBy=expiredAt&sorting=DESC">
-                                                <i class="material-icons sort">arrow_drop_up</i>
-                                            </a>
-                                            <a href="${pageContext.request.contextPath}/controller?cmd=MY_SUBSCRIPTIONS&sortBy=expiredAt&sorting=ASC">
-                                                <i class="material-icons sort">arrow_drop_down</i>
-                                            </a>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </div>
-                            </div>
-                        </th>
-                        <th>
                             <div class="sortable_column" style="width: 160px;">
                                 <fmt:message key="my_subscriptions.total_cost"/>
                                 <div class="sorting_block">
@@ -245,6 +208,43 @@
                             </div>
                         </th>
                         <th>
+                            <div class="sortable_column">
+                                <fmt:message key="my_subscriptions.expiration_date"/>
+                                <div class="sorting_block">
+                                    <c:choose>
+                                        <c:when test="${sortBy.equals('expiredAt')}">
+                                            <c:choose>
+                                                <c:when test="${sortOrder.equals('ASC')}">
+                                                    <a href="${pageContext.request.contextPath}/controller?cmd=MY_SUBSCRIPTIONS&sortBy=expiredAt&sorting=DESC">
+                                                        <i class="material-icons sort">arrow_drop_up</i>
+                                                    </a>
+                                                    <a href="">
+                                                        <i class="material-icons sort disabled">arrow_drop_down</i>
+                                                    </a>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <a href="">
+                                                        <i class="material-icons sort disabled">arrow_drop_up</i>
+                                                    </a>
+                                                    <a href="${pageContext.request.contextPath}/controller?cmd=MY_SUBSCRIPTIONS&sortBy=expiredAt&sorting=ASC">
+                                                        <i class="material-icons sort">arrow_drop_down</i>
+                                                    </a>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a href="${pageContext.request.contextPath}/controller?cmd=MY_SUBSCRIPTIONS&sortBy=expiredAt&sorting=DESC">
+                                                <i class="material-icons sort">arrow_drop_up</i>
+                                            </a>
+                                            <a href="${pageContext.request.contextPath}/controller?cmd=MY_SUBSCRIPTIONS&sortBy=expiredAt&sorting=ASC">
+                                                <i class="material-icons sort">arrow_drop_down</i>
+                                            </a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </div>
+                        </th>
+                        <th>
                             <div class="sortable_column" style="width: 90px;"><fmt:message key="my_subscriptions.status"/></div>
                         </th>
                         <th style="width: 80px;"><fmt:message key="my_subscriptions.details"/></th>
@@ -263,10 +263,10 @@
                                 <td style="font-weight: 700; text-align: left; padding-left: 35px;" class="subscription_column"
                                     style="text-align: left; padding-left: 15px;">${subscription.getPeriodicalTitle()}</td>
                                 <td class="subscription_column"
-                                    >${DateForTable.getString(subscription.getCreatedAt(), sessionScope.locale.getShortNameId())}</td>
-                                <td class="subscription_column"
-                                    >${DateForTable.getString(subscription.getExpiredAt(), sessionScope.locale.getShortNameId())}</td>
+                                    >${DateFormatter.getString(subscription.getCreatedAt(), sessionScope.locale.getShortNameId())}</td>
                                 <td>${MoneyFormatter.toHumanReadable(subscription.getPrice())}</td>
+                                <td class="subscription_column"
+                                >${DateFormatter.getString(subscription.getExpiredAt(), sessionScope.locale.getShortNameId())}</td>
                                 <td <c:set var="expired" scope="page" value="${subscription.getExpiredAt().isAfter(LocalDate.now())}"/>
                                     style="font-size: 11pt; font-weight: 700;
                                     <c:if test="${expired == false}">color: rgb(255, 117, 117);">

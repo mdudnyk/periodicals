@@ -1,6 +1,8 @@
 <%@ tag import="java.time.Year" %>
 <%@ tag import="com.periodicals.entity.MonthSelector" %>
 <%@ tag import="org.json.simple.JSONArray" %>
+<%@ tag import="com.periodicals.entity.LocaleCustom" %>
+<%@ tag import="com.periodicals.util.DateFormatter" %>
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -13,6 +15,7 @@
 <%
     String[] monthNames = {"jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"};
     int currentYear = Year.now().getValue();
+    LocaleCustom locale = (LocaleCustom) session.getAttribute("locale");
 
     if (calendar.get(currentYear) != null) {
         for (MonthSelector m : calendar.values()) {
@@ -28,7 +31,9 @@
                     request.setAttribute("month" , monthNames[i]);
                 %>
                 <p class="checkbox_block">
-                    <fmt:message key="periodical.${month}"/>
+                    <%=
+                        DateFormatter.getShortMonthName(i + 1, locale.getShortNameId())
+                    %>
                     <label class="checkbox_label">
                         <input type="checkbox" class="filled-in checkbox-green"
                                <% if (isChecked) {%>checked<%} %>/>
