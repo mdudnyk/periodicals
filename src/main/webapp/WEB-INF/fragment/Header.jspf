@@ -214,7 +214,7 @@
                                     <span><fmt:message key="header.link.publications"/></span>
                                 </li>
                             </a>
-                            <a href="#">
+                            <a href="${pageContext.request.contextPath}/controller?cmd=CUSTOMERS_PAGE">
                                 <li>
                                     <i class="material-icons profile">supervisor_account</i>
                                     <span><fmt:message key="header.link.customers"/></span>
