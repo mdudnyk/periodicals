@@ -1,5 +1,6 @@
-package com.periodicals.controller.servlet.command;
+package com.periodicals.controller.servlet.command.impl.post;
 
+import com.periodicals.controller.servlet.command.FrontCommand;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.dao.manager.DAOManagerFactory;
 import com.periodicals.service.exceptions.ServiceException;
@@ -9,12 +10,11 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-public class CustomersPageCommand implements FrontCommand {
+public class SetCustomerStatusCommand implements FrontCommand {
     @Override
     public void execute(final HttpServletRequest request, final HttpServletResponse response,
                         final DAOManagerFactory daoManager)
             throws DAOException, ServletException, IOException, ServiceException {
-
-        request.getRequestDispatcher("WEB-INF/CustomersPage.jsp").forward(request, response);
+        response.setStatus(404);
     }
 }

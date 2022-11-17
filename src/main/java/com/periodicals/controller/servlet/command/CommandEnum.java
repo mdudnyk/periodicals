@@ -30,6 +30,7 @@ public enum CommandEnum {
     SUBSCRIPTION_DETAILS(new SubscriptionDetailsCommand()),
     DELETE_MY_SUBSCRIPTION(new DeleteMySubscriptionCommand()),
     CUSTOMERS_PAGE(new CustomersPageCommand()),
+    SET_CUSTOMER_STATUS(new SetCustomerStatusCommand()),
     ERROR_PAGE(new ErrorPageCommand());
 
     private final FrontCommand frontCommand;

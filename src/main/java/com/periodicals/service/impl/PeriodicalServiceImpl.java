@@ -49,9 +49,9 @@ public class PeriodicalServiceImpl implements PeriodicalService {
                                                                          final String sortOrder) throws DAOException {
         skipPositions = Math.max(skipPositions, 0);
         amountOnPage = Math.max(amountOnPage, 1);
-        PeriodicalDAOManager pdm = daoManger.getPeriodicalDAOManager();
-        return pdm.getPeriodicalsForTableSortPag(
-                localeId, defaultLocaleId, skipPositions, amountOnPage, sortBy, sortOrder);
+        return daoManger.getPeriodicalDAOManager()
+                .getPeriodicalsForTableSortPag(localeId, defaultLocaleId,
+                        skipPositions, amountOnPage, sortBy, sortOrder);
     }
 
     @Override
@@ -62,21 +62,21 @@ public class PeriodicalServiceImpl implements PeriodicalService {
                                                                          final String sortBy,
                                                                          final String sortOrder,
                                                                          final String searchedTitle)  throws DAOException {
-        PeriodicalDAOManager pdm = daoManger.getPeriodicalDAOManager();
-        return pdm.getPeriodicalsForTableByTitleSortPag(
-                localeId, defaultLocaleId, skipPositions, amountOnPage, sortBy, sortOrder, searchedTitle);
+        skipPositions = Math.max(skipPositions, 0);
+        amountOnPage = Math.max(amountOnPage, 1);
+        return daoManger.getPeriodicalDAOManager()
+                .getPeriodicalsForTableByTitleSortPag(localeId, defaultLocaleId,
+                        skipPositions, amountOnPage, sortBy, sortOrder, searchedTitle);
     }
 
     @Override
     public int getPeriodicalsTotal() throws DAOException {
-        PeriodicalDAOManager pdm = daoManger.getPeriodicalDAOManager();
-        return pdm.getPeriodicalsAmount();
+        return daoManger.getPeriodicalDAOManager().getPeriodicalsAmount();
     }
 
     @Override
     public int getPeriodicalsTotalSearchMode(final String searchQuery) throws DAOException {
-        PeriodicalDAOManager pdm = daoManger.getPeriodicalDAOManager();
-        return pdm.getPeriodicalsAmountSearchMode(searchQuery);
+        return daoManger.getPeriodicalDAOManager().getPeriodicalsAmountSearchMode(searchQuery);
     }
 
     @Override

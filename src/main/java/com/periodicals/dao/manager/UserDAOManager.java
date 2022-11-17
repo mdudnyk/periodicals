@@ -4,6 +4,7 @@ import com.periodicals.dao.ConnectionManager;
 import com.periodicals.dao.UserDAO;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.dao.mysql.UserDAOMySql;
+import com.periodicals.entity.Subscription;
 import com.periodicals.entity.User;
 
 import java.sql.Connection;
@@ -27,13 +28,6 @@ public class UserDAOManager {
         conManager.close(connection);
     }
 
-    public List<User> getAllUsersList() throws DAOException {
-        Connection connection = conManager.getConnection();
-        List<User> users = userDAO.getAll(connection);
-        conManager.close(connection);
-        return users;
-    }
-
     public User getUserById(int id) throws DAOException {
         Connection connection = conManager.getConnection();
         User user = userDAO.getEntityById(id, connection);
@@ -48,15 +42,48 @@ public class UserDAOManager {
         return user;
     }
 
+    public List<User> getCustomersPagination(final int positionsToSkip,
+                                             final int amountOnPage,
+                                             final String sortBy,
+                                             final String sortOrder) throws DAOException {
+        Connection connection = conManager.getConnection();
+        List<User> result = userDAO
+                .getCustomersPagination(positionsToSkip, amountOnPage,
+                        sortBy, sortOrder, connection);
+        conManager.close(connection);
+        return result;
+    }
+
+    public List<User> getCustomersPagination(final String searchString,
+                                                   final int positionsToSkip,
+                                                   final int amountOnPage,
+                                                   final String sortBy,
+                                                   final String sortOrder) throws DAOException {
+        Connection connection = conManager.getConnection();
+        List<User> result = userDAO
+                .getCustomersPagination(searchString, positionsToSkip, amountOnPage,
+                        sortBy, sortOrder, connection);
+        conManager.close(connection);
+        return result;
+    }
+
+    public int getCustomersAmount() throws DAOException {
+        Connection connection = conManager.getConnection();
+        int amount = userDAO.getCustomersAmount(connection);
+        conManager.close(connection);
+        return amount;
+    }
+
+    public int getCustomersAmount(final String searchString) throws DAOException {
+        Connection connection = conManager.getConnection();
+        int amount = userDAO.getCustomersAmount(searchString, connection);
+        conManager.close(connection);
+        return amount;
+    }
+
     public void updateUser(User user) throws DAOException {
         Connection connection = conManager.getConnection();
         userDAO.update(user, connection);
-        conManager.close(connection);
-    }
-
-    public void deleteUser(int id) throws DAOException {
-        Connection connection = conManager.getConnection();
-        userDAO.delete(id, connection);
         conManager.close(connection);
     }
 }

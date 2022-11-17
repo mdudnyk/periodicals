@@ -7,6 +7,8 @@ import com.periodicals.entity.User;
 import com.periodicals.service.exceptions.ServiceException;
 import com.periodicals.service.UserService;
 
+import java.util.List;
+
 public class UserServiceImpl implements UserService {
     private final DAOManagerFactory daoManger;
 
@@ -38,6 +40,37 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUserInformation(final User user) throws DAOException {
         daoManger.getUserDAOManager().updateUser(user);
+    }
+
+    @Override
+    public List<User> getCustomersPagination(int positionsToSkip, int amountOnPage,
+                                             final String sortBy, final String sortOrder) throws DAOException {
+        positionsToSkip = Math.max(positionsToSkip, 0);
+        amountOnPage = Math.max(amountOnPage, 1);
+        return daoManger
+                .getUserDAOManager()
+                .getCustomersPagination(positionsToSkip, amountOnPage, sortBy, sortOrder);
+    }
+
+    @Override
+    public List<User> getCustomersPagination(int positionsToSkip, int amountOnPage,
+                                             final String sortBy, final String sortOrder,
+                                             final String searchString) throws DAOException {
+        positionsToSkip = Math.max(positionsToSkip, 0);
+        amountOnPage = Math.max(amountOnPage, 1);
+        return daoManger
+                .getUserDAOManager()
+                .getCustomersPagination(searchString, positionsToSkip, amountOnPage, sortBy, sortOrder);
+    }
+
+    @Override
+    public int getCustomersTotal() throws DAOException {
+        return daoManger.getUserDAOManager().getCustomersAmount();
+    }
+
+    @Override
+    public int getCustomersTotal(final String searchQuery) throws DAOException {
+        return daoManger.getUserDAOManager().getCustomersAmount(searchQuery);
     }
 
     private User findUserByEmail(final String email) throws DAOException {

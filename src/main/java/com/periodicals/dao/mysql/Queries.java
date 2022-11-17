@@ -17,7 +17,47 @@ class Queries {
     public static final String UPDATE_USER = "UPDATE user SET locale_id=?, firstname=?, lastname=?, password=?, " +
             "email=?, role=?, balance=?, is_blocked=? WHERE id=?";
     public static final String DELETE_USER = "DELETE FROM user WHERE id=?";
-
+    public static final String GET_CUSTOMERS_PAGINATION_ASC = """
+        SELECT * FROM user
+        WHERE role='CUSTOMER'
+        ORDER BY ?, 3
+        LIMIT ? OFFSET ?;
+        """;
+    public static final String GET_CUSTOMERS_PAGINATION_DESC = """
+        SELECT * FROM user
+        WHERE role='CUSTOMER'
+        ORDER BY ? DESC, 3
+        LIMIT ? OFFSET ?;
+        """;
+    public static final String SEARCH_CUSTOMERS_PAGINATION_ASC = """
+        SELECT * FROM user
+        WHERE role='CUSTOMER'
+            AND (id=? OR lastname LIKE CONCAT( '%',?,'%')
+                OR firstname LIKE CONCAT( '%',?,'%')
+                OR email LIKE CONCAT( '%',?,'%')
+            )
+        ORDER BY ?, 3
+        LIMIT ? OFFSET ?;
+        """;
+    public static final String SEARCH_CUSTOMERS_PAGINATION_DESC = """
+        SELECT * FROM user
+        WHERE role='CUSTOMER'
+            AND (id=? OR lastname LIKE CONCAT( '%',?,'%')
+                OR firstname LIKE CONCAT( '%',?,'%')
+                OR email LIKE CONCAT( '%',?,'%')
+            )
+        ORDER BY ? DESC, 3
+        LIMIT ? OFFSET ?;
+        """;
+    public static final String GET_CUSTOMERS_AMOUNT = "SELECT COUNT(*) FROM user WHERE role='CUSTOMER'";
+    public static final String GET_CUSTOMERS_AMOUNT_SEARCH_MODE = """
+            SELECT COUNT(*) FROM user
+            WHERE role='CUSTOMER'
+                AND (id=? OR lastname LIKE CONCAT( '%',?,'%')
+                    OR firstname LIKE CONCAT( '%',?,'%')
+                    OR email LIKE CONCAT( '%',?,'%')
+                )
+            """;
 
     //TOPIC
     public static final String CREATE_TOPIC = "INSERT INTO topic values (DEFAULT)";

@@ -80,6 +80,106 @@ public class UserDAOMySql implements UserDAO {
     }
 
     @Override
+    public List<User> getCustomersPagination(final int positionsToSkip,
+                                             final int amountOnPage,
+                                             final String sortBy,
+                                             final String sortOrder,
+                                             final Connection connection) throws DAOException {
+        List<User> subscriptions = new ArrayList<>();
+        String query = sortOrder.equalsIgnoreCase("DESC")
+                ? Queries.GET_CUSTOMERS_PAGINATION_DESC
+                : Queries.GET_CUSTOMERS_PAGINATION_ASC;
+        int sortingColumnNumber = sortBy.equalsIgnoreCase("name") ? 3
+                : sortBy.equalsIgnoreCase("email") ? 6
+                : sortBy.equalsIgnoreCase("id") ? 1 : 3;
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setObject(1, sortingColumnNumber);
+            ps.setInt(2, amountOnPage);
+            ps.setInt(3, positionsToSkip);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                subscriptions.add(fillEntityFromResultSet(rs));
+            }
+            rs.close();
+        } catch (SQLException e) {
+            throw new DAOException("Error while trying to get list of customers with pagination. "
+                    + e.getMessage());
+        }
+        return subscriptions;
+    }
+
+    @Override
+    public List<User> getCustomersPagination(final String searchString,
+                                                   final int positionsToSkip,
+                                                   final int amountOnPage,
+                                                   final String sortBy,
+                                                   final String sortOrder,
+                                                   final Connection connection) throws DAOException {
+        List<User> subscriptions = new ArrayList<>();
+        String query = sortOrder.equalsIgnoreCase("DESC")
+                ? Queries.SEARCH_CUSTOMERS_PAGINATION_ASC
+                : Queries.SEARCH_CUSTOMERS_PAGINATION_DESC;
+        int sortingColumnNumber = sortBy.equalsIgnoreCase("name") ? 3
+                : sortBy.equalsIgnoreCase("email") ? 6
+                : sortBy.equalsIgnoreCase("id") ? 1 : 3;
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, searchString);
+            ps.setString(2, searchString);
+            ps.setString(3, searchString);
+            ps.setString(4, searchString);
+            ps.setObject(5, sortingColumnNumber);
+            ps.setInt(6, amountOnPage);
+            ps.setInt(7, positionsToSkip);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                subscriptions.add(fillEntityFromResultSet(rs));
+            }
+            rs.close();
+        } catch (SQLException e) {
+            throw new DAOException("Error while trying to get list of customers with " +
+                    "pagination and searched value=" + searchString + e.getMessage());
+        }
+        return subscriptions;
+    }
+
+    @Override
+    public int getCustomersAmount(final Connection connection) throws DAOException {
+        int count = 0;
+        try (Statement stmt = connection.createStatement();
+             ResultSet resultSet = stmt.executeQuery(Queries.GET_CUSTOMERS_AMOUNT)) {
+            while (resultSet.next()) {
+                count = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Error while trying to get amount of customers. " + e.getMessage());
+        }
+        return count;
+    }
+
+    @Override
+    public int getCustomersAmount(final String searchString, final Connection connection) throws DAOException {
+        int count = 0;
+        try (PreparedStatement ps = connection.prepareStatement(Queries.GET_CUSTOMERS_AMOUNT_SEARCH_MODE)) {
+            ps.setString(1, searchString);
+            ps.setString(2, searchString);
+            ps.setString(3, searchString);
+            ps.setString(4, searchString);
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                count = resultSet.getInt(1);
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            throw new DAOException("Error while trying to get amount of customers (search mode)." + e.getMessage());
+        }
+        return count;
+    }
+
+    @Override
     public void update(final User entity, Connection connection) throws DAOException {
         try (PreparedStatement ps = connection.prepareStatement(Queries.UPDATE_USER)) {
             fillPreparedStatement(ps, entity);

@@ -2,7 +2,6 @@ package com.periodicals.dao.mysql;
 
 import com.periodicals.dao.SubscriptionDAO;
 import com.periodicals.dao.exception.DAOException;
-import com.periodicals.entity.Periodical;
 import com.periodicals.entity.Subscription;
 
 import java.sql.*;
