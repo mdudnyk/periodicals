@@ -36,9 +36,6 @@ public class CustomersPageCommand implements FrontCommand {
         setCurrentPage(request);
 
         request.setAttribute("customers", getCustomersList(request, userService));
-
-        System.out.println(request.getAttribute("customers"));
-
         request.getRequestDispatcher("WEB-INF/CustomersPage.jsp").forward(request, response);
     }
 

@@ -91,6 +91,7 @@ public class UserDAOMySql implements UserDAO {
                 : Queries.GET_CUSTOMERS_PAGINATION_ASC;
         int sortingColumnNumber = sortBy.equalsIgnoreCase("name") ? 3
                 : sortBy.equalsIgnoreCase("email") ? 6
+                : sortBy.equalsIgnoreCase("balance") ? 8
                 : sortBy.equalsIgnoreCase("id") ? 1 : 3;
 
         try (PreparedStatement ps = connection.prepareStatement(query)) {
@@ -123,6 +124,7 @@ public class UserDAOMySql implements UserDAO {
                 : Queries.SEARCH_CUSTOMERS_PAGINATION_DESC;
         int sortingColumnNumber = sortBy.equalsIgnoreCase("name") ? 3
                 : sortBy.equalsIgnoreCase("email") ? 6
+                : sortBy.equalsIgnoreCase("balance") ? 8
                 : sortBy.equalsIgnoreCase("id") ? 1 : 3;
 
         try (PreparedStatement ps = connection.prepareStatement(query)) {
@@ -212,7 +214,7 @@ public class UserDAOMySql implements UserDAO {
         ps.setString(5, entity.getEmail());
         ps.setString(6, entity.getRole().name());
         ps.setInt(7, entity.getBalance());
-        ps.setBoolean(8, entity.isActive());
+        ps.setBoolean(8, entity.isBlocked());
     }
 
     private User fillEntityFromResultSet(ResultSet resultSet) throws SQLException {
@@ -224,8 +226,8 @@ public class UserDAOMySql implements UserDAO {
         String email = resultSet.getString(6);
         UserRole userRole = UserRole.valueOf(resultSet.getString(7));
         int balance = resultSet.getInt(8);
-        boolean isActive = resultSet.getBoolean(9);
+        boolean isBlocked = resultSet.getBoolean(9);
 
-        return new User(id, localeId, firstName, lastName, password, email, userRole, balance, isActive);
+        return new User(id, localeId, firstName, lastName, password, email, userRole, balance, isBlocked);
     }
 }

@@ -29,14 +29,15 @@ async function setCustomerStatusRequest(id, isActive) {
             body: "&id=" + id + "&status=" + isActive,
         });
         if (response.status !== 200) {
-            cancelChangeStatusOnSwitch(isActive);
+            await cancelChangeStatusOnSwitch(isActive);
         }
     } catch (e) {
         console.log(e);
-        cancelChangeStatusOnSwitch(isActive);
+        await cancelChangeStatusOnSwitch(isActive);
     }
 }
 
-function cancelChangeStatusOnSwitch(isActive) {
+async function cancelChangeStatusOnSwitch(isActive) {
+    await new Promise(r => setTimeout(r, 300));
     switch_block.checked = !isActive;
 }

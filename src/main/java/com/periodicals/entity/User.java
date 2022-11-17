@@ -14,12 +14,12 @@ public class User implements Serializable {
     private final String email;
     private final UserRole userRole;
     private int balance;
-    private final boolean isActive;
+    private final boolean isBlocked;
     private Address address;
 
     public User(final String localeId, final String firstname, final String lastname,
                 final String password, final String email, final UserRole userRole, final int balance,
-                final boolean isActive) {
+                final boolean isBlocked) {
         this.localeId = localeId;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -27,12 +27,12 @@ public class User implements Serializable {
         this.email = email;
         this.userRole = userRole;
         this.balance = balance;
-        this.isActive = isActive;
+        this.isBlocked = isBlocked;
     }
 
     public User(final int id, final String localeId, final String firstname, final String lastname,
                 final String password, final String email,
-                final UserRole userRole, final int balance, final boolean isActive) {
+                final UserRole userRole, final int balance, final boolean isBlocked) {
         this.id = id;
         this.localeId = localeId;
         this.firstname = firstname;
@@ -41,7 +41,7 @@ public class User implements Serializable {
         this.email = email;
         this.userRole = userRole;
         this.balance = balance;
-        this.isActive = isActive;
+        this.isBlocked = isBlocked;
     }
 
     public int getId() {
@@ -76,8 +76,8 @@ public class User implements Serializable {
         return balance;
     }
 
-    public boolean isActive() {
-        return isActive;
+    public boolean isBlocked() {
+        return isBlocked;
     }
 
     public Address getAddress() {
@@ -105,7 +105,7 @@ public class User implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         final User user = (User) o;
-        return id == user.id && balance == user.balance && isActive == user.isActive
+        return id == user.id && balance == user.balance && isBlocked == user.isBlocked
                 && localeId.equals(user.localeId) && firstname.equals(user.firstname)
                 && lastname.equals(user.lastname) && password.equals(user.password)
                 && email.equals(user.email) && userRole == user.userRole && Objects.equals(address, user.address);
@@ -113,7 +113,7 @@ public class User implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, localeId, firstname, lastname, password, email, userRole, balance, isActive, address);
+        return Objects.hash(id, localeId, firstname, lastname, password, email, userRole, balance, isBlocked, address);
     }
 
     @Override
@@ -127,7 +127,7 @@ public class User implements Serializable {
                 ", email='" + email + '\'' +
                 ", role=" + userRole +
                 ", balance=" + balance +
-                ", isActive=" + isActive +
+                ", isActive=" + isBlocked +
                 ", address=" + address +
                 '}';
     }

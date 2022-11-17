@@ -266,7 +266,7 @@
                     <c:forEach var="periodical" items="${requestScope.periodicals}">
                         <c:set var="rowIndex" scope="request" value="${rowIndex + 1}"/>
                         <tr>
-                            <td>${rowIndex}</td>
+                            <td style="padding-left: 20px;">${rowIndex}</td>
                             <td class="periodical_column">${periodical.getTitle()}</td>
                             <td class="periodical_column">
                                     <c:if test="${periodical.getTopicName() == null}">
@@ -308,7 +308,7 @@
             </div>
                 </c:when>
                 <c:otherwise>
-                    </tbody>
+                        </tbody>
                     </table>
                         <span class="no_periodicals_to_show"><fmt:message key="periodicals.no_periodicals_to_show"/></span>
                 </c:otherwise>
