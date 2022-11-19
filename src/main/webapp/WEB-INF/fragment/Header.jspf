@@ -44,19 +44,22 @@
                                 <i class="material-icons warning">error</i>
                                 <div class="modal_alert_msgs">
                                 <span class="modal_alert_msg" id="si_wrong_email_password"
-                                      style="display: none;"><fmt:message key="header.alert.wrong_email_password"/>
+                                    style="display: none;"><fmt:message key="header.alert.wrong_email_password"/>
                                 </span>
-                                    <span class="modal_alert_msg" id="si_fill_all"
-                                          style="display: none;"><fmt:message key="header.alert.fill_all_fields"/>
+                                <span class="modal_alert_msg" id="si_fill_all"
+                                    style="display: none;"><fmt:message key="header.alert.fill_all_fields"/>
                                 </span>
-                                    <span class="modal_alert_msg" id="si_email_not_valid"
-                                          style="display: none;"><fmt:message key="header.alert.email_not_valid"/>
+                                <span class="modal_alert_msg" id="si_email_not_valid"
+                                    style="display: none;"><fmt:message key="header.alert.email_not_valid"/>
                                 </span>
-                                    <span class="modal_alert_msg" id="si_password_not_valid"
-                                          style="display: none;"><fmt:message key="header.alert.password_not_valid"/>
+                                <span class="modal_alert_msg" id="si_password_not_valid"
+                                    style="display: none;"><fmt:message key="header.alert.password_not_valid"/>
                                 </span>
-                                    <span class="modal_alert_msg" id="si_try_later"
-                                          style="display: none;"><fmt:message key="header.alert.try_later"/>
+                                <span class="modal_alert_msg" id="si_blocked_user"
+                                    style="display: none;"><fmt:message key="header.alert.si_blocked_user"/>
+                                </span>
+                                <span class="modal_alert_msg" id="si_try_later"
+                                    style="display: none;"><fmt:message key="header.alert.try_later"/>
                                 </span>
                                 </div>
                             </div>
@@ -96,28 +99,28 @@
                                 <i class="material-icons warning">error</i>
                                 <div class="modal_alert_msgs">
                                 <span class="modal_alert_msg" id="su_fill_all"
-                                      style="display: none;"><fmt:message key="header.alert.fill_all_fields"/>
+                                    style="display: none;"><fmt:message key="header.alert.fill_all_fields"/>
                                 </span>
-                                    <span class="modal_alert_msg" id="su_firstname_not_valid"
-                                          style="display: none;"><fmt:message key="header.alert.firstname_not_valid"/>
+                                <span class="modal_alert_msg" id="su_firstname_not_valid"
+                                    style="display: none;"><fmt:message key="header.alert.firstname_not_valid"/>
                                 </span>
-                                    <span class="modal_alert_msg" id="su_lastname_not_valid"
-                                          style="display: none;"><fmt:message key="header.alert.lastname_not_valid"/>
+                                <span class="modal_alert_msg" id="su_lastname_not_valid"
+                                    style="display: none;"><fmt:message key="header.alert.lastname_not_valid"/>
                                 </span>
-                                    <span class="modal_alert_msg" id="su_email_not_valid"
-                                          style="display: none;"><fmt:message key="header.alert.email_not_valid"/>
+                                <span class="modal_alert_msg" id="su_email_not_valid"
+                                    style="display: none;"><fmt:message key="header.alert.email_not_valid"/>
                                 </span>
-                                    <span class="modal_alert_msg" id="su_password_not_valid"
-                                          style="display: none;"><fmt:message key="header.alert.password_not_valid"/>
+                                <span class="modal_alert_msg" id="su_password_not_valid"
+                                    style="display: none;"><fmt:message key="header.alert.password_not_valid"/>
                                 </span>
-                                    <span class="modal_alert_msg" id="su_pass_identical"
-                                          style="display: none;"><fmt:message key="header.alert.identical_passwords"/>
+                                <span class="modal_alert_msg" id="su_pass_identical"
+                                    style="display: none;"><fmt:message key="header.alert.identical_passwords"/>
                                 </span>
-                                    <span class="modal_alert_msg" id="su_user_exists"
-                                          style="display: none;"><fmt:message key="header.alert.user_exists"/>
+                                <span class="modal_alert_msg" id="su_user_exists"
+                                    style="display: none;"><fmt:message key="header.alert.user_exists"/>
                                 </span>
-                                    <span class="modal_alert_msg" id="su_try_later"
-                                          style="display: none;"><fmt:message key="header.alert.try_later"/>
+                                <span class="modal_alert_msg" id="su_try_later"
+                                    style="display: none;"><fmt:message key="header.alert.try_later"/>
                                 </span>
                                 </div>
                             </div>
@@ -236,7 +239,6 @@
                     </ul>
                 </div>
             </c:if>
-
         </div>
         <img class="flag_img" src="${pageContext.request.contextPath}${sessionScope.locale.getFlagIconURL()}"
              alt="${sessionScope.locale.getShortNameId()}" height="30px">
@@ -254,7 +256,6 @@
                 </ul>
             </div>
         </div>
-
     </div>
 </header>
 

@@ -57,6 +57,7 @@ const si_wrong_email_password = document.getElementById('si_wrong_email_password
 const si_fill_all = document.getElementById('si_fill_all');
 const si_email_not_valid = document.getElementById('si_email_not_valid');
 const si_password_not_valid = document.getElementById('si_password_not_valid');
+const si_blocked_user = document.getElementById('si_blocked_user');
 const si_try_later = document.getElementById('si_try_later');
 
 function clearSignInInput() {
@@ -70,6 +71,7 @@ function clearSignInModalAlerts() {
     si_fill_all.style.display = 'none';
     si_email_not_valid.style.display = 'none';
     si_password_not_valid.style.display = 'none';
+    si_blocked_user.style.display = 'none';
     si_try_later.style.display = 'none';
 }
 
@@ -92,6 +94,8 @@ async function tryToSignIn() {
                 si_alert_block.style.display = 'flex';
                 if (response.status === 560) {
                     si_wrong_email_password.style.display = 'block';
+                } else if (response.status === 559) {
+                    si_blocked_user.style.display = 'block';
                 } else {
                     si_try_later.style.display = 'block';
                 }

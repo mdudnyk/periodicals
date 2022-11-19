@@ -4,6 +4,7 @@ import com.periodicals.dao.exception.DAOException;
 import com.periodicals.dao.manager.DAOManagerFactory;
 import com.periodicals.dao.manager.UserDAOManager;
 import com.periodicals.entity.User;
+import com.periodicals.entity.enums.UserRole;
 import com.periodicals.service.exceptions.ServiceException;
 import com.periodicals.service.UserService;
 
@@ -72,6 +73,24 @@ public class UserServiceImpl implements UserService {
     public int getCustomersTotal(final String searchQuery) throws DAOException {
         return daoManger.getUserDAOManager().getCustomersAmount(searchQuery);
     }
+
+    @Override
+    public void setBlockingStatusForCustomer(final int customerId, final boolean isBlocked)
+            throws DAOException, ServiceException {
+        UserDAOManager userDAOManager = daoManger.getUserDAOManager();
+        User user = userDAOManager.getUserById(customerId);
+        if (user != null) {
+            if (user.getRole() == UserRole.CUSTOMER) {
+                user.setIsBlocked(isBlocked);
+                userDAOManager.updateUser(user);
+            } else {
+                throw new ServiceException("Set blocking status option valid only for customers.");
+            }
+        } else {
+            throw new ServiceException("Can not set blocking status for customer. We do not have such user.");
+        }
+    }
+
 
     private User findUserByEmail(final String email) throws DAOException {
         UserDAOManager userDAO = daoManger.getUserDAOManager();

@@ -14,8 +14,7 @@ public class User implements Serializable {
     private final String email;
     private final UserRole userRole;
     private int balance;
-    private final boolean isBlocked;
-    private Address address;
+    private boolean isBlocked;
 
     public User(final String localeId, final String firstname, final String lastname,
                 final String password, final String email, final UserRole userRole, final int balance,
@@ -80,8 +79,8 @@ public class User implements Serializable {
         return isBlocked;
     }
 
-    public Address getAddress() {
-        return address;
+    public void setIsBlocked(final boolean blocked) {
+        isBlocked = blocked;
     }
 
     public void setId(final int id) {
@@ -96,10 +95,6 @@ public class User implements Serializable {
         this.localeId = localeId;
     }
 
-    public void setAddress(final Address address) {
-        this.address = address;
-    }
-
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
@@ -108,12 +103,12 @@ public class User implements Serializable {
         return id == user.id && balance == user.balance && isBlocked == user.isBlocked
                 && localeId.equals(user.localeId) && firstname.equals(user.firstname)
                 && lastname.equals(user.lastname) && password.equals(user.password)
-                && email.equals(user.email) && userRole == user.userRole && Objects.equals(address, user.address);
+                && email.equals(user.email) && userRole == user.userRole;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, localeId, firstname, lastname, password, email, userRole, balance, isBlocked, address);
+        return Objects.hash(id, localeId, firstname, lastname, password, email, userRole, balance, isBlocked);
     }
 
     @Override
@@ -127,8 +122,7 @@ public class User implements Serializable {
                 ", email='" + email + '\'' +
                 ", role=" + userRole +
                 ", balance=" + balance +
-                ", isActive=" + isBlocked +
-                ", address=" + address +
+                ", isBlocked=" + isBlocked +
                 '}';
     }
 }

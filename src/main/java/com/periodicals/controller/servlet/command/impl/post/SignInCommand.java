@@ -27,14 +27,18 @@ public class SignInCommand implements FrontCommand {
         User user = userService.signInUser(email, password);
 
         if (user != null) {
-        LocaleCustom userLocale = new LocaleServiceImpl(daoFactory)
-                .getLocaleByShortName(user.getLocaleId());
-            HttpSession session = request.getSession();
-            session.setAttribute("user", user);
-            session.setAttribute("locale", userLocale);
-            response.addCookie(new Cookie("lang", user.getLocaleId()));
+            if (user.getRole() == UserRole.CUSTOMER && user.isBlocked()) {
+                response.sendError(559, "User is blocked.");
+            } else {
+                LocaleCustom userLocale = new LocaleServiceImpl(daoFactory)
+                        .getLocaleByShortName(user.getLocaleId());
+                HttpSession session = request.getSession();
+                session.setAttribute("user", user);
+                session.setAttribute("locale", userLocale);
+                response.addCookie(new Cookie("lang", user.getLocaleId()));
+            }
         } else {
-            response.sendError(560, "Can`t find such user");
+            response.sendError(560, "Can`t find such user.");
         }
     }
 }

@@ -16,28 +16,29 @@ let switch_block;
 
 function changeStatus(id) {
     switch_block = document.getElementById('switch_' + id);
-    setCustomerStatusRequest(id, switch_block.checked);
+    setCustomerStatusRequest(id, !switch_block.checked);
 }
 
-async function setCustomerStatusRequest(id, isActive) {
+async function setCustomerStatusRequest(id, isBlocked) {
+    console.log(isBlocked);
     try {
         let response = await fetch('controller?cmd=SET_CUSTOMER_STATUS', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: "&id=" + id + "&status=" + isActive,
+            body: "&id=" + id + "&status=" + isBlocked,
         });
         if (response.status !== 200) {
-            await cancelChangeStatusOnSwitch(isActive);
+            await cancelChangeStatusOnSwitch(isBlocked);
         }
     } catch (e) {
         console.log(e);
-        await cancelChangeStatusOnSwitch(isActive);
+        await cancelChangeStatusOnSwitch(isBlocked);
     }
 }
 
-async function cancelChangeStatusOnSwitch(isActive) {
+async function cancelChangeStatusOnSwitch(isBlocked) {
     await new Promise(r => setTimeout(r, 300));
-    switch_block.checked = !isActive;
+    switch_block.checked = isBlocked;
 }

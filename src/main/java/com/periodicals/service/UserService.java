@@ -25,4 +25,6 @@ public interface UserService {
 
     int getCustomersTotal(String searchQuery) throws DAOException;
 
+    void setBlockingStatusForCustomer(int customerId, boolean isBlocked) throws DAOException, ServiceException;
+
 }
