@@ -1,3 +1,7 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.locale.getShortNameId()}"/>
+<fmt:setBundle basename="messages"/>
+
 <!DOCTYPE html>
 <head>
     <title>PressReader | Error</title>
@@ -6,9 +10,9 @@
     <meta http-equiv="refresh" content="6; url=<%=request.getHeader("referer")%>">
 </head>
 <body>
-    <h1>Oops! Something went wrong</h1>
-    <p>You will be redirected to the previous page in
-        <span class="seconds" id="demo">5</span>s
+    <h1><fmt:message key="error.oops"/></h1>
+    <p><fmt:message key="error.will_redirect"/>
+        <span class="seconds" id="demo">5</span><fmt:message key="error.sec"/>
     </p>
     <script>
         let periodInSeconds = 4;

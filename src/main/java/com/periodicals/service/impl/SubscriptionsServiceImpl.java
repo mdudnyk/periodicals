@@ -32,7 +32,7 @@ public class SubscriptionsServiceImpl implements SubscriptionsService {
 
         Periodical periodical = periodicalDAOManager.getPeriodicalById(periodicalId);
         if (!isValidSubscriptionCalendar(periodical.getReleaseCalendar(), calendar)) {
-            throw new IllegalArgumentException("Invalid subscription months input. ");
+            throw new IllegalArgumentException("Invalid subscription months input.");
         }
 
         PriceDeterminant pd = new PriceDeterminant(periodical.getPrice(), periodical.getFrequency());
@@ -41,8 +41,11 @@ public class SubscriptionsServiceImpl implements SubscriptionsService {
 
         User userFromDB = userDAOManager.getUserById(user.getId());
         int userBalance = userFromDB.getBalance();
+        if (user.isBlocked()) {
+            throw new ServiceException("Account is blocked.");
+        }
         if (userBalance < totalPrice) {
-            throw new ServiceException("Subscription is denied. Not enough money. ");
+            throw new ServiceException("Not enough money.");
         } else {
             userFromDB.setBalance(userBalance - totalPrice);
         }

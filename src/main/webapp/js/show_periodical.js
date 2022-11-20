@@ -28,6 +28,8 @@ async function sendSubscribeRequest(id) {
                 only_registered.style.display = 'block';
             } else if (result === 568) {
                 top_up_balance.style.display = 'block';
+            } else if (result === 569) {
+                blocked_account.style.display = 'block';
             } else {
                 try_later.style.display = 'block';
             }
@@ -44,6 +46,7 @@ const alert_block_success = document.getElementById('alert_block_success');
 const alert_block_warning = document.getElementById('alert_block_warning');
 const try_later = document.getElementById('try_later');
 const only_registered = document.getElementById('only_registered');
+const blocked_account = document.getElementById('blocked_account');
 const select_month = document.getElementById('select_month');
 const top_up_balance = document.getElementById('top_up_balance');
 
@@ -52,6 +55,7 @@ function hideAlerts() {
     alert_block_warning.style.display = 'none';
     select_month.style.display = 'none';
     try_later.style.display = 'none';
+    blocked_account.style.display = 'none';
     only_registered.style.display = 'none';
     top_up_balance.style.display = 'none';
 }

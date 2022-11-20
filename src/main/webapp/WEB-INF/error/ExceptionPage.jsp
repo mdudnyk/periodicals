@@ -1,4 +1,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.locale.getShortNameId()}"/>
+<fmt:setBundle basename="messages"/>
+
 <%
     String message = pageContext.getException().getMessage();
 %>
@@ -10,10 +13,10 @@
         <link rel="stylesheet" href="css/error.css">
     </head>
     <body>
-        <h1>Oops! Something went wrong</h1>
-        <p>Error occurred while processing your request</p>
-        <p>Message: <%=message%></p>
+        <h1><fmt:message key="error.oops"/></h1>
+        <p><fmt:message key="error.error"/></p>
+        <p><fmt:message key="error.message"/><%=message%></p>
         <br>
-        <p>Please inform our support service: mdudnyk.sps@gmail.com</p>
+        <p><fmt:message key="error.inform_support"/></p>
     </body>
 </html>

@@ -3,6 +3,7 @@ package com.periodicals.service.impl;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.dao.manager.DAOManagerFactory;
 import com.periodicals.entity.Payment;
+import com.periodicals.entity.User;
 import com.periodicals.entity.enums.PaymentStatus;
 import com.periodicals.service.PaymentService;
 import com.periodicals.service.exceptions.ServiceException;
@@ -16,11 +17,13 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public void createPayment(final Payment payment) throws DAOException, ServiceException {
-
+        User user = daoManger.getUserDAOManager().getUserById(payment.getUserId());
+        if (user.isBlocked()) {
+            throw new ServiceException("Account is blocked.");
+        }
         if (payment.getAmount() == 0) {
             throw new ServiceException("Amount of top up should be bigger than 0.");
         }
-
         daoManger.getPaymentDAOManager().createPayment(payment);
     }
 

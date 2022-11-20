@@ -4,13 +4,14 @@
 
 <!DOCTYPE html>
 <head>
-    <title>PressReader | Access Denied</title>
+    <title>PressReader | Blocked</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/error.css">
     <meta http-equiv="refresh" content="6; url=<%=request.getHeader("referer")%>">
 </head>
 <body>
-<h1><fmt:message key="error.access_denied"/></h1>
+<h1><fmt:message key="error.blocked"/></h1>
+<p><fmt:message key="error.inform_support"/></p>
 <p><fmt:message key="error.will_redirect"/>
     <span class="seconds" id="demo">5</span><fmt:message key="error.sec"/>
 </p>

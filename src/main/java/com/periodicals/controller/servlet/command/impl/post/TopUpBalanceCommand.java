@@ -33,10 +33,18 @@ public class TopUpBalanceCommand implements FrontCommand {
         String orderId = String.valueOf(user.getId()) + System.currentTimeMillis();
 
         PaymentService service = new PaymentServiceImpl(daoManager);
-        service.createPayment(new Payment(
-                orderId,
-                user.getId(),
-                MoneyFormatter.toIntegerFormat(amountOfTopUp)));
+        try {
+            service.createPayment(new Payment(
+                    orderId,
+                    user.getId(),
+                    MoneyFormatter.toIntegerFormat(amountOfTopUp)));
+        } catch (ServiceException e) {
+            if (e.getMessage().equals("Account is blocked.")) {
+                request.getRequestDispatcher("WEB-INF/error/ErrorBlockedAccount.jsp").forward(request, response);
+                return;
+            }
+        }
+
 
         Map<String, String> params = new HashMap<>();
         fillParamsMap(orderId, user, refererLink, amountOfTopUp, params, publicIP);

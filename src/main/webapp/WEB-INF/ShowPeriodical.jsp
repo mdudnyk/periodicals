@@ -72,6 +72,7 @@
     </div>
     <div class="alert_block warning" id="alert_block_warning">
         <span id="try_later"><fmt:message key="new_periodical.alert.try_later"/></span>
+        <span id="blocked_account"><fmt:message key="show_periodical.blocked_account"/></span>
         <span id="only_registered"><fmt:message key="show_periodical.only_registered"/></span>
         <span id="select_month"><fmt:message key="show_periodical.please_select_months"/></span>
         <span id="top_up_balance"><fmt:message key="show_periodical.top_up"/></span>

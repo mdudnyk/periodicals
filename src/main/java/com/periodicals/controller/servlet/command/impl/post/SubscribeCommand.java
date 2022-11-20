@@ -5,11 +5,10 @@ import com.periodicals.dao.exception.DAOException;
 import com.periodicals.dao.manager.DAOManagerFactory;
 import com.periodicals.entity.MonthSelector;
 import com.periodicals.entity.User;
+import com.periodicals.entity.enums.UserRole;
 import com.periodicals.service.exceptions.ServiceException;
 import com.periodicals.service.SubscriptionsService;
-import com.periodicals.service.UserService;
 import com.periodicals.service.impl.SubscriptionsServiceImpl;
-import com.periodicals.service.impl.UserServiceImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -44,7 +43,11 @@ public class SubscribeCommand implements FrontCommand {
             try {
                 subscriptionsService.createSubscription(user, Integer.parseInt(periodicalId), subscriptionCalendar);
             } catch (ServiceException e) {
-                response.setStatus(568);
+                if (e.getMessage().equals("Account is blocked.")) {
+                    response.setStatus(569);
+                } else if (e.getMessage().equals("Not enough money.")) {
+                    response.setStatus(568);
+                }
             }
         } catch (ParseException e) {
             throw new IllegalArgumentException("Invalid SUBSCRIBE request format. ");
