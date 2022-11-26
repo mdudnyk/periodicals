@@ -40,7 +40,7 @@ public class DBManager implements ConnectionManager {
         }
     }
 
-    public static synchronized DBManager getInstance() {
+    public static DBManager getInstance() {
         if (instance == null) {
             instance = new DBManager();
         }
@@ -84,7 +84,7 @@ public class DBManager implements ConnectionManager {
             }
             connection.close();
         } catch (SQLException e) {
-            throw new DAOException("Unable to release the Hikari connection to the pool. ", e);
+            throw new DAOException("Unable to close connection to DB ", e);
         }
     }
 

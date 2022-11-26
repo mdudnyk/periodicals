@@ -23,33 +23,50 @@ public class LocaleDAOManager {
 
     public void createLocale(LocaleCustom locale) throws DAOException {
         Connection connection = conManager.getConnection();
-        localeDAO.create(locale, connection);
-        conManager.close(connection);
+        try {
+            localeDAO.create(locale, connection);
+        } finally {
+            conManager.close(connection);
+        }
     }
 
     public List<LocaleCustom> getAllLocalesList() throws DAOException {
         Connection connection = conManager.getConnection();
-        List<LocaleCustom> locales = localeDAO.getAll(connection);
-        conManager.close(connection);
+        List<LocaleCustom> locales;
+        try {
+            locales = localeDAO.getAll(connection);
+        } finally {
+            conManager.close(connection);
+        }
         return locales;
     }
 
     public LocaleCustom getLocaleById(String id) throws DAOException {
         Connection connection = conManager.getConnection();
-        LocaleCustom locale = localeDAO.getEntityById(id, connection);
-        conManager.close(connection);
+        LocaleCustom locale;
+        try {
+            locale = localeDAO.getEntityById(id, connection);
+        } finally {
+            conManager.close(connection);
+        }
         return locale;
     }
 
     public void updateLocale(LocaleCustom locale) throws DAOException {
         Connection connection = conManager.getConnection();
-        localeDAO.update(locale, connection);
-        conManager.close(connection);
+        try {
+            localeDAO.update(locale, connection);
+        } finally {
+            conManager.close(connection);
+        }
     }
 
     public void deleteLocale(String id) throws DAOException {
         Connection connection = conManager.getConnection();
-        localeDAO.delete(id, connection);
-        conManager.close(connection);
+        try {
+            localeDAO.delete(id, connection);
+        } finally {
+            conManager.close(connection);
+        }
     }
 }
