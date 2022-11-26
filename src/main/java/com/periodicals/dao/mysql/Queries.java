@@ -71,11 +71,11 @@ class Queries {
                         FROM topic_translate
                         WHERE topic_id=id AND locale_id=?)
                     ) AS name
-                FROM topic
-                         JOIN topic_translate ON id = topic_id
-                GROUP BY id
-                ORDER BY name;
-                """;
+            FROM topic
+                    JOIN topic_translate ON id = topic_id
+            GROUP BY id
+            ORDER BY name;
+            """;
     public static final String GET_TOPICS_WITH_TRANSLATES_BY_LOCALE_PAGINATION_ASC = """
             SELECT id, COALESCE(
                         (SELECT name
@@ -85,12 +85,12 @@ class Queries {
                         FROM topic_translate
                         WHERE topic_id=id AND locale_id=?)
                     ) AS name
-                FROM topic
-                         JOIN topic_translate ON id = topic_id
-                GROUP BY id
-                ORDER BY name
-                LIMIT ? OFFSET ?;
-                """;
+            FROM topic
+                    JOIN topic_translate ON id = topic_id
+            GROUP BY id
+            ORDER BY name
+            LIMIT ? OFFSET ?;
+            """;
     public static final String GET_TOPICS_WITH_TRANSLATES_BY_LOCALE_PAGINATION_DESC = """
             SELECT id, COALESCE(
                         (SELECT name
@@ -100,12 +100,12 @@ class Queries {
                         FROM topic_translate
                         WHERE topic_id=id AND locale_id=?)
                     ) AS name
-                FROM topic
-                         JOIN topic_translate ON id = topic_id
-                GROUP BY id
-                ORDER BY name DESC
-                LIMIT ? OFFSET ?;
-                """;
+            FROM topic
+                    JOIN topic_translate ON id = topic_id
+            GROUP BY id
+            ORDER BY name DESC
+            LIMIT ? OFFSET ?;
+            """;
     public static final String GET_TOPICS_WITH_TRANSLATES_BY_NAME_AND_LOCALE_PAGINATION_ASC = """
             SELECT id, COALESCE(
                         (SELECT name
@@ -115,13 +115,13 @@ class Queries {
                         FROM topic_translate
                         WHERE topic_id=id AND locale_id=?)
                     ) AS name
-                FROM topic
-                         JOIN topic_translate ON id = topic_id
-                WHERE name LIKE CONCAT( '%',?,'%')
-                GROUP BY id
-                ORDER BY name
-                LIMIT ? OFFSET ?;
-                """;
+            FROM topic
+                    JOIN topic_translate ON id = topic_id
+            WHERE name LIKE CONCAT( '%',?,'%')
+            GROUP BY id
+            ORDER BY name
+            LIMIT ? OFFSET ?;
+            """;
     public static final String GET_TOPICS_WITH_TRANSLATES_BY_NAME_AND_LOCALE_PAGINATION_DESC = """
             SELECT id, COALESCE(
                         (SELECT name
@@ -131,13 +131,13 @@ class Queries {
                         FROM topic_translate
                         WHERE topic_id=id AND locale_id=?)
                     ) AS name
-                FROM topic
-                         JOIN topic_translate ON id = topic_id
-                WHERE name LIKE CONCAT( '%',?,'%')
-                GROUP BY id
-                ORDER BY name DESC
-                LIMIT ? OFFSET ?;
-                """;
+            FROM topic
+                    JOIN topic_translate ON id = topic_id
+            WHERE name LIKE CONCAT( '%',?,'%')
+            GROUP BY id
+            ORDER BY name DESC
+            LIMIT ? OFFSET ?;
+            """;
     public static final String GET_TOPIC_BY_ID = "SELECT * FROM topic WHERE id=?";
     public static final String GET_TOPIC_BY_NAME = """
             SELECT id
@@ -301,6 +301,7 @@ class Queries {
             "INSERT INTO subscription_calendar values (?, ?, ?)";
     public static final String GET_SUBSCRIPTION_CALENDAR_BY_ID =
             "SELECT * FROM subscription_calendar WHERE subscription_id=?";
+
 
     //PAYMENT
     public static final String CREATE_PAYMENT = "INSERT INTO payment values (?, ?, ?, ?, ?)";

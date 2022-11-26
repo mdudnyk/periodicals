@@ -16,6 +16,11 @@ class UserDAOMySqlTest {
     static void globalSetUp() throws SQLException {
         dbManager = DBManager.getInstance();
         connection = dbManager.getConnection();
+        initAllTablesInDB(connection);
+    }
+
+    private static void initAllTablesInDB(final Connection connection) throws SQLException {
+
     }
 
     @AfterAll

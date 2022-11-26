@@ -46,7 +46,6 @@ public class LocaleDAOMySql implements LocaleDAO {
             if (rs.next()) {
                 locale = fillEntityFromResultSet(rs);
             }
-            rs.close();
         } catch (SQLException e) {
             throw new DAOException("Error while trying to get locale by it`s ID=" + id + ". " + e.getMessage());
         }
