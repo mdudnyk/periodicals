@@ -86,13 +86,10 @@ public class UserDAOMySql implements UserDAO {
                                              final String sortOrder,
                                              final Connection connection) throws DAOException {
         List<User> subscriptions = new ArrayList<>();
-        String query = sortOrder.equalsIgnoreCase("DESC")
+        String query = sortOrder != null && sortOrder.equalsIgnoreCase("DESC")
                 ? Queries.GET_CUSTOMERS_PAGINATION_DESC
                 : Queries.GET_CUSTOMERS_PAGINATION_ASC;
-        int sortingColumnNumber = sortBy.equalsIgnoreCase("name") ? 3
-                : sortBy.equalsIgnoreCase("email") ? 6
-                : sortBy.equalsIgnoreCase("balance") ? 8
-                : sortBy.equalsIgnoreCase("id") ? 1 : 3;
+        int sortingColumnNumber = getSortingColumnNumber(sortBy);
 
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setObject(1, sortingColumnNumber);
@@ -119,13 +116,10 @@ public class UserDAOMySql implements UserDAO {
                                                    final String sortOrder,
                                                    final Connection connection) throws DAOException {
         List<User> subscriptions = new ArrayList<>();
-        String query = sortOrder.equalsIgnoreCase("DESC")
-                ? Queries.SEARCH_CUSTOMERS_PAGINATION_ASC
-                : Queries.SEARCH_CUSTOMERS_PAGINATION_DESC;
-        int sortingColumnNumber = sortBy.equalsIgnoreCase("name") ? 3
-                : sortBy.equalsIgnoreCase("email") ? 6
-                : sortBy.equalsIgnoreCase("balance") ? 8
-                : sortBy.equalsIgnoreCase("id") ? 1 : 3;
+        String query = sortOrder != null && sortOrder.equalsIgnoreCase("DESC")
+                ? Queries.SEARCH_CUSTOMERS_PAGINATION_DESC
+                : Queries.SEARCH_CUSTOMERS_PAGINATION_ASC;
+        int sortingColumnNumber = getSortingColumnNumber(sortBy);
 
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, searchString);
@@ -146,6 +140,16 @@ public class UserDAOMySql implements UserDAO {
                     "pagination and searched value=" + searchString + e.getMessage());
         }
         return subscriptions;
+    }
+
+    private int getSortingColumnNumber(final String sortBy) {
+        int sortingColumnNumber = sortBy != null ?
+                (sortBy.equalsIgnoreCase("name") ? 3
+                        : sortBy.equalsIgnoreCase("email") ? 6
+                        : sortBy.equalsIgnoreCase("balance") ? 8
+                        : sortBy.equalsIgnoreCase("id") ? 1 : 3)
+                : 3;
+        return sortingColumnNumber;
     }
 
     @Override

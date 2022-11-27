@@ -14,13 +14,13 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema periodicals_db
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `periodicals_db` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
-USE `periodicals_db` ;
+CREATE SCHEMA IF NOT EXISTS `periodicals_db_test` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ;
+USE `periodicals_db_test` ;
 
 -- -----------------------------------------------------
 -- Table `periodicals_db`.`locale`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `periodicals_db`.`locale` (
+CREATE TABLE IF NOT EXISTS `locale` (
   `short_name_id` VARCHAR(3) NOT NULL,
   `lang_name_original` VARCHAR(50) NOT NULL,
   `currency_name` VARCHAR(3) NOT NULL DEFAULT 'UAH',
@@ -34,7 +34,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `periodicals_db`.`user`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `periodicals_db`.`user` (
+CREATE TABLE IF NOT EXISTS `user` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `locale_id` VARCHAR(3) NULL,
   `firstname` VARCHAR(50) NOT NULL,
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `periodicals_db`.`user` (
   INDEX `fk_user_locale_idx` (`locale_id` ASC) VISIBLE,
   CONSTRAINT `fk_user_locale`
     FOREIGN KEY (`locale_id`)
-    REFERENCES `periodicals_db`.`locale` (`short_name_id`)
+    REFERENCES `locale` (`short_name_id`)
     ON DELETE SET NULL
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
@@ -58,7 +58,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `periodicals_db`.`topic`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `periodicals_db`.`topic` (
+CREATE TABLE IF NOT EXISTS `topic` (
   `id` INT NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
@@ -67,7 +67,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `periodicals_db`.`periodical`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `periodicals_db`.`periodical` (
+CREATE TABLE IF NOT EXISTS `periodical` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `topic_id` INT NULL,
   `title` VARCHAR(50) NOT NULL,
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `periodicals_db`.`periodical` (
   INDEX `fk_periodical_topic_idx` (`topic_id` ASC) VISIBLE,
   CONSTRAINT `fk_periodical_topic`
     FOREIGN KEY (`topic_id`)
-    REFERENCES `periodicals_db`.`topic` (`id`)
+    REFERENCES `topic` (`id`)
     ON DELETE SET NULL
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -89,7 +89,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `periodicals_db`.`periodical_translate`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `periodicals_db`.`periodical_translate` (
+CREATE TABLE IF NOT EXISTS `periodical_translate` (
   `periodical_id` INT NOT NULL AUTO_INCREMENT,
   `locale_id` VARCHAR(3) NOT NULL,
   `publishing_country` VARCHAR(50) NOT NULL,
@@ -100,12 +100,12 @@ CREATE TABLE IF NOT EXISTS `periodicals_db`.`periodical_translate` (
   INDEX `fk_periodical_translate_locale_idx` (`locale_id` ASC) VISIBLE,
   CONSTRAINT `fk_periodical_translate_periodical`
     FOREIGN KEY (`periodical_id`)
-    REFERENCES `periodicals_db`.`periodical` (`id`)
+    REFERENCES `periodical` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_periodical_translate_locale`
     FOREIGN KEY (`locale_id`)
-    REFERENCES `periodicals_db`.`locale` (`short_name_id`)
+    REFERENCES `locale` (`short_name_id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
@@ -114,7 +114,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `periodicals_db`.`topic_translate`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `periodicals_db`.`topic_translate` (
+CREATE TABLE IF NOT EXISTS `topic_translate` (
   `topic_id` INT NOT NULL AUTO_INCREMENT,
   `locale_id` VARCHAR(3) NOT NULL,
   `name` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
@@ -123,12 +123,12 @@ CREATE TABLE IF NOT EXISTS `periodicals_db`.`topic_translate` (
   INDEX `fk_topic_translate_locale_idx` (`locale_id` ASC) VISIBLE,
   CONSTRAINT `fk_topic_translate_topic`
     FOREIGN KEY (`topic_id`)
-    REFERENCES `periodicals_db`.`topic` (`id`)
+    REFERENCES `topic` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_topic_translate_locale`
     FOREIGN KEY (`locale_id`)
-    REFERENCES `periodicals_db`.`locale` (`short_name_id`)
+    REFERENCES `locale` (`short_name_id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
@@ -137,7 +137,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `periodicals_db`.`subscription`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `periodicals_db`.`subscription` (
+CREATE TABLE IF NOT EXISTS `subscription` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `periodical_id` INT NULL,
@@ -150,12 +150,12 @@ CREATE TABLE IF NOT EXISTS `periodicals_db`.`subscription` (
   INDEX `fk_subscription_periodical_idx` (`periodical_id` ASC) VISIBLE,
   CONSTRAINT `fk_subscription_user`
     FOREIGN KEY (`user_id`)
-    REFERENCES `periodicals_db`.`user` (`id`)
+    REFERENCES `user` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_subscription_periodical`
     FOREIGN KEY (`periodical_id`)
-    REFERENCES `periodicals_db`.`periodical` (`id`)
+    REFERENCES `periodical` (`id`)
     ON DELETE SET NULL
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -164,7 +164,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `periodicals_db`.`release_calendar`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `periodicals_db`.`release_calendar` (
+CREATE TABLE IF NOT EXISTS `release_calendar` (
   `periodical_id` INT NOT NULL,
   `year` INT NOT NULL,
   `month` JSON NOT NULL,
@@ -172,7 +172,7 @@ CREATE TABLE IF NOT EXISTS `periodicals_db`.`release_calendar` (
   INDEX `fk_release_calendar_periodical_idx` (`periodical_id` ASC) INVISIBLE,
   CONSTRAINT `fk_release_calendar_periodical`
     FOREIGN KEY (`periodical_id`)
-    REFERENCES `periodicals_db`.`periodical` (`id`)
+    REFERENCES `periodical` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -181,7 +181,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `periodicals_db`.`subscription_calendar`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `periodicals_db`.`subscription_calendar` (
+CREATE TABLE IF NOT EXISTS `subscription_calendar` (
   `subscription_id` INT NOT NULL,
   `year` INT NOT NULL,
   `month` JSON NOT NULL,
@@ -189,7 +189,7 @@ CREATE TABLE IF NOT EXISTS `periodicals_db`.`subscription_calendar` (
   INDEX `fk_subscription_calendar_subscription_idx` (`subscription_id` ASC) INVISIBLE,
   CONSTRAINT `fk_subscription_calendar_subscription`
     FOREIGN KEY (`subscription_id`)
-    REFERENCES `periodicals_db`.`subscription` (`id`)
+    REFERENCES `subscription` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -198,7 +198,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `periodicals_db`.`payment`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `periodicals_db`.`payment` (
+CREATE TABLE IF NOT EXISTS `payment` (
   `id` VARCHAR(25) NOT NULL,
   `user_id` INT NULL,
   `amount` INT NOT NULL,
@@ -208,7 +208,7 @@ CREATE TABLE IF NOT EXISTS `periodicals_db`.`payment` (
   INDEX `fk_payment_user_idx` (`user_id` ASC) INVISIBLE,
   CONSTRAINT `fk_payment_user`
     FOREIGN KEY (`user_id`)
-    REFERENCES `periodicals_db`.`user` (`id`)
+    REFERENCES `user` (`id`)
     ON DELETE SET NULL
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
