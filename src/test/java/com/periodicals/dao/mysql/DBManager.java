@@ -3,12 +3,13 @@ package com.periodicals.dao.mysql;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import com.periodicals.dao.ConnectionManager;
 import com.periodicals.dao.exception.DAOException;
+import org.apache.ibatis.jdbc.ScriptRunner;
 
 import javax.sql.DataSource;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
 public class DBManager implements ConnectionManager {
@@ -45,6 +46,22 @@ public class DBManager implements ConnectionManager {
             instance = new DBManager();
         }
         return instance;
+    }
+
+    public void setUpDatabase(Connection connection) throws FileNotFoundException {
+        ScriptRunner sr = new ScriptRunner(connection);
+        Reader reader = new BufferedReader(
+                new FileReader(
+                        "dbSource/periodicals_datasource_test.sql"));
+        sr.runScript(reader);
+    }
+
+    public void dropDatabase(Connection connection) throws SQLException {
+        String crateTablesSQL =
+                "DROP SCHEMA IF EXISTS `periodicals_db_test`";
+        Statement statement = connection.createStatement();
+        statement.execute(crateTablesSQL);
+        statement.close();
     }
 
     @Override

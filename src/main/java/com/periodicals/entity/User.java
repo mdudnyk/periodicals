@@ -8,8 +8,8 @@ import java.util.Objects;
 public class User implements Serializable {
     private int id;
     private String localeId;
-    private final String firstname;
-    private final String lastname;
+    private String firstname;
+    private String lastname;
     private final String password;
     private final String email;
     private final UserRole userRole;
@@ -85,6 +85,14 @@ public class User implements Serializable {
 
     public void setId(final int id) {
         this.id = id;
+    }
+
+    public void setFirstname(final String firstname) {
+        this.firstname = firstname;
+    }
+
+    public void setLastname(final String lastname) {
+        this.lastname = lastname;
     }
 
     public void setBalance(int newBalance) {
