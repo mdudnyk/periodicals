@@ -69,7 +69,7 @@ public class TopicDAOMySql implements TopicDAO {
                                                 final String defaultLocale, final int skip, final int amount,
                                                 final String sorting) throws DAOException {
         List<Topic> topics = new ArrayList<>();
-        String query = sorting.equals("DESC") ? Queries.GET_TOPICS_WITH_TRANSLATES_BY_LOCALE_PAGINATION_DESC :
+        String query = sorting != null && sorting.equals("DESC") ? Queries.GET_TOPICS_WITH_TRANSLATES_BY_LOCALE_PAGINATION_DESC :
                 Queries.GET_TOPICS_WITH_TRANSLATES_BY_LOCALE_PAGINATION_ASC;
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, locale);
