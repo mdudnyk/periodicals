@@ -15,6 +15,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.matchers.JUnitMatchers.containsString;
 
 class UserDAOMySqlTest {
@@ -27,6 +28,9 @@ class UserDAOMySqlTest {
         dbManager = DBManager.getInstance();
         connection = dbManager.getConnection();
         dbManager.setUpDatabase(connection);
+        Statement statement = connection.createStatement();
+        statement.execute("INSERT INTO locale values('uk', 'українська', 'грн', '/img/ua_flag.png')");
+        statement.close();
     }
 
 
@@ -39,86 +43,73 @@ class UserDAOMySqlTest {
     @BeforeEach
     void setUp() throws SQLException {
         Statement statement = connection.createStatement();
-        statement.execute("INSERT INTO locale values('uk', 'українська', 'грн', '/img/ua_flag.png')");
+        statement.execute("INSERT INTO user values(1, 'uk', 'admin', 'admin', 'qwerty123', 'admin@gmail.com', 'ADMIN', 1000000, false)");
         statement.close();
     }
 
     @AfterEach
     void tearDown() throws SQLException {
         Statement statement = connection.createStatement();
-        statement.execute("DELETE FROM locale");
         statement.execute("DELETE FROM user");
         statement.close();
     }
 
     @Test
-    void create() {
+    void create() throws DAOException {
         User user = new User("uk", "Myroslav", "Dudnyk", "yamahar1",
                 "mad0013@mail.ru", UserRole.CUSTOMER, 100, false);
         assertDoesNotThrow(() -> userDAO.create(user, connection));
+
+        assertEquals(2, userDAO.getAll(connection).size());
+
         assertThrows(DAOException.class, () -> userDAO.create(user, connection));
         assertThrows(NullPointerException.class, () -> userDAO.create(null, connection));
     }
 
     @Test
     void getAll() throws DAOException {
-        assertEquals(0,userDAO.getAll(connection).size());
-
-        User user1 = new User("uk", "Myroslav", "Dudnyk", "yamahar1",
-                "mad0013@mail.ru", UserRole.CUSTOMER, 100, false);
-        User user2 = new User("uk", "admin", "admin", "qwerty123",
-                "admin@gmail.com", UserRole.ADMIN, 100, false);
-        userDAO.create(user1, connection);
-        userDAO.create(user2, connection);
-        List<User> usersForTest = List.of(user1, user2);
         List<User> usersFromDB = userDAO.getAll(connection);
-        assertEquals(usersForTest, usersFromDB);
+        assertEquals(1, usersFromDB.size());
     }
 
     @Test
     void getEntityById() throws DAOException {
-        User userForTest = new User("uk", "Myroslav", "Dudnyk", "yamahar1",
-                "mad0013@mail.ru", UserRole.CUSTOMER, 100, false);
-        userDAO.create(userForTest, connection);
-        User userFromDB = userDAO.getEntityById(1, connection);
-        assertEquals(userForTest, userFromDB);
-
+        assertNotNull(userDAO.getEntityById(1, connection));
         assertNull(userDAO.getEntityById(99, connection));
     }
 
     @Test
     void getUserByEmail() throws DAOException {
+        assertNotNull(userDAO.getUserByEmail("admin@gmail.com", connection));
         assertNull(userDAO.getUserByEmail(null, connection));
-        assertNull(userDAO.getUserByEmail("mad0013@mail.ru", connection));
-        User userForTest = new User("uk", "Myroslav", "Dudnyk", "yamahar1",
-                "mad0013@mail.ru", UserRole.CUSTOMER, 100, false);
-        userDAO.create(userForTest, connection);
-        User userFromDB = userDAO.getUserByEmail("mad0013@mail.ru", connection);
-        assertEquals(userForTest, userFromDB);
+        assertNull(userDAO.getUserByEmail("admin@gmail", connection));
     }
 
     @Test
     void update() throws DAOException {
-        User userForTest = new User("uk", "Myroslav", "Dudnyk", "yamahar1",
-                "mad0013@mail.ru", UserRole.CUSTOMER, 100, false);
-        userDAO.create(userForTest, connection);
-        String newFirstName = "Biba";
-        userForTest.setFirstname(newFirstName);
+        User userBeforeUpdate = userDAO.getEntityById(1, connection);
+        User userForTest = new User(1,"uk", "Myroslav", "Dudnyk", "yamahar1",
+                "admin@gmail.com", UserRole.CUSTOMER, 100, false);
         userDAO.update(userForTest, connection);
-        User userFromDB = userDAO.getUserByEmail("mad0013@mail.ru", connection);
-        assertEquals(newFirstName, userFromDB.getFirstname());
+        User userAfterUpdate = userDAO.getEntityById(1, connection);
+        assertNotEquals(userBeforeUpdate, userAfterUpdate);
+
+        userForTest.setId(10);
+        DAOException daoException = assertThrows(DAOException.class, () -> userDAO.update(userForTest, connection));
+        assertThat(daoException.getMessage(), containsString("We don`t have such user"));
+
+        assertThrows(NullPointerException.class, () -> userDAO.update(null, connection));
     }
 
     @Test
     void delete() throws DAOException {
-        User userForTest = new User("uk", "Myroslav", "Dudnyk", "yamahar1",
-                "mad0013@mail.ru", UserRole.CUSTOMER, 100, false);
-        userDAO.create(userForTest, connection);
-        List<User> users = userDAO.getAll(connection);
-        int countBeforeDeleting = users.size();
-        userDAO.delete(users.get(0).getId(), connection);
+        int countBeforeDeleting = userDAO.getAll(connection).size();
+
+        userDAO.delete(1, connection);
+
         int countAfterDeleting = userDAO.getAll(connection).size();
         assertNotEquals(countBeforeDeleting, countAfterDeleting);
+
         DAOException daoException = assertThrows(DAOException.class, () -> userDAO.delete(1, connection));
         assertThat(daoException.getMessage(), containsString("We don`t have such user"));
     }

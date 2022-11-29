@@ -75,16 +75,6 @@ public class TopicDAOManager {
         return topicTranslate;
     }
 
-    public List<Topic> getAllTopics() throws DAOException {
-        Connection connection = conManager.getConnection();
-        List<Topic> topics = topicDAO.getAll(connection);
-        for (Topic t : topics) {
-            t.addTranslationsMap(topicTranslateDAO.getAllTranslates(t.getId(), connection));
-        }
-        conManager.close(connection);
-        return topics;
-    }
-
     public List<Topic> getTopicsSortPag(final String locale,
                                         final String defaultLocale,
                                         final int skip,

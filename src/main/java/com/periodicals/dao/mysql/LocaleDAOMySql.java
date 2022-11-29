@@ -56,7 +56,9 @@ public class LocaleDAOMySql implements LocaleDAO {
     @Override
     public void update(final LocaleCustom entity, final Connection connection) throws DAOException {
         try (PreparedStatement ps = connection.prepareStatement(Queries.UPDATE_LOCALE)) {
-            fillPreparedStatement(ps, entity);
+            ps.setString(1, entity.getLangNameOriginal());
+            ps.setString(2, entity.getCurrency());
+            ps.setString(3, entity.getFlagIconURL());
             ps.setString(4, entity.getShortNameId());
             if (ps.executeUpdate() < 1) {
                 throw new DAOException("We don`t have such locale. ");

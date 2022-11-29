@@ -12,12 +12,7 @@ public class TopicTranslateDAOMySql implements TopicTranslateDAO {
 
     @Override
     public void create(final TopicTranslate entity, final Connection connection) throws DAOException {
-        try(PreparedStatement ps = connection.prepareStatement(Queries.CREATE_TOPIC_TRANSLATE)) {
-            fillPreparedStatement(ps, entity);
-            ps.execute();
-        } catch (SQLException e) {
-            throw new DAOException("Can not add new topic translate to the database. " + e.getMessage());
-        }
+        throw new UnsupportedOperationException();
     }
 
     public void create(final int parentObjID, final TopicTranslate entity, final Connection connection) throws DAOException {
@@ -88,16 +83,7 @@ public class TopicTranslateDAOMySql implements TopicTranslateDAO {
 
     @Override
     public void delete(final TopicTranslate entity, final Connection connection) throws DAOException {
-        try (PreparedStatement ps = connection.prepareStatement(Queries.DELETE_TOPIC_TRANSLATE)) {
-            ps.setInt(1, entity.getTopicID());
-            ps.setString(2, entity.getLocaleID());
-            if (ps.executeUpdate() < 1) {
-                throw new DAOException("We don`t have such topic translate. ");
-            }
-        } catch (SQLException e) {
-            throw new DAOException("Can not delete topic translate with topicID=" + entity.getTopicID()
-                    + " and localeID='" + entity.getLocaleID() + "' from database. " + e.getMessage());
-        }
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -119,12 +105,6 @@ public class TopicTranslateDAOMySql implements TopicTranslateDAO {
                     + localeID + " is exists. " + e.getMessage());
         }
         return exists;
-    }
-
-    private void fillPreparedStatement(PreparedStatement ps, TopicTranslate entity) throws SQLException {
-        ps.setInt(1, entity.getTopicID());
-        ps.setString(2, entity.getLocaleID());
-        ps.setString(3, entity.getName());
     }
 
     private TopicTranslate fillEntityFromResultSet(ResultSet resultSet) throws SQLException {
