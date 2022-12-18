@@ -2,7 +2,6 @@ package com.periodicals.dao.mysql;
 
 import com.periodicals.dao.PaymentDAO;
 import com.periodicals.dao.exception.DAOException;
-import com.periodicals.entity.LocaleCustom;
 import com.periodicals.entity.Payment;
 import com.periodicals.entity.enums.PaymentStatus;
 import org.junit.jupiter.api.*;
@@ -53,6 +52,7 @@ class PaymentDAOMySqlTest {
         statement.execute("DELETE FROM payment");
         statement.close();
     }
+
     @Test
     void create() throws DAOException {
         Payment payment = new Payment("2222", 1, 100);

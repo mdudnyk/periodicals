@@ -109,7 +109,7 @@ class TopicDAOMySqlTest {
         assertEquals(1, topics.size());
 
         topics = topicDAO
-                .getAllByNameAndLocalePagination(connection, "Автомобілі","en", "en",
+                .getAllByNameAndLocalePagination(connection, "Автомобілі", "en", "en",
                         2, 10, "ASC");
         assertEquals(0, topics.size());
 

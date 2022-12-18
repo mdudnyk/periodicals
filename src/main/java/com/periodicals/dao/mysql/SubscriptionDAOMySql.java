@@ -35,7 +35,7 @@ public class SubscriptionDAOMySql implements SubscriptionDAO {
 
     @Override
     public List<Subscription> getAll(final Connection connection) throws DAOException {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override

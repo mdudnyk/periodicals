@@ -87,7 +87,7 @@ class UserDAOMySqlTest {
     @Test
     void update() throws DAOException {
         User userBeforeUpdate = userDAO.getEntityById(1, connection);
-        User userForTest = new User(1,"uk", "Myroslav", "Dudnyk", "yamahar1",
+        User userForTest = new User(1, "uk", "Myroslav", "Dudnyk", "yamahar1",
                 "admin@gmail.com", UserRole.CUSTOMER, 100, false);
         userDAO.update(userForTest, connection);
         User userAfterUpdate = userDAO.getEntityById(1, connection);
