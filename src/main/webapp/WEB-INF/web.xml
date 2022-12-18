@@ -34,6 +34,6 @@
     <!--IP needs for LiqPay API-->
     <context-param>
         <param-name>publicIP</param-name>
-        <param-value>45.158.51.89</param-value>
+        <param-value>37.139.164.123</param-value>
     </context-param>
 </web-app>

@@ -55,6 +55,7 @@ class TopicTranslateDAOMySqlTest {
         statement.execute("DELETE FROM topic_translate");
         statement.close();
     }
+
     @Test
     void create() {
         TopicTranslate topicTranslate = new TopicTranslate(1, "ua", "Films");
@@ -116,7 +117,7 @@ class TopicTranslateDAOMySqlTest {
     @Test
     void delete() throws DAOException {
         TopicTranslate topicTranslate = topicTranslateDAO.getTranslateByLocale(1, "uk", connection);
-        assertThrows(UnsupportedOperationException.class, () -> topicTranslateDAO.create(topicTranslate, connection));
+        assertThrows(UnsupportedOperationException.class, () -> topicTranslateDAO.delete(topicTranslate, connection));
     }
 
     @Test

@@ -33,7 +33,6 @@ class UserDAOMySqlTest {
         statement.close();
     }
 
-
     @AfterAll
     static void globalTearDown() throws SQLException {
         dbManager.dropDatabase(connection);

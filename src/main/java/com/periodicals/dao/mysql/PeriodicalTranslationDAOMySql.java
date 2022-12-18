@@ -98,11 +98,6 @@ public class PeriodicalTranslationDAOMySql implements PeriodicalTranslationDAO {
         }
     }
 
-
-    public void update(final PeriodicalTranslate entity, final Connection connection) throws DAOException {
-
-    }
-
     private void fillPreparedStatement(PreparedStatement ps, final int periodicalId, PeriodicalTranslate entity)
             throws SQLException {
         ps.setInt(1, periodicalId);
