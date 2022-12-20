@@ -155,13 +155,15 @@ public class PeriodicalDAOManager  {
         Connection connection = conManager.getConnection();
         Periodical periodical = periodicalDAO.getEntityById(id, connection);
         if (periodical != null) {
+            Map<String, PeriodicalTranslate> translationMap = new HashMap<>();
             PeriodicalTranslate periodicalTranslate = periodicalTranslationDAO
                     .getTranslationByPeriodicalIdAndLocale(id, currentLocale, connection);
             if (periodicalTranslate == null) {
                 periodicalTranslate = periodicalTranslationDAO
                         .getTranslationByPeriodicalIdAndLocale(id, defaultLocale, connection);
             }
-            periodical.setTranslation(periodicalTranslate);
+            translationMap.put(periodicalTranslate.getLocaleID(), periodicalTranslate);
+            periodical.setTranslation(translationMap);
 
             Map<Integer, MonthSelector> calendar = new HashMap<>();
             for (int i = 0; i < 2; i++) {

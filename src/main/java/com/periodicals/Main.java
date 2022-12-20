@@ -1,11 +1,12 @@
 package com.periodicals;
 
-import com.periodicals.entity.User;
-import com.periodicals.entity.enums.UserRole;
+import com.periodicals.dao.exception.DAOException;
+import com.periodicals.dao.manager.DAOManagerFactory;
+import com.periodicals.dao.manager.PeriodicalDAOManager;
 
 public class Main {
-    public static void main(String[] args)  {
-        User user1 = new User(1, "uk", "Myroslav", "Dudnyk", "yamahar1",
-                "mad0013@mail.ru", UserRole.CUSTOMER, 100, false);
+    public static void main(String[] args) throws DAOException {
+        PeriodicalDAOManager daoManager = DAOManagerFactory.getInstance().getPeriodicalDAOManager();
+        System.out.println(daoManager.getPeriodicalById(1, "ua", "en", 2022));
     }
 }

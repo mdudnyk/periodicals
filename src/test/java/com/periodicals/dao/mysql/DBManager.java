@@ -89,8 +89,12 @@ public class DBManager implements ConnectionManager {
     }
 
     @Override
-    public void rollback(final Connection connection) {
-        throw new UnsupportedOperationException();
+    public void rollback(final Connection connection) throws DAOException {
+        try {
+            connection.rollback();
+        } catch (SQLException ex) {
+            throw new DAOException("Something went wrong while trying to rollback. " + ex.getMessage());
+        }
     }
 
     @Override

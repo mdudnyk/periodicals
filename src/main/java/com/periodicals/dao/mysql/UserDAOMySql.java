@@ -143,13 +143,12 @@ public class UserDAOMySql implements UserDAO {
     }
 
     private int getSortingColumnNumber(final String sortBy) {
-        int sortingColumnNumber = sortBy != null ?
+        return sortBy != null ?
                 (sortBy.equalsIgnoreCase("name") ? 3
                         : sortBy.equalsIgnoreCase("email") ? 6
                         : sortBy.equalsIgnoreCase("balance") ? 8
                         : sortBy.equalsIgnoreCase("id") ? 1 : 3)
                 : 3;
-        return sortingColumnNumber;
     }
 
     @Override

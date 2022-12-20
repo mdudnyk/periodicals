@@ -164,6 +164,9 @@ class PeriodicalDAOMySqlTest {
         assertEquals(1, periodicalDAO
                 .getPeriodicalsForTableSortPag(connection, "en", "en", 4, 10,
                         "status", "ASC").size());
+        assertTrue(periodicalDAO
+                .getPeriodicalsForTableSortPag(connection, null, null, 0, 0,
+                        null, null).isEmpty());
 
         PeriodicalForTable periodical = new PeriodicalForTable(4, "Classic Cars4", "Автомобілі",
                 16303, true);
@@ -191,6 +194,9 @@ class PeriodicalDAOMySqlTest {
         assertEquals(0, periodicalDAO
                 .getPeriodicalsForTableByTitleSortPag(connection, "en", "en", 0, 10,
                         "status", "ASC", "classic cars100").size());
+        assertTrue(periodicalDAO
+                .getPeriodicalsForTableByTitleSortPag(connection, null, null, 0, 0,
+                        null, null, null).isEmpty());
 
         PeriodicalForTable periodical = new PeriodicalForTable(4, "Classic Cars4", "Автомобілі",
                 16303, true);

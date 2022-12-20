@@ -137,13 +137,15 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
             final Connection connection, final String locale, final String defaultLocale,
             final int skip, final int amount, final String sortBy, final String order) throws DAOException {
         List<PeriodicalForTable> periodicals = new ArrayList<>();
-        String query = order.equalsIgnoreCase("DESC")
+        String query = order != null && order.equalsIgnoreCase("DESC")
                 ? Queries.GET_PERIODICALS_FOR_TABLE_PAGINATION_DESC
                 : Queries.GET_PERIODICALS_FOR_TABLE_PAGINATION_ASC;
-            int sortingColumnNumber = sortBy.equalsIgnoreCase("title") ? 2
-                    : sortBy.equalsIgnoreCase("topic") ? 3
-                    : sortBy.equalsIgnoreCase("price") ? 4
-                    : sortBy.equalsIgnoreCase("status") ? 5 : 2;
+        int sortingColumnNumber = sortBy != null ?
+                (sortBy.equalsIgnoreCase("title") ? 2
+                        : sortBy.equalsIgnoreCase("topic") ? 3
+                        : sortBy.equalsIgnoreCase("price") ? 4
+                        : sortBy.equalsIgnoreCase("status") ? 5 : 2)
+                : 2;
 
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, locale);
@@ -176,13 +178,15 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
             final int skip, final int amount, final String sortBy, final String order,
             final String searchedTitle) throws DAOException {
         List<PeriodicalForTable> periodicals = new ArrayList<>();
-        String query = order.equalsIgnoreCase("DESC")
+        String query = order != null && order.equalsIgnoreCase("DESC")
                 ? Queries.GET_PERIODICALS_FOR_TABLE_BY_TITLE_PAGINATION_DESC
                 : Queries.GET_PERIODICALS_FOR_TABLE_BY_TITLE_PAGINATION_ASC;
-        int sortingColumnNumber = sortBy.equalsIgnoreCase("title") ? 2
-                : sortBy.equalsIgnoreCase("topicName") ? 3
-                : sortBy.equalsIgnoreCase("price") ? 4
-                : sortBy.equalsIgnoreCase("status") ? 5 : 2;
+        int sortingColumnNumber = sortBy != null ?
+                (sortBy.equalsIgnoreCase("title") ? 2
+                        : sortBy.equalsIgnoreCase("topic") ? 3
+                        : sortBy.equalsIgnoreCase("price") ? 4
+                        : sortBy.equalsIgnoreCase("status") ? 5 : 2)
+                : 2;
 
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, locale);
