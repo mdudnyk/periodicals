@@ -44,6 +44,7 @@ class PeriodicalDAOManagerTest {
     Periodical periodical;
     PeriodicalForTable periodicalForTable;
 
+
     @BeforeEach
     void beforeEach() {
         daoManager = new PeriodicalDAOManager(DBManager.getInstance());

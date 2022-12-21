@@ -47,32 +47,40 @@ public class TopicDAOManager {
 
     public Topic getTopicById(int topicId) throws DAOException {
         Connection connection = conManager.getConnection();
-        Topic topic = topicDAO.getEntityById(topicId, connection);
-        if (topic != null) {
-            topic.addTranslationsMap(topicTranslateDAO.getAllTranslates(topicId, connection));
+        try {
+            Topic topic = topicDAO.getEntityById(topicId, connection);
+            if (topic != null) {
+                topic.addTranslationsMap(topicTranslateDAO.getAllTranslates(topicId, connection));
+            }
+            return topic;
+        } finally {
+            conManager.close(connection);
         }
-        conManager.close(connection);
-        return topic;
     }
 
     public Topic getTopicByIdAndLocale(int topicId, String localeId, String defaultLocale) throws DAOException {
         Connection connection = conManager.getConnection();
-        Topic topic = topicDAO.getEntityById(topicId, connection);
-        if (topic != null) {
-            topic.addTranslate(topicTranslateDAO.getTranslateByLocale(topicId, localeId, connection));
-            if (topic.getAllTranslates().size() == 0) {
-                topic.addTranslate(topicTranslateDAO.getTranslateByLocale(topicId, defaultLocale, connection));
+        try {
+            Topic topic = topicDAO.getEntityById(topicId, connection);
+            if (topic != null) {
+                topic.addTranslate(topicTranslateDAO.getTranslateByLocale(topicId, localeId, connection));
+                if (topic.getAllTranslates().size() == 0) {
+                    topic.addTranslate(topicTranslateDAO.getTranslateByLocale(topicId, defaultLocale, connection));
+                }
             }
+            return topic;
+        } finally {
+            conManager.close(connection);
         }
-        conManager.close(connection);
-        return topic;
     }
 
     public TopicTranslate getTranslationByIdAndLocale(int topicId, String localeId) throws DAOException {
         Connection connection = conManager.getConnection();
-        TopicTranslate topicTranslate = topicTranslateDAO.getTranslateByLocale(topicId, localeId, connection);
-        conManager.close(connection);
-        return topicTranslate;
+        try {
+            return topicTranslateDAO.getTranslateByLocale(topicId, localeId, connection);
+        } finally {
+            conManager.close(connection);
+        }
     }
 
     public List<Topic> getTopicsSortPag(final String locale,
@@ -81,10 +89,12 @@ public class TopicDAOManager {
                                         final int amount,
                                         final String sorting) throws DAOException {
         Connection connection = conManager.getConnection();
-        List<Topic> topics = topicDAO
-                .getAllByLocalePagination(connection, locale, defaultLocale, skip, amount, sorting);
-        conManager.close(connection);
-        return topics;
+        try {
+            return topicDAO
+                    .getAllByLocalePagination(connection, locale, defaultLocale, skip, amount, sorting);
+        } finally {
+            conManager.close(connection);
+        }
     }
 
     public List<Topic> getTopicsByNameSortPag(final String locale,
@@ -94,43 +104,54 @@ public class TopicDAOManager {
                                               final String sorting,
                                               final String name) throws DAOException {
         Connection connection = conManager.getConnection();
-        List<Topic> topics = topicDAO.getAllByNameAndLocalePagination(
-                connection, name, locale, defaultLocale, skip, amount, sorting);
-        conManager.close(connection);
-        return topics;
+        try {
+            return topicDAO.getAllByNameAndLocalePagination(
+                    connection, name, locale, defaultLocale, skip, amount, sorting);
+        } finally {
+            conManager.close(connection);
+        }
     }
 
     public List<Topic> getAllTopicsByLocale(String localeId, String defaultLocale) throws DAOException {
         Connection connection = conManager.getConnection();
-        List<Topic> topics = topicDAO.getAllWithTranslatesByLocale(connection, localeId, defaultLocale);
-        conManager.close(connection);
-        return topics;
+        try {
+            return topicDAO.getAllWithTranslatesByLocale(connection, localeId, defaultLocale);
+        } finally {
+            conManager.close(connection);
+        }
     }
 
     public int getTopicsAmount() throws DAOException {
         Connection connection = conManager.getConnection();
-        int count = topicDAO.getTopicsAmount(connection);
-        conManager.close(connection);
-        return count;
+        try {
+            return topicDAO.getTopicsAmount(connection);
+        } finally {
+            conManager.close(connection);
+        }
     }
 
     public int getTopicsAmountSearchMode(final String searchQuery) throws DAOException {
         Connection connection = conManager.getConnection();
-        int count = topicDAO.getTopicsAmountSearchMode(connection, searchQuery);
-        conManager.close(connection);
-        return count;
+        try {
+            return topicDAO.getTopicsAmountSearchMode(connection, searchQuery);
+        } finally {
+            conManager.close(connection);
+        }
     }
 
     public Topic getTopicByName(final List<String> strings) throws DAOException {
         Connection connection = conManager.getConnection();
         Topic topic = null;
-        for (String s : strings) {
-            topic = topicDAO.getTopicByName(s, connection);
-            if (topic != null) {
-                break;
+        try {
+            for (String s : strings) {
+                topic = topicDAO.getTopicByName(s, connection);
+                if (topic != null) {
+                    break;
+                }
             }
+        } finally {
+            conManager.close(connection);
         }
-        conManager.close(connection);
         return topic;
     }
 
@@ -158,8 +179,11 @@ public class TopicDAOManager {
 
     public void deleteTopic(final int id) throws DAOException {
         Connection connection = conManager.getConnection();
-        topicDAO.delete(id, connection);
-        conManager.close(connection);
+        try {
+            topicDAO.delete(id, connection);
+        } finally {
+            conManager.close(connection);
+        }
     }
 
     private void rollback(final Connection con) throws DAOException {
