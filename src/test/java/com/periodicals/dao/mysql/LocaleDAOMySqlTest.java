@@ -82,10 +82,11 @@ class LocaleDAOMySqlTest {
 
         DAOException daoException = assertThrows(DAOException.class,
                 () -> localeDao.update(falseLocaleToUpdate, connection));
-        assertThat(daoException.getMessage(), containsString("We don`t have such locale"));
+        assertThat(daoException.getMessage(), containsString("Can not update locale"));
 
-        falseLocaleToUpdate.setShortNameId("uk");
-        assertDoesNotThrow(() -> localeDao.update(falseLocaleToUpdate, connection));
+        LocaleCustom correctLocaleToUpdate =
+                new LocaleCustom("en", "German", "uah", "/img/de_flag.png");
+        assertDoesNotThrow(() -> localeDao.update(correctLocaleToUpdate, connection));
     }
 
     @Test
@@ -99,6 +100,6 @@ class LocaleDAOMySqlTest {
         assertNotEquals(countBeforeDeleting, countAfterDeleting);
 
         DAOException daoException = assertThrows(DAOException.class, () -> localeDao.delete("uk", connection));
-        assertThat(daoException.getMessage(), containsString("We don`t have such locale"));
+        assertThat(daoException.getMessage(), containsString("Can not delete locale"));
     }
 }

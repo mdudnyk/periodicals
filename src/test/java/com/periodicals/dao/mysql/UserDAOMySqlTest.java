@@ -95,7 +95,7 @@ class UserDAOMySqlTest {
 
         userForTest.setId(10);
         DAOException daoException = assertThrows(DAOException.class, () -> userDAO.update(userForTest, connection));
-        assertThat(daoException.getMessage(), containsString("We don`t have such user"));
+        assertThat(daoException.getMessage(), containsString("Can not update user"));
 
         assertThrows(NullPointerException.class, () -> userDAO.update(null, connection));
     }
@@ -110,7 +110,7 @@ class UserDAOMySqlTest {
         assertNotEquals(countBeforeDeleting, countAfterDeleting);
 
         DAOException daoException = assertThrows(DAOException.class, () -> userDAO.delete(1, connection));
-        assertThat(daoException.getMessage(), containsString("We don`t have such user"));
+        assertThat(daoException.getMessage(), containsString("Can not delete user"));
     }
 
     @Test

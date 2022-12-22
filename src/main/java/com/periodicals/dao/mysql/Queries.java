@@ -5,9 +5,8 @@ class Queries {
     public static final String CREATE_LOCALE = "INSERT INTO locale values (?, ?, ?, ?)";
     public static final String GET_ALL_LOCALES = "SELECT * FROM locale";
     public static final String GET_LOCALE_BY_ID = "SELECT * FROM locale WHERE short_name_id=?";
-    public static final String UPDATE_LOCALE = """
-            UPDATE locale SET lang_name_original=?, currency_name=?, flag_icon_url=? WHERE short_name_id=?
-            """;
+    public static final String UPDATE_LOCALE = "UPDATE locale SET short_name_id=?, lang_name_original=?, " +
+            "currency_name=?, flag_icon_url=? WHERE short_name_id=?";
     public static final String DELETE_LOCALE = "DELETE FROM locale WHERE short_name_id=?";
 
 
