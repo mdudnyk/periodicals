@@ -76,7 +76,7 @@ class LocaleDAOMySqlTest {
     }
 
     @Test
-    void update() {
+    void update() throws DAOException {
         LocaleCustom falseLocaleToUpdate =
                 new LocaleCustom("de", "German", "uah", "/img/de_flag.png");
 

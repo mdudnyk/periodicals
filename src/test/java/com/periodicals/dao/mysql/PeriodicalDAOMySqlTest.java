@@ -102,13 +102,18 @@ class PeriodicalDAOMySqlTest {
         frequency.put("period", "month");
         Periodical periodicalForTest = new Periodical(1, 1, "Classic Cars",
                 "166643252774218.jpeg", 15400, frequency, true);
-        periodicalDAO.update(periodicalForTest, connection);
+        assertDoesNotThrow(() -> periodicalDAO.update(periodicalForTest, connection));
 
         Periodical periodicalAfterUpdate = periodicalDAO.getEntityById(1, connection);
 
         assertNotEquals(periodicalBeforeUpdate, periodicalAfterUpdate);
 
         assertThrows(NullPointerException.class, () -> periodicalDAO.update(null, connection));
+
+        Periodical falsePeriodicalForTest = new Periodical(10, 1, "Be-be-be",
+                "166643252774218.jpeg", 15400, frequency, true);
+        DAOException daoException = assertThrows(DAOException.class, () -> periodicalDAO.update(falsePeriodicalForTest, connection));
+        assertThat(daoException.getMessage(), containsString("Can not update periodical"));
     }
 
     @Test
@@ -125,7 +130,13 @@ class PeriodicalDAOMySqlTest {
         Periodical periodicalAfterUpdate = periodicalDAO.getEntityById(1, connection);
 
         assertNotEquals(periodicalBeforeUpdate, periodicalAfterUpdate);
+
         assertThrows(NullPointerException.class, () -> periodicalDAO.updateWithoutImage(null, connection));
+
+        Periodical falsePeriodicalForTest = new Periodical(10, 1, "Be-be-be",
+                "166643252774218.jpeg", 15400, frequency, true);
+        DAOException daoException = assertThrows(DAOException.class, () -> periodicalDAO.update(falsePeriodicalForTest, connection));
+        assertThat(daoException.getMessage(), containsString("Can not update periodical"));
     }
 
     @Test
@@ -144,7 +155,7 @@ class PeriodicalDAOMySqlTest {
         assertEquals(1, countBeforeDeleting - countAfterDeleting);
 
         DAOException daoException = assertThrows(DAOException.class, () -> periodicalDAO.delete(1, connection));
-        assertThat(daoException.getMessage(), containsString("We don`t have such periodical"));
+        assertThat(daoException.getMessage(), containsString("Can not delete periodical"));
     }
 
     @Test

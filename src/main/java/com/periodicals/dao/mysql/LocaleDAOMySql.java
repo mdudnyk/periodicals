@@ -36,7 +36,7 @@ public class LocaleDAOMySql implements LocaleDAO {
             throw new DAOException("Can not add new locale to the database.");
         }
 
-        LOG.debug("Locale with id=" + entity.getShortNameId() + " successfully added to database.");
+        LOG.debug("Locale with id=" + entity.getShortNameId() + " successfully added to database");
     }
 
     /**
@@ -58,11 +58,11 @@ public class LocaleDAOMySql implements LocaleDAO {
             }
         } catch (SQLException e) {
             LOG.error("Did not retrieve locales list from database. " + e.getMessage());
-            throw new DAOException("Error while trying to retrieve locales list from database.");
+            throw new DAOException("Error while trying to retrieve locales list from database");
         }
 
         LOG.debug("All locales list successfully retrieved from database. " +
-                "List size=" + locales.size() + ".");
+                "List size=" + locales.size());
         return locales;
     }
 
@@ -92,9 +92,9 @@ public class LocaleDAOMySql implements LocaleDAO {
         }
 
         if (locale != null) {
-            LOG.debug("Locale with id=" + id + " successfully retrieved from database.");
+            LOG.debug("Locale with id=" + id + " successfully retrieved from database");
         } else {
-            LOG.debug("Locale with id=" + id + " is not presented in database.");
+            LOG.debug("Locale with id=" + id + " is not represented in database");
         }
         return locale;
     }
@@ -111,15 +111,15 @@ public class LocaleDAOMySql implements LocaleDAO {
             fillPreparedStatement(ps, entity);
             ps.setString(5, entity.getShortNameId());
             if (ps.executeUpdate() < 1) {
-                LOG.error("Locale with id=" + entity.getShortNameId() + " does not present in database.");
+                LOG.error("The locale is not represented in the database");
                 throw new DAOException("We don`t have such locale.");
             }
         } catch (SQLException e) {
-            LOG.error("Can not update un existing locale. " + e.getMessage());
-            throw new DAOException("Can not update locale with ID=" + entity.getShortNameId() + " in database.");
+            LOG.error("Can not update locale with id=" + entity.getShortNameId() + ". " + e.getMessage());
+            throw new DAOException("Can not update locale with ID=" + entity.getShortNameId() + " in database");
         }
 
-        LOG.debug("Locale with id=" + entity.getShortNameId() + " was successfully updated.");
+        LOG.debug("The locale with id=" + entity.getShortNameId() + " was successfully updated");
     }
 
     /**
@@ -133,15 +133,15 @@ public class LocaleDAOMySql implements LocaleDAO {
         try (PreparedStatement ps = connection.prepareStatement(Queries.DELETE_LOCALE)) {
             ps.setString(1, id);
             if (ps.executeUpdate() < 1) {
-                LOG.error("Locale with id=" + id + " does not present in database.");
+                LOG.error("The locale is not represented in the database");
                 throw new DAOException("We don`t have such locale.");
             }
         } catch (SQLException e) {
-            LOG.error("Can not delete un existing locale. " + e.getMessage());
+            LOG.error("Can not delete locale with id=" + id + ". " + e.getMessage());
             throw new DAOException("Can not delete locale with ID=" + id + " from database.");
         }
 
-        LOG.debug("Locale with id=" + id + " was successfully deleted.");
+        LOG.debug("The locale with id=" + id + " was successfully deleted");
     }
 
     /**

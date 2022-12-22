@@ -83,7 +83,7 @@ class PaymentDAOMySqlTest {
 
         Payment failPayment = new Payment("2222", 1, 100);
         DAOException daoException = assertThrows(DAOException.class, () -> paymentDAO.update(failPayment, connection));
-        assertThat(daoException.getMessage(), containsString("We don`t have such payment"));
+        assertThat(daoException.getMessage(), containsString("Can not update payment"));
     }
 
     @Test
