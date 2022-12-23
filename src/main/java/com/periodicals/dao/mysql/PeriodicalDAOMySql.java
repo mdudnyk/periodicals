@@ -28,7 +28,8 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
      */
     @Override
     public void create(final Periodical entity, final Connection connection) throws DAOException {
-        try (PreparedStatement ps = connection.prepareStatement(Queries.CREATE_PERIODICAL, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = connection
+                .prepareStatement(Queries.CREATE_PERIODICAL, Statement.RETURN_GENERATED_KEYS)) {
             fillPreparedStatement(ps, entity);
             if (ps.executeUpdate() > 0) {
                 try (ResultSet rs = ps.getGeneratedKeys()) {
@@ -395,7 +396,7 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
      *
      * @param title {@link String} value with searched periodicals title. {@code WHERE} command in MySQL.
      * @return {@code true} when periodical with specified {@code title} is represented in database.
-     * Otherwise returns {@code false}.
+     * Otherwise, returns {@code false}.
      * @throws NullPointerException in case of {@link Connection} parameter is {@code null}.
      * @throws DAOException         in case of error on database side.
      */
@@ -419,9 +420,9 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
         }
 
         if (exists) {
-            LOG.error("The periodical with title=" + title + " is represented in database");
+            LOG.debug("The periodical with title=" + title + " is represented in database");
         } else {
-            LOG.error("The periodical with title=" + title + " is not represented in database");
+            LOG.debug("The periodical with title=" + title + " is not represented in database");
         }
         return exists;
     }
@@ -460,10 +461,10 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
         }
 
         if (exists) {
-            LOG.error("The periodical with title=" + title +
+            LOG.debug("The periodical with title=" + title +
                     " is represented in database (id=" + id + " excluded)");
         } else {
-            LOG.error("The periodical with title=" + title +
+            LOG.debug("The periodical with title=" + title +
                     " is not represented in database (id=" + id + " excluded)");
         }
         return exists;

@@ -135,6 +135,8 @@ class PeriodicalTranslationDAOMySqlTest {
                 .getTranslationByPeriodicalIdAndLocale(1, "en", connection);
 
         assertNotEquals(periodicalTranslateEnFromDBBefore, periodicalTranslateEnFromDBAfter);
-        assertDoesNotThrow(() -> periodicalTranslationDAO.update(100, periodicalTranslateEn, connection));
+        DAOException daoException = assertThrows(DAOException.class,
+                () -> periodicalTranslationDAO.update(100, periodicalTranslateEn, connection));
+        assertThat(daoException.getMessage(), containsString("Can not update periodical translation"));
     }
 }

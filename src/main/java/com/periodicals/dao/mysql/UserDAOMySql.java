@@ -26,7 +26,8 @@ public class UserDAOMySql implements UserDAO {
      */
     @Override
     public void create(final User entity, Connection connection) throws DAOException {
-        try (PreparedStatement ps = connection.prepareStatement(Queries.CREATE_USER, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = connection
+                .prepareStatement(Queries.CREATE_USER, Statement.RETURN_GENERATED_KEYS)) {
             fillPreparedStatement(ps, entity);
             if (ps.executeUpdate() > 0) {
                 try (ResultSet rs = ps.getGeneratedKeys()) {
