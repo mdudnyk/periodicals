@@ -48,10 +48,10 @@ public class UserDAOMySql implements UserDAO {
     }
 
     /**
-     * Returns an {@link ArrayList} with all {@link User} entities presented in the database.
+     * Returns an {@link ArrayList} with all {@link User} entities represented in the database.
      *
-     * @return an {@link ArrayList} with all {@link User} entities presented in the database or an
-     * empty {@code ArrayList} when there is no user entities presented in the database.
+     * @return an {@link ArrayList} with all {@link User} entities represented in the database or an
+     * empty {@code ArrayList} when there is no user entities represented in the database.
      * @throws NullPointerException in case of {@link Connection} parameter is {@code null}.
      * @throws DAOException         in case of error on database side.
      */
@@ -69,7 +69,7 @@ public class UserDAOMySql implements UserDAO {
             throw new DAOException("Error while trying to retrieve users list from database.");
         }
 
-        LOG.debug("All users list successfully retrieved from database. " +
+        LOG.debug("All users list was successfully retrieved from database. " +
                 "List size=" + users.size());
         return users;
     }

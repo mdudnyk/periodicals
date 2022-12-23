@@ -204,10 +204,10 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
             ps.setInt(1, id);
             if (ps.executeUpdate() < 1) {
                 LOG.error("The periodical is not represented in the database");
-                throw new DAOException("We don`t have such periodical. ");
+                throw new DAOException("We don`t have such periodical.");
             }
         } catch (SQLException e) {
-            LOG.error("Can not delete periodical with id=" + id + ". " + e.getMessage());
+            LOG.error("Can not delete the periodical with id=" + id + ". " + e.getMessage());
             throw new DAOException("Can not delete periodical with id=" + id + " from database.");
         }
 
@@ -262,13 +262,13 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
                 }
             }
         } catch (SQLException e) {
-            LOG.error("Did not retrieve periodicals list from database. " +
+            LOG.error("Did not retrieve periodicals list from database (pagination). " +
                     "LOCALE=" + locale + ", DEFAULT_LOCALE=" + defaultLocale + ", SKIP=" + skip +
                     ", AMOUNT=" + amount + ", SORT_BY=" + sortBy + ", ORDER=" + order + ". " + e.getMessage());
-            throw new DAOException("Error while trying to retrieve list of periodicals (pagination mode).");
+            throw new DAOException("Error while trying to retrieve list of periodicals (pagination).");
         }
 
-        LOG.debug("List of periodicals successfully retrieved from database (pagination mode). " +
+        LOG.debug("List of periodicals was successfully retrieved from database (pagination). " +
                 "List size=" + periodicals.size());
         return periodicals;
     }
@@ -337,9 +337,9 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
     }
 
     /**
-     * Returns a total amount of {@link Periodical} entities that are presented in the database.
+     * Returns a total amount of {@link Periodical} entities that are represented in the database.
      *
-     * @return a total amount of periodicals that are presented in the database.
+     * @return a total amount of periodicals that are represented in the database.
      * @throws NullPointerException in case of {@link Connection} parameter is {@code null}.
      * @throws DAOException         in case of error on database side.
      */

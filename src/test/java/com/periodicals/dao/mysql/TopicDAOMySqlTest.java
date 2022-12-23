@@ -148,7 +148,7 @@ class TopicDAOMySqlTest {
         assertEquals(1, countBeforeDeleting - countAfterDeleting);
 
         DAOException daoException = assertThrows(DAOException.class, () -> topicDAO.delete(1, connection));
-        assertThat(daoException.getMessage(), containsString("We don`t have such topic"));
+        assertThat(daoException.getMessage(), containsString("Can not delete topic"));
     }
 
     @Test
