@@ -40,6 +40,7 @@ public class HikariConnectionPool implements ConnectionManager {
     @Override
     public Connection getConnection() throws DAOException {
         Connection connection;
+
         try {
             connection = dataSource.getConnection();
         } catch (SQLException e) {

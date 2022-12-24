@@ -29,8 +29,8 @@ public class PeriodicalTranslationDAOMySql implements PeriodicalTranslationDAO {
      *                              when entities with {@code periodical_id} or {@code locale_id} are not represented
      *                              in database.
      */
-    public void create(final int periodicalId, final PeriodicalTranslate entity, final Connection connection)
-            throws DAOException {
+    public void create(final int periodicalId, final PeriodicalTranslate entity,
+                       final Connection connection) throws DAOException {
         try (PreparedStatement ps = connection.prepareStatement(Queries.CREATE_PERIODICAL_TRANSLATE)) {
             fillPreparedStatement(ps, periodicalId, entity);
             ps.execute();
@@ -115,10 +115,10 @@ public class PeriodicalTranslationDAOMySql implements PeriodicalTranslationDAO {
         }
 
         if (translation != null) {
-            LOG.debug("The translation with locale id=" + localeId + " and periodical id=" + periodicalId
+            LOG.debug("The periodical translation with locale id=" + localeId + " and periodical id=" + periodicalId
                     + " successfully retrieved from database");
         } else {
-            LOG.debug("The translation with locale id=" + localeId + " and periodical id=" + periodicalId
+            LOG.debug("The periodical translation with locale id=" + localeId + " and periodical id=" + periodicalId
                     + " is not represented in database");
         }
         return translation;
@@ -138,7 +138,7 @@ public class PeriodicalTranslationDAOMySql implements PeriodicalTranslationDAO {
     @Override
     public boolean checkIfTranslationExists(final int periodicalId, final String localeId,
                                             final Connection connection) throws DAOException {
-        boolean exists = false;
+        boolean isRepresented = false;
 
         try (PreparedStatement ps = connection.prepareStatement(Queries.PERIODICAL_TRANSLATE_EXISTS)) {
             ps.setInt(1, periodicalId);
@@ -146,7 +146,7 @@ public class PeriodicalTranslationDAOMySql implements PeriodicalTranslationDAO {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     if (rs.getInt(1) == 1) {
-                        exists = true;
+                        isRepresented = true;
                     }
                 }
             }
@@ -157,18 +157,18 @@ public class PeriodicalTranslationDAOMySql implements PeriodicalTranslationDAO {
                     " periodical id=" + periodicalId + " and locale id=" + localeId + " is represented in database.");
         }
 
-        if (exists) {
+        if (isRepresented) {
             LOG.debug("The periodical translation with periodical id=" + periodicalId +
                     " and locale id=" + localeId + " is represented in database.");
         } else {
             LOG.debug("The periodical translation with periodical id=" + periodicalId +
                     " and locale id=" + localeId + " is not represented in database.");
         }
-        return exists;
+        return isRepresented;
     }
 
     /**
-     * Updates a {@link PeriodicalTranslate} entity presented in the database.
+     * Updates a {@link PeriodicalTranslate} entity represented in the database.
      *
      * @param periodicalId is an {@link Periodical} {@code ID} for {@code periodical translation} entity in database.
      * @throws NullPointerException in case of {@link Connection} or {@link PeriodicalTranslate} argument is {@code null}.

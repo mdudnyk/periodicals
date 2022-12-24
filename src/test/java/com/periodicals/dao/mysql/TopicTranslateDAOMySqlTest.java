@@ -110,7 +110,10 @@ class TopicTranslateDAOMySqlTest {
         assertEquals(newTopicName, topicTranslate.getName());
 
         TopicTranslate falseTopicTranslate = new TopicTranslate(100, "es", "Food");
-        assertDoesNotThrow(() -> topicTranslateDAO.update(falseTopicTranslate, connection));
+        DAOException daoException = assertThrows(DAOException.class,
+                () -> topicTranslateDAO.update(falseTopicTranslate, connection));
+        assertThat(daoException.getMessage(), containsString("Can not update topic translation"));
+
     }
 
     @Test
