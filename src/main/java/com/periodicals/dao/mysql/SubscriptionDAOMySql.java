@@ -16,7 +16,7 @@ import java.util.List;
  * A class for interacting with the {@code subscription} table in the {@code MySql} database.
  */
 public class SubscriptionDAOMySql implements SubscriptionDAO {
-    private static final Logger LOG = LogManager.getLogger(PeriodicalDAOMySql.class);
+    private static final Logger LOG = LogManager.getLogger(SubscriptionDAOMySql.class);
 
     /**
      * Inserts {@link Subscription} entity into the database.

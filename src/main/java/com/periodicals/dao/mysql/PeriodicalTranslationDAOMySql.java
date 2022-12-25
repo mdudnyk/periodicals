@@ -19,7 +19,7 @@ import java.util.Map;
  * A class for interacting with the {@code periodical_translate} table in the {@code MySql} database.
  */
 public class PeriodicalTranslationDAOMySql implements PeriodicalTranslationDAO {
-    private static final Logger LOG = LogManager.getLogger(PeriodicalDAOMySql.class);
+    private static final Logger LOG = LogManager.getLogger(PeriodicalTranslationDAOMySql.class);
 
     /**
      * Inserts {@link PeriodicalTranslate} entity into the database.

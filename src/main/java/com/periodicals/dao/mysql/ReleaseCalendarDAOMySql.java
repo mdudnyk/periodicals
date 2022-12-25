@@ -20,7 +20,7 @@ import java.util.Map;
 
 
 public class ReleaseCalendarDAOMySql implements ReleaseCalendarDAO {
-    private static final Logger LOG = LogManager.getLogger(PeriodicalDAOMySql.class);
+    private static final Logger LOG = LogManager.getLogger(ReleaseCalendarDAOMySql.class);
 
     /**
      * Inserts {@link MonthSelector} entity into the {@code release_calendar} table.

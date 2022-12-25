@@ -21,7 +21,7 @@ import java.util.Map;
  * A class for interacting with the {@code subscription_calendar} table in the {@code MySql} database.
  */
 public class SubscriptionCalendarDAOMySql implements SubscriptionCalendarDAO {
-    private static final Logger LOG = LogManager.getLogger(PeriodicalDAOMySql.class);
+    private static final Logger LOG = LogManager.getLogger(SubscriptionCalendarDAOMySql.class);
 
     /**
      * Inserts {@link MonthSelector} entity into the {@code subscription_calendar} table.
