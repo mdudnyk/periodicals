@@ -1,6 +1,6 @@
 Periodicals
 
-Short Description of functionaluty:
+Short Description of functionality:
 
 Implementation of Periodicals system. 
 In the system there is a list of publications that are grouped by topic.
