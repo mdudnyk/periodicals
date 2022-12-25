@@ -32,7 +32,9 @@ public class TopicTranslateDAOMySql implements TopicTranslateDAO {
      * Inserts {@link TopicTranslate} entity into the database.
      *
      * @throws NullPointerException in case of {@link TopicTranslate} or {@link Connection} parameter is {@code null}.
-     * @throws DAOException         in case of error at the database side.
+     * @throws DAOException         in case of error at the database side or in case
+     *                              when entity with {@code topic_id} or {@code locale_id} are not represented
+     *                              in database.
      */
     public void create(final int topicId, final TopicTranslate entity, final Connection connection) throws DAOException {
         try (PreparedStatement ps = connection.prepareStatement(Queries.CREATE_TOPIC_TRANSLATE)) {
@@ -142,8 +144,7 @@ public class TopicTranslateDAOMySql implements TopicTranslateDAO {
             ps.setInt(2, entity.getTopicID());
             ps.setString(3, entity.getLocaleID());
             if (ps.executeUpdate() < 1) {
-                LOG.error("The topic translation is not represented in the database");
-                throw new DAOException("We don`t have such topic translation.");
+                throw new DAOException("The topic translation is not represented in the database");
             }
         } catch (SQLException e) {
             LOG.error("Can not update topic translation with locale id=" + entity.getLocaleID()
@@ -186,7 +187,7 @@ public class TopicTranslateDAOMySql implements TopicTranslateDAO {
         try (PreparedStatement ps = connection.prepareStatement(Queries.TOPIC_TRANSLATE_EXISTS)) {
             ps.setInt(1, topicId);
             ps.setString(2, localeId);
-            try (ResultSet rs = ps.executeQuery();) {
+            try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     if (rs.getInt(1) == 1) {
                         isRepresented = true;

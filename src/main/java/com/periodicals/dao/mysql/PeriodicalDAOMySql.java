@@ -112,8 +112,7 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
             fillPreparedStatement(ps, entity);
             ps.setInt(7, entity.getId());
             if (ps.executeUpdate() < 1) {
-                LOG.error("The periodical is not represented in the database");
-                throw new DAOException("We don`t have such periodical.");
+                throw new DAOException("The periodical is not represented in the database");
             }
         } catch (SQLException e) {
             LOG.error("Can not update periodical with id=" + entity.getId() + ". " + e.getMessage());
@@ -187,8 +186,8 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
                     "home page with topic id=" + topicId + ". ");
         }
 
-        LOG.debug("Periodicals for home page list successfully retrieved from database. " +
-                "List size=" + periodicals.size());
+        LOG.debug("Periodicals for home page with topic id=" + topicId +
+                " list successfully retrieved from database. " + "List size=" + periodicals.size());
         return periodicals;
     }
 
@@ -203,8 +202,7 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
         try (PreparedStatement ps = connection.prepareStatement(Queries.DELETE_PERIODICAL)) {
             ps.setInt(1, id);
             if (ps.executeUpdate() < 1) {
-                LOG.error("The periodical is not represented in the database");
-                throw new DAOException("We don`t have such periodical.");
+                throw new DAOException("We don`t have such periodical in database");
             }
         } catch (SQLException e) {
             LOG.error("Can not delete the periodical with id=" + id + ". " + e.getMessage());
@@ -383,7 +381,7 @@ public class PeriodicalDAOMySql implements PeriodicalDAO {
             }
         } catch (SQLException e) {
             LOG.error("Did not retrieve periodicals amount from database (search mode). " + e.getMessage());
-            throw new DAOException("Error while trying to retrieve amount of periodicals (search mode).");
+            throw new DAOException("Error while trying to retrieve amount of periodicals.");
         }
 
         LOG.debug("Amount of periodicals matching search query=" + searchQuery +

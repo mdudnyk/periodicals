@@ -111,8 +111,7 @@ public class LocaleDAOMySql implements LocaleDAO {
             fillPreparedStatement(ps, entity);
             ps.setString(5, entity.getShortNameId());
             if (ps.executeUpdate() < 1) {
-                LOG.error("The locale is not represented in the database");
-                throw new DAOException("We don`t have such locale.");
+                throw new DAOException("The locale is not represented in the database");
             }
         } catch (SQLException e) {
             LOG.error("Can not update locale with id=" + entity.getShortNameId() + ". " + e.getMessage());
@@ -133,8 +132,7 @@ public class LocaleDAOMySql implements LocaleDAO {
         try (PreparedStatement ps = connection.prepareStatement(Queries.DELETE_LOCALE)) {
             ps.setString(1, id);
             if (ps.executeUpdate() < 1) {
-                LOG.error("The locale is not represented in the database");
-                throw new DAOException("We don`t have such locale.");
+                throw new DAOException("The locale is not represented in the database");
             }
         } catch (SQLException e) {
             LOG.error("Can not delete locale with id=" + id + ". " + e.getMessage());

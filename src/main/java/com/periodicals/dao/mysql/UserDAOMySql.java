@@ -186,7 +186,7 @@ public class UserDAOMySql implements UserDAO {
             LOG.error("Did not retrieve customers list from database. " +
                     "SKIP=" + positionsToSkip + ", AMOUNT=" + amountOnPage +
                     ", SORT_BY=" + sortBy + ", ORDER=" + sortOrder + ". " + e.getMessage());
-            throw new DAOException("Error while trying to retrieve list of customers (pagination mode).");
+            throw new DAOException("Error while trying to retrieve list of customers.");
         }
 
         LOG.debug("List of customers successfully retrieved from database (pagination mode). " +
@@ -326,8 +326,7 @@ public class UserDAOMySql implements UserDAO {
             fillPreparedStatement(ps, entity);
             ps.setInt(9, entity.getId());
             if (ps.executeUpdate() < 1) {
-                LOG.error("The user is not represented in database");
-                throw new DAOException("We don`t have such user.");
+                throw new DAOException("The user is not represented in database");
             }
         } catch (SQLException e) {
             LOG.error("Can not update user with id=" + entity.getId() + ". " + e.getMessage());
@@ -349,8 +348,7 @@ public class UserDAOMySql implements UserDAO {
         try (PreparedStatement ps = connection.prepareStatement(Queries.DELETE_USER)) {
             ps.setInt(1, id);
             if (ps.executeUpdate() < 1) {
-                LOG.error("The user is not represented in database");
-                throw new DAOException("We don`t have such user.");
+                throw new DAOException("The user is not represented in database");
             }
         } catch (SQLException e) {
             LOG.error("Can not delete user with id=" + id + ". " + e.getMessage());

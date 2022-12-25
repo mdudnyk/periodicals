@@ -313,8 +313,7 @@ public class TopicDAOMySql implements TopicDAO {
         try (PreparedStatement ps = connection.prepareStatement(Queries.DELETE_TOPIC)) {
             ps.setInt(1, id);
             if (ps.executeUpdate() < 1) {
-                LOG.error("The topic is not represented in the database");
-                throw new DAOException("We don`t have such topic.");
+                throw new DAOException("The topic is not represented in the database");
             }
         } catch (SQLException e) {
             LOG.error("Can not delete the topic with id=" + id + ". " + e.getMessage());

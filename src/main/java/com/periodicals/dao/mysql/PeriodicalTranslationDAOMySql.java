@@ -184,8 +184,7 @@ public class PeriodicalTranslationDAOMySql implements PeriodicalTranslationDAO {
             ps.setInt(4, periodicalId);
             ps.setString(5, entity.getLocaleID());
             if (ps.executeUpdate() < 1) {
-                LOG.error("The periodical translation is not represented in the database");
-                throw new DAOException("We don`t have such periodical translation.");
+                throw new DAOException("The periodical translation is not represented in the database");
             }
         } catch (SQLException e) {
             LOG.error("Can not update periodical translation with locale id=" + entity.getLocaleID()

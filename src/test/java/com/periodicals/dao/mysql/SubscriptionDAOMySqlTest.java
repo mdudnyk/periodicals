@@ -73,9 +73,7 @@ class SubscriptionDAOMySqlTest {
 
     @Test
     void getAll() {
-        assertThrows(UnsupportedOperationException.class, () -> {
-            subscriptionDAO.getAll(connection);
-        });
+        assertThrows(UnsupportedOperationException.class, () -> subscriptionDAO.getAll(connection));
     }
 
     @Test
@@ -124,12 +122,9 @@ class SubscriptionDAOMySqlTest {
         assertEquals(0, subscriptionDAO
                 .getSubscriptionsByUserIdPagination(2, 0, 10,
                         "title", "ASC", connection).size());
-        assertThrows(NullPointerException.class, () -> subscriptionDAO
+        assertDoesNotThrow(() -> subscriptionDAO
                 .getSubscriptionsByUserIdPagination(1, 1, 10,
-                        null, "ASC", connection));
-        assertThrows(NullPointerException.class, () -> subscriptionDAO
-                .getSubscriptionsByUserIdPagination(1, 1, 10,
-                        "title", null, connection));
+                        null, null, connection));
     }
 
     @Test
@@ -153,9 +148,7 @@ class SubscriptionDAOMySqlTest {
 
     @Test
     void update() throws DAOException {
-        assertThrows(UnsupportedOperationException.class, () -> {
-            subscriptionDAO.update(null, connection);
-        });
+        assertThrows(UnsupportedOperationException.class, () -> subscriptionDAO.update(null, connection));
     }
 
     @Test
@@ -168,6 +161,6 @@ class SubscriptionDAOMySqlTest {
         assertEquals(1, countBeforeDeleting - countAfterDeleting);
 
         DAOException daoException = assertThrows(DAOException.class, () -> subscriptionDAO.delete(1, connection));
-        assertThat(daoException.getMessage(), containsString("We don`t have such subscription"));
+        assertThat(daoException.getMessage(), containsString("Can not delete subscription"));
     }
 }
