@@ -1,14 +1,14 @@
 package com.periodicals.dao.manager;
 
 import com.periodicals.dao.ConnectionManager;
-import com.periodicals.dao.UserDAO;
+import com.periodicals.dao.interfacesForDAO.UserDAO;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.dao.mysql.SubscriptionCalendarDAOMySql;
 import com.periodicals.dao.mysql.UserDAOMySql;
 import com.periodicals.entity.MonthSelector;
 import com.periodicals.entity.Subscription;
-import com.periodicals.dao.SubscriptionCalendarDAO;
-import com.periodicals.dao.SubscriptionDAO;
+import com.periodicals.dao.interfacesForDAO.SubscriptionCalendarDAO;
+import com.periodicals.dao.interfacesForDAO.SubscriptionDAO;
 import com.periodicals.dao.mysql.SubscriptionDAOMySql;
 import com.periodicals.entity.User;
 
@@ -16,16 +16,16 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-public class SubscriptionDAOManager {
+public class SubscriptionDao {
     private ConnectionManager conManager;
     private SubscriptionDAO subscriptionDAO;
     private SubscriptionCalendarDAO subscriptionCalendarDAO;
     private UserDAO userDAO;
 
-    private SubscriptionDAOManager() {
+    private SubscriptionDao() {
     }
 
-    public SubscriptionDAOManager(ConnectionManager connectionManager) {
+    public SubscriptionDao(ConnectionManager connectionManager) {
         this.conManager = connectionManager;
         subscriptionDAO = new SubscriptionDAOMySql();
         subscriptionCalendarDAO = new SubscriptionCalendarDAOMySql();

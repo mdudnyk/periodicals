@@ -1,8 +1,8 @@
 package com.periodicals.service.impl;
 
 import com.periodicals.dao.exception.DAOException;
-import com.periodicals.dao.manager.DAOManagerFactory;
-import com.periodicals.dao.manager.UserDAOManager;
+import com.periodicals.dao.manager.DAOManager;
+import com.periodicals.dao.manager.UserDao;
 import com.periodicals.entity.User;
 import com.periodicals.entity.enums.UserRole;
 import com.periodicals.service.exceptions.ServiceException;
@@ -11,9 +11,9 @@ import com.periodicals.service.UserService;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
-    private final DAOManagerFactory daoManger;
+    private final DAOManager daoManger;
 
-    public UserServiceImpl(DAOManagerFactory daoManger) {
+    public UserServiceImpl(DAOManager daoManger) {
         this.daoManger = daoManger;
     }
 
@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
         //TODO input validation
         User tmpUser = findUserByEmail(user.getEmail());
         if (tmpUser == null) {
-            daoManger.getUserDAOManager().createUser(user);
+            daoManger.getUserDao().createUser(user);
         } else {
             throw new ServiceException("Sorry, this email is already being used");
         }
@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUserInformation(final User user) throws DAOException {
-        daoManger.getUserDAOManager().updateUser(user);
+        daoManger.getUserDao().updateUser(user);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
         positionsToSkip = Math.max(positionsToSkip, 0);
         amountOnPage = Math.max(amountOnPage, 1);
         return daoManger
-                .getUserDAOManager()
+                .getUserDao()
                 .getCustomersPagination(positionsToSkip, amountOnPage, sortBy, sortOrder);
     }
 
@@ -60,29 +60,29 @@ public class UserServiceImpl implements UserService {
         positionsToSkip = Math.max(positionsToSkip, 0);
         amountOnPage = Math.max(amountOnPage, 1);
         return daoManger
-                .getUserDAOManager()
+                .getUserDao()
                 .getCustomersPagination(searchString, positionsToSkip, amountOnPage, sortBy, sortOrder);
     }
 
     @Override
     public int getCustomersTotal() throws DAOException {
-        return daoManger.getUserDAOManager().getCustomersAmount();
+        return daoManger.getUserDao().getCustomersAmount();
     }
 
     @Override
     public int getCustomersTotal(final String searchQuery) throws DAOException {
-        return daoManger.getUserDAOManager().getCustomersAmount(searchQuery);
+        return daoManger.getUserDao().getCustomersAmount(searchQuery);
     }
 
     @Override
     public void setBlockingStatusForCustomer(final int customerId, final boolean isBlocked)
             throws DAOException, ServiceException {
-        UserDAOManager userDAOManager = daoManger.getUserDAOManager();
-        User user = userDAOManager.getUserById(customerId);
+        UserDao userDao = daoManger.getUserDao();
+        User user = userDao.getUserById(customerId);
         if (user != null) {
             if (user.getRole() == UserRole.CUSTOMER) {
                 user.setIsBlocked(isBlocked);
-                userDAOManager.updateUser(user);
+                userDao.updateUser(user);
             } else {
                 throw new ServiceException("Set blocking status option valid only for customers.");
             }
@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService {
 
 
     private User findUserByEmail(final String email) throws DAOException {
-        UserDAOManager userDAO = daoManger.getUserDAOManager();
+        UserDao userDAO = daoManger.getUserDao();
         return userDAO.getUserByEmail(email);
     }
 }

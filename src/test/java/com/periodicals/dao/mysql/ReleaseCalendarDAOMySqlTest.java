@@ -1,6 +1,6 @@
 package com.periodicals.dao.mysql;
 
-import com.periodicals.dao.ReleaseCalendarDAO;
+import com.periodicals.dao.interfacesForDAO.ReleaseCalendarDAO;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.entity.MonthSelector;
 import org.json.simple.JSONArray;
@@ -73,18 +73,10 @@ class ReleaseCalendarDAOMySqlTest {
         MonthSelector releaseYear2022 = new MonthSelector(2022, activeMonths);
         MonthSelector releaseYear2023 = new MonthSelector(2023, activeMonths);
 
-        assertDoesNotThrow(() -> {
-            releaseCalendarDAO.create(2, releaseYear2022, connection);
-        });
-        assertDoesNotThrow(() -> {
-            releaseCalendarDAO.create(2, releaseYear2023, connection);
-        });
-        assertThrows(DAOException.class, () -> {
-            releaseCalendarDAO.create(2, releaseYear2022, connection);
-        });
-        assertThrows(DAOException.class, () -> {
-            releaseCalendarDAO.create(3, releaseYear2022, connection);
-        });
+        assertDoesNotThrow(() -> releaseCalendarDAO.create(2, releaseYear2022, connection));
+        assertDoesNotThrow(() -> releaseCalendarDAO.create(2, releaseYear2023, connection));
+        assertThrows(DAOException.class, () -> releaseCalendarDAO.create(2, releaseYear2022, connection));
+        assertThrows(DAOException.class, () -> releaseCalendarDAO.create(3, releaseYear2022, connection));
 
         assertEquals(releaseYear2022, releaseCalendarDAO
                 .getCalendarByPeriodicalIdAndYear(2, 2022, connection));
@@ -168,12 +160,8 @@ class ReleaseCalendarDAOMySqlTest {
 
         MonthSelector releaseToUpdateFalse = new MonthSelector(2022, null);
         assertThrows(NullPointerException.class,
-                () -> {
-                    releaseCalendarDAO.update(1, releaseToUpdateFalse, connection);
-                });
+                () -> releaseCalendarDAO.update(1, releaseToUpdateFalse, connection));
         assertThrows(NullPointerException.class,
-                () -> {
-                    releaseCalendarDAO.update(1, null, connection);
-                });
+                () -> releaseCalendarDAO.update(1, null, connection));
     }
 }

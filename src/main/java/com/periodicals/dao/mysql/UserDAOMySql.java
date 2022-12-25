@@ -1,7 +1,7 @@
 package com.periodicals.dao.mysql;
 
 import com.periodicals.dao.exception.DAOException;
-import com.periodicals.dao.UserDAO;
+import com.periodicals.dao.interfacesForDAO.UserDAO;
 import com.periodicals.entity.User;
 import com.periodicals.entity.enums.UserRole;
 import org.apache.logging.log4j.LogManager;
@@ -100,8 +100,7 @@ public class UserDAOMySql implements UserDAO {
         }
 
         if (user != null) {
-            LOG.debug("The user with id=" + id + " successfully retrieved from database. " +
-                    "His email=" + user.getEmail());
+            LOG.debug("The user with id=" + id + " successfully retrieved from database.");
         } else {
             LOG.debug("The user with id=" + id + " is not represented in database");
         }

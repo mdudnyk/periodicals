@@ -1,7 +1,7 @@
 package com.periodicals.service.impl;
 
 import com.periodicals.dao.exception.DAOException;
-import com.periodicals.dao.manager.DAOManagerFactory;
+import com.periodicals.dao.manager.DAOManager;
 import com.periodicals.entity.LocaleCustom;
 import com.periodicals.service.LocaleService;
 
@@ -10,15 +10,15 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class LocaleServiceImpl implements LocaleService {
-    private final DAOManagerFactory daoManger;
+    private final DAOManager daoManger;
 
-    public LocaleServiceImpl(DAOManagerFactory daoManger) {
+    public LocaleServiceImpl(DAOManager daoManger) {
         this.daoManger = daoManger;
     }
 
     @Override
     public Map<String, LocaleCustom> getAllLocalesMap() throws DAOException {
-        return daoManger.getLocaleDAOManager().getAllLocalesList()
+        return daoManger.getLocaleDao().getAllLocalesList()
                 .stream()
                 .collect(Collectors
                         .toMap(LocaleCustom::getShortNameId, Function.identity()));
@@ -26,6 +26,6 @@ public class LocaleServiceImpl implements LocaleService {
 
     @Override
     public LocaleCustom getLocaleByShortName(final String shortName) throws DAOException {
-        return daoManger.getLocaleDAOManager().getLocaleById(shortName);
+        return daoManger.getLocaleDao().getLocaleById(shortName);
     }
 }

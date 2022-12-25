@@ -1,6 +1,6 @@
 package com.periodicals.dao.mysql;
 
-import com.periodicals.dao.UserDAO;
+import com.periodicals.dao.interfacesForDAO.UserDAO;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.entity.User;
 import com.periodicals.entity.enums.UserRole;

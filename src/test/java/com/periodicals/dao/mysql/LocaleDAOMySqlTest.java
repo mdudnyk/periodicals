@@ -1,6 +1,6 @@
 package com.periodicals.dao.mysql;
 
-import com.periodicals.dao.LocaleDAO;
+import com.periodicals.dao.interfacesForDAO.LocaleDAO;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.entity.LocaleCustom;
 import org.junit.jupiter.api.*;

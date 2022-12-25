@@ -1,6 +1,6 @@
 package com.periodicals.dao.mysql;
 
-import com.periodicals.dao.SubscriptionDAO;
+import com.periodicals.dao.interfacesForDAO.SubscriptionDAO;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.entity.Subscription;
 import org.apache.logging.log4j.LogManager;

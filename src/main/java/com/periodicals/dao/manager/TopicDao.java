@@ -1,8 +1,8 @@
 package com.periodicals.dao.manager;
 
 import com.periodicals.dao.ConnectionManager;
-import com.periodicals.dao.TopicDAO;
-import com.periodicals.dao.TopicTranslateDAO;
+import com.periodicals.dao.interfacesForDAO.TopicDAO;
+import com.periodicals.dao.interfacesForDAO.TopicTranslateDAO;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.dao.mysql.TopicDAOMySql;
 import com.periodicals.dao.mysql.TopicTranslateDAOMySql;
@@ -14,15 +14,15 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-public class TopicDAOManager {
+public class TopicDao {
     private ConnectionManager conManager;
     private TopicDAO topicDAO;
     private TopicTranslateDAO topicTranslateDAO;
 
-    private TopicDAOManager() {
+    private TopicDao() {
     }
 
-    public TopicDAOManager(ConnectionManager connectionManager) {
+    public TopicDao(ConnectionManager connectionManager) {
         this.conManager = connectionManager;
         topicDAO = new TopicDAOMySql();
         topicTranslateDAO = new TopicTranslateDAOMySql();

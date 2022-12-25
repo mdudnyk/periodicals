@@ -4,7 +4,6 @@ import com.periodicals.dao.exception.DAOException;
 import com.periodicals.dao.mysql.DBManager;
 import com.periodicals.dao.mysql.TopicDAOMySql;
 import com.periodicals.dao.mysql.TopicTranslateDAOMySql;
-import com.periodicals.entity.PeriodicalTranslate;
 import com.periodicals.entity.Topic;
 import com.periodicals.entity.TopicTranslate;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,8 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +25,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 
 @ExtendWith(MockitoExtension.class)
-class TopicDAOManagerTest {
+class TopicDaoTest {
 
     @Mock
     TopicDAOMySql topicDAO;
@@ -36,11 +33,11 @@ class TopicDAOManagerTest {
     @Mock
     TopicTranslateDAOMySql translationDAO;
 
-    TopicDAOManager daoManager;
+    TopicDao daoManager;
 
     @BeforeEach
     void beforeEach() {
-        daoManager = new TopicDAOManager(DBManager.getInstance());
+        daoManager = new TopicDao(DBManager.getInstance());
         replaceWithMockedField();
     }
 

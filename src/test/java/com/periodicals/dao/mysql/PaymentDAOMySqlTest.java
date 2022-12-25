@@ -1,6 +1,6 @@
 package com.periodicals.dao.mysql;
 
-import com.periodicals.dao.PaymentDAO;
+import com.periodicals.dao.interfacesForDAO.PaymentDAO;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.entity.Payment;
 import com.periodicals.entity.enums.PaymentStatus;

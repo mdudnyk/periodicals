@@ -2,7 +2,7 @@ package com.periodicals.controller.servlet.command.impl.post;
 
 import com.periodicals.controller.servlet.command.FrontCommand;
 import com.periodicals.dao.exception.DAOException;
-import com.periodicals.dao.manager.DAOManagerFactory;
+import com.periodicals.dao.manager.DAOManager;
 import com.periodicals.entity.Topic;
 import com.periodicals.entity.TopicTranslate;
 import com.periodicals.service.exceptions.ServiceException;
@@ -19,7 +19,7 @@ import java.util.Map;
 public class EditTopicCommand implements FrontCommand {
     @Override
     public void execute(final HttpServletRequest request,
-                        final HttpServletResponse response, final DAOManagerFactory daoManager)
+                        final HttpServletResponse response, final DAOManager daoManager)
             throws DAOException, ServletException, IOException, ServiceException {
         Map<String, TopicTranslate> translations = getTranslationsMap(request);
         TopicService topicService = new TopicServiceImpl(daoManager);

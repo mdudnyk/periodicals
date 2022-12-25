@@ -2,7 +2,7 @@ package com.periodicals.controller.servlet.command.impl.post;
 
 import com.periodicals.controller.servlet.command.FrontCommand;
 import com.periodicals.dao.exception.DAOException;
-import com.periodicals.dao.manager.DAOManagerFactory;
+import com.periodicals.dao.manager.DAOManager;
 import com.periodicals.entity.User;
 import com.periodicals.service.SubscriptionsService;
 import com.periodicals.service.exceptions.ServiceException;
@@ -16,7 +16,7 @@ import java.io.IOException;
 public class DeleteMySubscriptionCommand implements FrontCommand {
     @Override
     public void execute(final HttpServletRequest request, final HttpServletResponse response,
-                        final DAOManagerFactory daoManager)
+                        final DAOManager daoManager)
             throws DAOException, ServletException, IOException, ServiceException {
         SubscriptionsService service = new SubscriptionsServiceImpl(daoManager);
         String id = request.getParameter("id");

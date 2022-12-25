@@ -1,4 +1,4 @@
-package com.periodicals.dao;
+package com.periodicals.dao.interfacesForDAO;
 
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.entity.MonthSelector;

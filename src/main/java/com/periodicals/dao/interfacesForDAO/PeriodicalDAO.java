@@ -1,4 +1,4 @@
-package com.periodicals.dao;
+package com.periodicals.dao.interfacesForDAO;
 
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.entity.Periodical;
@@ -16,11 +16,11 @@ public interface PeriodicalDAO extends GeneralDAO<Periodical, Integer> {
 
     List<PeriodicalForTable> getPeriodicalsForTableByTitleSortPag(
             Connection connection, String locale, String defaultLocale,
-            int skip, int amount, String sortBy, String order, String searchedTitle) throws DAOException;
+            int skip, int amount, String sortBy, String order, String title) throws DAOException;
 
     int getPeriodicalsAmount(Connection connection) throws DAOException;
 
-    int getPeriodicalsAmountSearchMode(Connection connection, String searchQuery) throws DAOException;
+    int getPeriodicalsAmountSearchMode(Connection connection, String title) throws DAOException;
 
     boolean getIsPeriodicalExists(Connection connection, String title) throws DAOException;
 

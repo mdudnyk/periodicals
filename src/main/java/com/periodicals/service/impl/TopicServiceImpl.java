@@ -1,8 +1,8 @@
 package com.periodicals.service.impl;
 
 import com.periodicals.dao.exception.DAOException;
-import com.periodicals.dao.manager.DAOManagerFactory;
-import com.periodicals.dao.manager.TopicDAOManager;
+import com.periodicals.dao.manager.DAOManager;
+import com.periodicals.dao.manager.TopicDao;
 import com.periodicals.entity.Topic;
 import com.periodicals.entity.TopicTranslate;
 import com.periodicals.service.exceptions.ServiceException;
@@ -12,15 +12,15 @@ import java.util.List;
 import java.util.Map;
 
 public class TopicServiceImpl implements TopicService {
-    private final DAOManagerFactory daoManger;
+    private final DAOManager daoManger;
 
-    public TopicServiceImpl(DAOManagerFactory daoManger) {
+    public TopicServiceImpl(DAOManager daoManger) {
         this.daoManger = daoManger;
     }
 
     @Override
     public List<Topic> getAllTopicsByLocale(final String localeId, final String defaultLocaleId) throws DAOException {
-        TopicDAOManager tdm = daoManger.getTopicDAOManager();
+        TopicDao tdm = daoManger.getTopicDao();
         return tdm.getAllTopicsByLocale(localeId, defaultLocaleId);
     }
 
@@ -33,7 +33,7 @@ public class TopicServiceImpl implements TopicService {
 
         skipPositions = Math.max(skipPositions, 0);
         amountOnPage = Math.max(amountOnPage, 1);
-        TopicDAOManager tdm = daoManger.getTopicDAOManager();
+        TopicDao tdm = daoManger.getTopicDao();
         return tdm.getTopicsSortPag(
                 localeId, defaultLocaleId, skipPositions, amountOnPage, sortOrder);
     }
@@ -48,20 +48,20 @@ public class TopicServiceImpl implements TopicService {
 
         skipPositions = Math.max(skipPositions, 0);
         amountOnPage = Math.max(amountOnPage, 1);
-        TopicDAOManager tdm = daoManger.getTopicDAOManager();
+        TopicDao tdm = daoManger.getTopicDao();
         return tdm.getTopicsByNameSortPag(
                 localeId, defaultLocaleId, skipPositions, amountOnPage, sortOrder, searchedName);
     }
 
     @Override
     public int getTopicsTotal() throws DAOException {
-        TopicDAOManager tdm = daoManger.getTopicDAOManager();
+        TopicDao tdm = daoManger.getTopicDao();
         return tdm.getTopicsAmount();
     }
 
     @Override
     public int getTopicsTotalSearchMode(final String searchQuery) throws DAOException {
-        TopicDAOManager tdm = daoManger.getTopicDAOManager();
+        TopicDao tdm = daoManger.getTopicDao();
         return tdm.getTopicsAmountSearchMode(searchQuery);
     }
 
@@ -69,7 +69,7 @@ public class TopicServiceImpl implements TopicService {
     public Topic getTopicById(final int id) throws DAOException, ServiceException {
         Topic topic;
         if (id > 0) {
-            topic = daoManger.getTopicDAOManager().getTopicById(id);
+            topic = daoManger.getTopicDao().getTopicById(id);
             if (topic == null) {
                 throw new ServiceException("Topic with ID="
                         + id + " is not existing. ");
@@ -84,10 +84,10 @@ public class TopicServiceImpl implements TopicService {
     @Override
     public TopicTranslate getTopicTranslateByIdAndLocale(final int topicId, final String currentLocale,
                                        final String defaultLocale) throws DAOException {
-        TopicTranslate topicTranslate = daoManger.getTopicDAOManager()
+        TopicTranslate topicTranslate = daoManger.getTopicDao()
                 .getTranslationByIdAndLocale(topicId, currentLocale);
         if (topicTranslate == null) {
-            topicTranslate = daoManger.getTopicDAOManager()
+            topicTranslate = daoManger.getTopicDao()
                     .getTranslationByIdAndLocale(topicId, defaultLocale);
         }
         return topicTranslate;
@@ -95,7 +95,7 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public void createNewTopic(final Map<String, String> translations) throws ServiceException, DAOException {
-        TopicDAOManager tdm = daoManger.getTopicDAOManager();
+        TopicDao tdm = daoManger.getTopicDao();
 
         if (tdm.getTopicByName(translations.values().stream().toList()) != null) {
             throw new ServiceException("Topic with this name already exists");
@@ -111,7 +111,7 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public void updateTopic(Topic topic) throws DAOException, ServiceException {
-        TopicDAOManager tdm = daoManger.getTopicDAOManager();
+        TopicDao tdm = daoManger.getTopicDao();
         if (tdm.getTopicById(topic.getId()) == null) {
             throw new ServiceException("Topic with ID=" + topic.getId() + " not exists");
         } else {
@@ -121,7 +121,7 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public void deleteTopic(final int id) throws DAOException, ServiceException {
-        TopicDAOManager tdm = daoManger.getTopicDAOManager();
+        TopicDao tdm = daoManger.getTopicDao();
         if (id > 0) {
             tdm.deleteTopic(id);
         } else {

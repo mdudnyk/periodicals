@@ -93,13 +93,14 @@ public class HikariConnectionPool implements ConnectionManager {
 
         try {
             connection.setAutoCommit(false);
+            LOG.debug("Connection's auto-commit state was set to 'off' mode");
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+            LOG.debug("This Connection object's transaction isolation level was set to 'read committed'");
         } catch (SQLException e) {
             LOG.error("Can not prepare connection to work with transactions. " + e.getMessage());
             throw new DAOException("Unable to modify connection object.");
         }
 
-        LOG.debug("Connection was successfully prepared to work with transactions");
         return connection;
     }
 
@@ -119,6 +120,8 @@ public class HikariConnectionPool implements ConnectionManager {
             LOG.error("Can not rollback transaction. " + e.getMessage());
             throw new DAOException("Something went wrong while trying to rollback transaction.");
         }
+
+        LOG.debug("All changes made in the current transaction were successfully undoes");
     }
 
     /**
@@ -137,12 +140,15 @@ public class HikariConnectionPool implements ConnectionManager {
         try {
             if (!connection.getAutoCommit()) {
                 connection.setAutoCommit(true);
+                LOG.debug("Connection's auto-commit state was set to 'on' mode");
             }
             connection.close();
         } catch (SQLException e) {
             LOG.error("Can not close and release connection to the pool of connection. " + e.getMessage());
             throw new DAOException("Unable to release the connection to the pool");
         }
+
+        LOG.debug("Connection was successfully returned to the pool of connections");
     }
 
     /**

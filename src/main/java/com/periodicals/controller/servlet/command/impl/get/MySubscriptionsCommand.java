@@ -2,7 +2,7 @@ package com.periodicals.controller.servlet.command.impl.get;
 
 import com.periodicals.controller.servlet.command.FrontCommand;
 import com.periodicals.dao.exception.DAOException;
-import com.periodicals.dao.manager.DAOManagerFactory;
+import com.periodicals.dao.manager.DAOManager;
 import com.periodicals.entity.Subscription;
 import com.periodicals.entity.User;
 import com.periodicals.service.SubscriptionsService;
@@ -19,7 +19,7 @@ import java.util.List;
 public class MySubscriptionsCommand implements FrontCommand {
     @Override
     public void execute(final HttpServletRequest request, final HttpServletResponse response,
-                        final DAOManagerFactory daoManager)
+                        final DAOManager daoManager)
             throws DAOException, ServiceException, ServletException, IOException {
         SubscriptionsService service = new SubscriptionsServiceImpl(daoManager);
         HttpSession session = request.getSession();
@@ -66,7 +66,7 @@ public class MySubscriptionsCommand implements FrontCommand {
             throws DAOException, ServiceException {
         String searchQuery = (String) request.getSession().getAttribute("subscriptionsSearchString");
         int amountOnPage = (Integer) request.getSession().getAttribute("subscriptionsAmountOnPage");
-        int subscriptionsTotal = 9;
+        int subscriptionsTotal;
         int totalPages;
 
         if(searchQuery.equals("")) {

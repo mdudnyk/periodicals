@@ -1,7 +1,7 @@
 package com.periodicals.dao.manager;
 
 import com.periodicals.dao.ConnectionManager;
-import com.periodicals.dao.UserDAO;
+import com.periodicals.dao.interfacesForDAO.UserDAO;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.dao.mysql.LocaleDAOMySql;
 import com.periodicals.dao.mysql.UserDAOMySql;
@@ -12,16 +12,16 @@ import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
 import java.util.List;
 
-public class UserDAOManager {
+public class UserDao {
     private static final Logger LOG = LogManager.getLogger(LocaleDAOMySql.class);
 
     private ConnectionManager conManager;
     private UserDAO userDAO;
 
-    private UserDAOManager() {
+    private UserDao() {
     }
 
-    public UserDAOManager(ConnectionManager connectionManager) {
+    public UserDao(ConnectionManager connectionManager) {
         this.conManager = connectionManager;
         userDAO = new UserDAOMySql();
     }

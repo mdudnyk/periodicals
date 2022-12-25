@@ -1,10 +1,10 @@
 package com.periodicals.dao.manager;
 
 import com.periodicals.dao.ConnectionManager;
-import com.periodicals.dao.PeriodicalDAO;
+import com.periodicals.dao.interfacesForDAO.PeriodicalDAO;
 
-import com.periodicals.dao.PeriodicalTranslationDAO;
-import com.periodicals.dao.ReleaseCalendarDAO;
+import com.periodicals.dao.interfacesForDAO.PeriodicalTranslationDAO;
+import com.periodicals.dao.interfacesForDAO.ReleaseCalendarDAO;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.dao.mysql.PeriodicalDAOMySql;
 import com.periodicals.dao.mysql.PeriodicalTranslationDAOMySql;
@@ -13,21 +13,20 @@ import com.periodicals.entity.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PeriodicalDAOManager  {
+public class PeriodicalDao {
     private ConnectionManager conManager;
     private PeriodicalDAO periodicalDAO;
     private PeriodicalTranslationDAO periodicalTranslationDAO;
     private ReleaseCalendarDAO releaseCalendarDAO;
 
-    private PeriodicalDAOManager() {
+    private PeriodicalDao() {
     }
 
-    public PeriodicalDAOManager(ConnectionManager connectionManager) {
+    public PeriodicalDao(ConnectionManager connectionManager) {
         this.conManager = connectionManager;
         periodicalDAO = new PeriodicalDAOMySql();
         periodicalTranslationDAO = new PeriodicalTranslationDAOMySql();

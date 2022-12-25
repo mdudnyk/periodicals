@@ -1,13 +1,12 @@
 package com.periodicals.dao.mysql;
 
-import com.periodicals.dao.SubscriptionDAO;
+import com.periodicals.dao.interfacesForDAO.SubscriptionDAO;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.entity.Subscription;
 import org.junit.jupiter.api.*;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;

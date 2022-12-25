@@ -2,13 +2,12 @@ package com.periodicals.controller.servlet.command.impl.post;
 
 import com.periodicals.controller.servlet.command.FrontCommand;
 import com.periodicals.dao.exception.DAOException;
-import com.periodicals.dao.manager.DAOManagerFactory;
+import com.periodicals.dao.manager.DAOManager;
 import com.periodicals.service.PaymentService;
 import com.periodicals.service.exceptions.ServiceException;
 import com.periodicals.service.impl.PaymentServiceImpl;
 import com.periodicals.util.LiqPayService;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.json.simple.JSONObject;
@@ -22,7 +21,7 @@ import java.util.Base64;
 public class GetPaymentResultCommand implements FrontCommand {
     @Override
     public void execute(final HttpServletRequest request, final HttpServletResponse response,
-                        final DAOManagerFactory daoManager)
+                        final DAOManager daoManager)
             throws DAOException, ServletException, IOException, ServiceException {
         String data = request.getParameter("data");
         String signature = request.getParameter("signature");

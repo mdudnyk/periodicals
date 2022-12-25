@@ -1,7 +1,7 @@
 package com.periodicals.controller.servlet.listener;
 
 import com.periodicals.dao.exception.DAOException;
-import com.periodicals.dao.manager.DAOManagerFactory;
+import com.periodicals.dao.manager.DAOManager;
 import com.periodicals.entity.LocaleCustom;
 import com.periodicals.service.LocaleService;
 import com.periodicals.service.impl.LocaleServiceImpl;
@@ -30,10 +30,10 @@ public class ContextListener implements ServletContextListener {
 
 	private void initDatasource(ServletContext context) throws IllegalStateException {
 		try {
-			DAOManagerFactory dmf = DAOManagerFactory.getInstance();
+			DAOManager dm = DAOManager.getInstance();
 			LOG.debug("Data source initialized");
-			context.setAttribute("DAOManagerFactory", dmf);
-			LOG.debug("context.setAttribute 'DAOManagerFactory': {}", dmf.getClass().getName());
+			context.setAttribute("DAOManagerFactory", dm);
+			LOG.debug("context.setAttribute 'DAOManagerFactory': {}", dm.getClass().getName());
 		} catch (DAOException e) {
 			LOG.error("Cannot initialize dataSource. " + e.getCause().getMessage());
 			throw new IllegalStateException(e);
@@ -43,7 +43,7 @@ public class ContextListener implements ServletContextListener {
 	private void initLocaleList(ServletContext context) {
 		Object o = context.getAttribute("DAOManagerFactory");
 		if (o != null) {
-			DAOManagerFactory dmf = (DAOManagerFactory) o;
+			DAOManager dmf = (DAOManager) o;
 			LocaleService localeService = new LocaleServiceImpl(dmf);
 			try {
 				Map<String, LocaleCustom> locales = localeService.getAllLocalesMap();
@@ -66,8 +66,8 @@ public class ContextListener implements ServletContextListener {
 		LOG.debug("Start context destroying");
 		Object o = sce.getServletContext().getAttribute("DAOManagerFactory");
 		if (o != null) {
-			DAOManagerFactory dmf = (DAOManagerFactory) o;
-			dmf.closeDAO();
+			DAOManager dm = (DAOManager) o;
+			dm.closeDAO();
 			LOG.debug("Closed DAO manager factory datasource");
 		}
 		try {
@@ -80,5 +80,4 @@ public class ContextListener implements ServletContextListener {
 		}
 		LOG.debug("End context destroying");
 	}
-
 }

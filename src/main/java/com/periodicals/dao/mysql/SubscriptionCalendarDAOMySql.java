@@ -1,6 +1,6 @@
 package com.periodicals.dao.mysql;
 
-import com.periodicals.dao.SubscriptionCalendarDAO;
+import com.periodicals.dao.interfacesForDAO.SubscriptionCalendarDAO;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.entity.MonthSelector;
 import com.periodicals.entity.Subscription;

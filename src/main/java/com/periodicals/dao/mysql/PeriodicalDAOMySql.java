@@ -1,6 +1,6 @@
 package com.periodicals.dao.mysql;
 
-import com.periodicals.dao.PeriodicalDAO;
+import com.periodicals.dao.interfacesForDAO.PeriodicalDAO;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.entity.*;
 import org.apache.logging.log4j.LogManager;

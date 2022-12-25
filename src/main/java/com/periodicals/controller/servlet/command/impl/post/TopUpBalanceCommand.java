@@ -2,7 +2,7 @@ package com.periodicals.controller.servlet.command.impl.post;
 
 import com.periodicals.controller.servlet.command.FrontCommand;
 import com.periodicals.dao.exception.DAOException;
-import com.periodicals.dao.manager.DAOManagerFactory;
+import com.periodicals.dao.manager.DAOManager;
 import com.periodicals.entity.Payment;
 import com.periodicals.entity.User;
 import com.periodicals.service.PaymentService;
@@ -24,7 +24,7 @@ public class TopUpBalanceCommand implements FrontCommand {
 
     @Override
     public void execute(final HttpServletRequest request, final HttpServletResponse response,
-                        final DAOManagerFactory daoManager) throws DAOException, ServletException,
+                        final DAOManager daoManager) throws DAOException, ServletException,
             IOException, ServiceException {
         User user = (User) request.getSession().getAttribute("user");
         String refererLink = (String) request.getSession().getAttribute("refererForLiqPay");

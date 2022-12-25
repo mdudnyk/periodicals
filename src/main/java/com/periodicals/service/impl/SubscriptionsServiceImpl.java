@@ -1,10 +1,10 @@
 package com.periodicals.service.impl;
 
 import com.periodicals.dao.exception.DAOException;
-import com.periodicals.dao.manager.DAOManagerFactory;
-import com.periodicals.dao.manager.PeriodicalDAOManager;
-import com.periodicals.dao.manager.SubscriptionDAOManager;
-import com.periodicals.dao.manager.UserDAOManager;
+import com.periodicals.dao.manager.DAOManager;
+import com.periodicals.dao.manager.PeriodicalDao;
+import com.periodicals.dao.manager.SubscriptionDao;
+import com.periodicals.dao.manager.UserDao;
 import com.periodicals.entity.*;
 import com.periodicals.entity.enums.UserRole;
 import com.periodicals.service.SubscriptionsService;
@@ -18,19 +18,19 @@ import java.util.List;
 import java.util.Map;
 
 public class SubscriptionsServiceImpl implements SubscriptionsService {
-    private final DAOManagerFactory daoManger;
+    private final DAOManager daoManger;
 
-    public SubscriptionsServiceImpl(DAOManagerFactory daoManger) {
+    public SubscriptionsServiceImpl(DAOManager daoManger) {
         this.daoManger = daoManger;
     }
 
     @Override
     public void createSubscription(User user, final int periodicalId, final List<MonthSelector> calendar)
             throws DAOException, ServiceException {
-        PeriodicalDAOManager periodicalDAOManager = daoManger.getPeriodicalDAOManager();
-        UserDAOManager userDAOManager = daoManger.getUserDAOManager();
+        PeriodicalDao periodicalDao = daoManger.getPeriodicalDao();
+        UserDao userDao = daoManger.getUserDao();
 
-        Periodical periodical = periodicalDAOManager.getPeriodicalById(periodicalId);
+        Periodical periodical = periodicalDao.getPeriodicalById(periodicalId);
         if (!isValidSubscriptionCalendar(periodical.getReleaseCalendar(), calendar)) {
             throw new IllegalArgumentException("Invalid subscription months input.");
         }
@@ -39,7 +39,7 @@ public class SubscriptionsServiceImpl implements SubscriptionsService {
         int basePrice = pd.getPrice();
         int totalPrice = countTotalPrice(basePrice, calendar);
 
-        User userFromDB = userDAOManager.getUserById(user.getId());
+        User userFromDB = userDao.getUserById(user.getId());
         int userBalance = userFromDB.getBalance();
         if (user.isBlocked()) {
             throw new ServiceException("Account is blocked.");
@@ -60,8 +60,8 @@ public class SubscriptionsServiceImpl implements SubscriptionsService {
                 MonthSelector.getLastMonth(calendar));
         subscription.addSubscriptionYearList(calendar);
 
-        SubscriptionDAOManager subscriptionDAOManager = daoManger.getSubscriptionDAOManager();
-        subscriptionDAOManager.subscribeUserToPeriodical(subscription, userFromDB);
+        SubscriptionDao subscriptionDao = daoManger.getSubscriptionDao();
+        subscriptionDao.subscribeUserToPeriodical(subscription, userFromDB);
         user.setBalance(userFromDB.getBalance());
 
     }
@@ -69,7 +69,7 @@ public class SubscriptionsServiceImpl implements SubscriptionsService {
     @Override
     public int getSubscriptionsTotal(final int userId) throws DAOException, ServiceException {
         userIdValidation(userId);
-        return daoManger.getSubscriptionDAOManager().getSubscriptionsTotal(userId);
+        return daoManger.getSubscriptionDao().getSubscriptionsTotal(userId);
     }
 
     @Override
@@ -77,7 +77,7 @@ public class SubscriptionsServiceImpl implements SubscriptionsService {
             throws DAOException, ServiceException {
         userIdValidation(userId);
         searchStringValidation(searchQuery);
-        return daoManger.getSubscriptionDAOManager().getSubscriptionsTotal(userId, searchQuery);
+        return daoManger.getSubscriptionDao().getSubscriptionsTotal(userId, searchQuery);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class SubscriptionsServiceImpl implements SubscriptionsService {
         positionsToSkip = Math.max(positionsToSkip, 0);
         amountOnPage = Math.max(amountOnPage, 1);
         return daoManger
-                .getSubscriptionDAOManager()
+                .getSubscriptionDao()
                 .getSubscriptionsByUserIdPagination(userId, positionsToSkip, amountOnPage,
                         subscriptionsSortBy, subscriptionsSortOrder);
     }
@@ -105,7 +105,7 @@ public class SubscriptionsServiceImpl implements SubscriptionsService {
         positionsToSkip = Math.max(positionsToSkip, 0);
         amountOnPage = Math.max(amountOnPage, 1);
         return daoManger
-                .getSubscriptionDAOManager()
+                .getSubscriptionDao()
                 .getSubscriptionsByUserIdPagination(userId, searchString, positionsToSkip, amountOnPage,
                         subscriptionsSortBy, subscriptionsSortOrder);
     }
@@ -115,13 +115,13 @@ public class SubscriptionsServiceImpl implements SubscriptionsService {
             throws DAOException, ServiceException {
         userIdValidation(userId);
         subscriptionIdValidation(subscriptionId);
-        Subscription subscription = daoManger.getSubscriptionDAOManager().getSubscriptionById(subscriptionId);
+        Subscription subscription = daoManger.getSubscriptionDao().getSubscriptionById(subscriptionId);
         if (subscription.getUserId() != userId) {
             throw new ServiceException("Don't enough rights to delete this subscription.");
         } else if (subscription.getExpiredAt().isAfter(LocalDate.now())) {
             throw new ServiceException("Can't delete not expired subscription.");
         }
-        daoManger.getSubscriptionDAOManager().deleteSubscription(subscriptionId);
+        daoManger.getSubscriptionDao().deleteSubscription(subscriptionId);
     }
 
     @Override
@@ -131,7 +131,7 @@ public class SubscriptionsServiceImpl implements SubscriptionsService {
         userIdValidation(userId);
         subscriptionIdValidation(subscriptionId);
 
-        Subscription subscription = daoManger.getSubscriptionDAOManager().getSubscriptionById(subscriptionId);
+        Subscription subscription = daoManger.getSubscriptionDao().getSubscriptionById(subscriptionId);
         if (subscription == null) {
             throw new ServiceException("Can't find this subscription.");
         }
@@ -139,7 +139,7 @@ public class SubscriptionsServiceImpl implements SubscriptionsService {
                 subscription.getPeriodicalTitle(),
                 subscription.getSubscriptionCalendar());
 
-        User user = daoManger.getUserDAOManager().getUserById(userId);
+        User user = daoManger.getUserDao().getUserById(userId);
         if (subscription.getUserId() != userId
                 && user != null
                 && user.getRole() != UserRole.ADMIN) {
@@ -148,7 +148,7 @@ public class SubscriptionsServiceImpl implements SubscriptionsService {
 
         if (subscription.getPeriodicalId() != 0) {
             Periodical periodical = daoManger
-                    .getPeriodicalDAOManager()
+                    .getPeriodicalDao()
                     .getPeriodicalById(
                             subscription.getPeriodicalId(),
                             currentLocale,
@@ -162,7 +162,7 @@ public class SubscriptionsServiceImpl implements SubscriptionsService {
                 subscriptionDetails.setOriginCountry(periodicalTranslate.getCountry());
                 subscriptionDetails.setPublishingLanguage(periodicalTranslate.getLanguage());
                 Topic topic = daoManger
-                        .getTopicDAOManager()
+                        .getTopicDao()
                         .getTopicByIdAndLocale(
                                 periodical.getTopicID(),
                                 currentLocale,

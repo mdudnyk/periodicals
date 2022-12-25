@@ -2,7 +2,7 @@ package com.periodicals.controller.servlet.command.impl.get;
 
 import com.periodicals.controller.servlet.command.FrontCommand;
 import com.periodicals.dao.exception.DAOException;
-import com.periodicals.dao.manager.DAOManagerFactory;
+import com.periodicals.dao.manager.DAOManager;
 import com.periodicals.entity.LocaleCustom;
 import com.periodicals.entity.PeriodicalForTable;
 import com.periodicals.service.PeriodicalService;
@@ -25,7 +25,7 @@ public class PeriodicalsPageCommand implements FrontCommand {
 
     @Override
     public void execute(final HttpServletRequest request, final HttpServletResponse response,
-                        final DAOManagerFactory daoManager)
+                        final DAOManager daoManager)
             throws DAOException, ServletException, IOException, ServiceException {
         PeriodicalService periodicalService = new PeriodicalServiceImpl(daoManager);
         initSessionAttributes(request.getSession());

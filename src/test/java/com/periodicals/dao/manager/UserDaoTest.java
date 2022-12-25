@@ -3,14 +3,12 @@ package com.periodicals.dao.manager;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.dao.mysql.DBManager;
 import com.periodicals.dao.mysql.UserDAOMySql;
-import com.periodicals.entity.LocaleCustom;
 import com.periodicals.entity.User;
 import com.periodicals.entity.enums.UserRole;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.lang.reflect.Field;
@@ -24,19 +22,19 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class UserDAOManagerTest {
+class UserDaoTest {
 
     @Mock
     UserDAOMySql dao;
 
-    UserDAOManager daoManager;
+    UserDao daoManager;
 
     User user;
 
 
     @BeforeEach
     void beforeEach() {
-        daoManager = new UserDAOManager(DBManager.getInstance());
+        daoManager = new UserDao(DBManager.getInstance());
         replaceWithMockedField();
         user = new User(1, "en", "Miroslav",
                 "Dudnyk", "password", "email", UserRole.CUSTOMER,

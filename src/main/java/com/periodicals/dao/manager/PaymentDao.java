@@ -1,8 +1,8 @@
 package com.periodicals.dao.manager;
 
 import com.periodicals.dao.ConnectionManager;
-import com.periodicals.dao.PaymentDAO;
-import com.periodicals.dao.UserDAO;
+import com.periodicals.dao.interfacesForDAO.PaymentDAO;
+import com.periodicals.dao.interfacesForDAO.UserDAO;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.dao.mysql.PaymentDAOMySql;
 import com.periodicals.dao.mysql.UserDAOMySql;
@@ -13,15 +13,15 @@ import com.periodicals.entity.enums.PaymentStatus;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class PaymentDAOManager {
+public class PaymentDao {
     private ConnectionManager conManager;
     private PaymentDAO paymentDAO;
     private UserDAO userDAO;
 
-    private PaymentDAOManager() {
+    private PaymentDao() {
     }
 
-    public PaymentDAOManager(ConnectionManager connectionManager) {
+    public PaymentDao(ConnectionManager connectionManager) {
         this.conManager = connectionManager;
         paymentDAO = new PaymentDAOMySql();
         userDAO = new UserDAOMySql();

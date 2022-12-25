@@ -20,16 +20,16 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class LocaleDAOManagerTest {
+class LocaleDaoTest {
 
     @Mock
     LocaleDAOMySql dao;
 
-    LocaleDAOManager daoManager;
+    LocaleDao daoManager;
 
     @BeforeEach
     void beforeEach() {
-        daoManager = new LocaleDAOManager(DBManager.getInstance());
+        daoManager = new LocaleDao(DBManager.getInstance());
         replaceWithMockedField();
     }
 

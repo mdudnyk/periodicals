@@ -1,8 +1,8 @@
 package com.periodicals.service.impl;
 
 import com.periodicals.dao.exception.DAOException;
-import com.periodicals.dao.manager.DAOManagerFactory;
-import com.periodicals.dao.manager.PeriodicalDAOManager;
+import com.periodicals.dao.manager.DAOManager;
+import com.periodicals.dao.manager.PeriodicalDao;
 import com.periodicals.entity.Periodical;
 import com.periodicals.entity.PeriodicalForHomePage;
 import com.periodicals.entity.PeriodicalForTable;
@@ -15,15 +15,15 @@ import java.util.List;
 import java.util.Map;
 
 public class PeriodicalServiceImpl implements PeriodicalService {
-    private final DAOManagerFactory daoManger;
+    private final DAOManager daoManger;
 
-    public PeriodicalServiceImpl(DAOManagerFactory daoManger) {
+    public PeriodicalServiceImpl(DAOManager daoManger) {
         this.daoManger = daoManger;
     }
 
     @Override
     public void createPeriodical(final Periodical periodical) throws DAOException, ServiceException {
-        PeriodicalDAOManager pdm = daoManger.getPeriodicalDAOManager();
+        PeriodicalDao pdm = daoManger.getPeriodicalDao();
         if (!pdm.getIsPeriodicalExists(periodical.getTitle())) {
             pdm.createPeriodical(periodical);
         } else {
@@ -33,7 +33,7 @@ public class PeriodicalServiceImpl implements PeriodicalService {
 
     @Override
     public void editPeriodical(final Periodical periodical) throws DAOException, ServiceException {
-        PeriodicalDAOManager pdm = daoManger.getPeriodicalDAOManager();
+        PeriodicalDao pdm = daoManger.getPeriodicalDao();
         if (!pdm.getIsPeriodicalExists(periodical.getId(), periodical.getTitle())) {
             pdm.editPeriodical(periodical);
         } else {
@@ -49,7 +49,7 @@ public class PeriodicalServiceImpl implements PeriodicalService {
                                                                          final String sortOrder) throws DAOException {
         skipPositions = Math.max(skipPositions, 0);
         amountOnPage = Math.max(amountOnPage, 1);
-        return daoManger.getPeriodicalDAOManager()
+        return daoManger.getPeriodicalDao()
                 .getPeriodicalsForTableSortPag(localeId, defaultLocaleId,
                         skipPositions, amountOnPage, sortBy, sortOrder);
     }
@@ -64,24 +64,24 @@ public class PeriodicalServiceImpl implements PeriodicalService {
                                                                          final String searchedTitle)  throws DAOException {
         skipPositions = Math.max(skipPositions, 0);
         amountOnPage = Math.max(amountOnPage, 1);
-        return daoManger.getPeriodicalDAOManager()
+        return daoManger.getPeriodicalDao()
                 .getPeriodicalsForTableByTitleSortPag(localeId, defaultLocaleId,
                         skipPositions, amountOnPage, sortBy, sortOrder, searchedTitle);
     }
 
     @Override
     public int getPeriodicalsTotal() throws DAOException {
-        return daoManger.getPeriodicalDAOManager().getPeriodicalsAmount();
+        return daoManger.getPeriodicalDao().getPeriodicalsAmount();
     }
 
     @Override
     public int getPeriodicalsTotalSearchMode(final String searchQuery) throws DAOException {
-        return daoManger.getPeriodicalDAOManager().getPeriodicalsAmountSearchMode(searchQuery);
+        return daoManger.getPeriodicalDao().getPeriodicalsAmountSearchMode(searchQuery);
     }
 
     @Override
     public void deletePeriodical(final int id) throws DAOException, ServiceException {
-        PeriodicalDAOManager pdm = daoManger.getPeriodicalDAOManager();
+        PeriodicalDao pdm = daoManger.getPeriodicalDao();
         if (id > 0) {
             pdm.deletePeriodical(id);
         } else {
@@ -93,7 +93,7 @@ public class PeriodicalServiceImpl implements PeriodicalService {
     public Periodical getPeriodicalById(final int id) throws DAOException, ServiceException {
         Periodical periodical;
         if (id > 0) {
-            periodical = daoManger.getPeriodicalDAOManager().getPeriodicalById(id);
+            periodical = daoManger.getPeriodicalDao().getPeriodicalById(id);
             if (periodical == null) {
                 throw new ServiceException("Periodical with ID="
                         + id + " is not exists. ");
@@ -108,7 +108,7 @@ public class PeriodicalServiceImpl implements PeriodicalService {
     @Override
     public Map<Integer, List<PeriodicalForHomePage>> getPeriodicalsForHomePage(final List<Topic> topics)
             throws DAOException {
-        PeriodicalDAOManager pdm = daoManger.getPeriodicalDAOManager();
+        PeriodicalDao pdm = daoManger.getPeriodicalDao();
         return pdm.getPeriodicalsForHomePage(topics);
     }
 
@@ -120,7 +120,7 @@ public class PeriodicalServiceImpl implements PeriodicalService {
         int currentYear = Year.now().getValue();
 
         if (id > 0) {
-            periodical = daoManger.getPeriodicalDAOManager()
+            periodical = daoManger.getPeriodicalDao()
                     .getPeriodicalById(id, currentLocale, defaultLocale, currentYear);
             if (periodical == null) {
                 throw new ServiceException("Periodical with ID="

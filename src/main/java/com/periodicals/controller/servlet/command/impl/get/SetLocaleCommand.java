@@ -2,7 +2,7 @@ package com.periodicals.controller.servlet.command.impl.get;
 
 import com.periodicals.controller.servlet.command.FrontCommand;
 import com.periodicals.dao.exception.DAOException;
-import com.periodicals.dao.manager.DAOManagerFactory;
+import com.periodicals.dao.manager.DAOManager;
 import com.periodicals.entity.LocaleCustom;
 import com.periodicals.entity.User;
 import com.periodicals.service.LocaleService;
@@ -23,7 +23,7 @@ public class SetLocaleCommand implements FrontCommand {
 
     @Override
     public void execute(final HttpServletRequest request, final HttpServletResponse response,
-                        DAOManagerFactory daoFactory) throws DAOException, IOException {
+                        DAOManager daoFactory) throws DAOException, IOException {
 
         String localeNameToSet = request.getParameter("lang");
         LocaleService localeService = new LocaleServiceImpl(daoFactory);

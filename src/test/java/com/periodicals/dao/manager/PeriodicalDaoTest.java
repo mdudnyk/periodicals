@@ -6,7 +6,6 @@ import com.periodicals.dao.mysql.PeriodicalDAOMySql;
 import com.periodicals.dao.mysql.PeriodicalTranslationDAOMySql;
 import com.periodicals.dao.mysql.ReleaseCalendarDAOMySql;
 import com.periodicals.entity.*;
-import com.periodicals.entity.enums.UserRole;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +16,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +26,7 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class PeriodicalDAOManagerTest {
+class PeriodicalDaoTest {
 
     @Mock
     PeriodicalDAOMySql periodicalDAO;
@@ -39,7 +37,7 @@ class PeriodicalDAOManagerTest {
     @Mock
     ReleaseCalendarDAOMySql calendarDAO;
 
-    PeriodicalDAOManager daoManager;
+    PeriodicalDao daoManager;
 
     Periodical periodical;
     PeriodicalForTable periodicalForTable;
@@ -47,7 +45,7 @@ class PeriodicalDAOManagerTest {
 
     @BeforeEach
     void beforeEach() {
-        daoManager = new PeriodicalDAOManager(DBManager.getInstance());
+        daoManager = new PeriodicalDao(DBManager.getInstance());
         replaceWithMockedField();
         periodical = new Periodical(1, 1, "TopGear",
                 "no_image.jpg", 100, new JSONObject(), true);

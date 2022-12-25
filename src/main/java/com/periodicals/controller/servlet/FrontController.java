@@ -2,7 +2,7 @@ package com.periodicals.controller.servlet;
 
 import com.periodicals.controller.servlet.command.CommandFactory;
 import com.periodicals.controller.servlet.command.FrontCommand;
-import com.periodicals.dao.manager.DAOManagerFactory;
+import com.periodicals.dao.manager.DAOManager;
 import com.periodicals.util.CommandAccessChecker;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -29,8 +29,8 @@ public class FrontController extends HttpServlet {
 
     private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         try {
-            DAOManagerFactory daoFactory =
-                    (DAOManagerFactory) request
+            DAOManager daoFactory =
+                    (DAOManager) request
                     .getServletContext()
                     .getAttribute("DAOManagerFactory");
             FrontCommand command = CommandFactory.getCommand(request);

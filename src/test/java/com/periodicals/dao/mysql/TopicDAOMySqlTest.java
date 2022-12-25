@@ -1,6 +1,6 @@
 package com.periodicals.dao.mysql;
 
-import com.periodicals.dao.TopicDAO;
+import com.periodicals.dao.interfacesForDAO.TopicDAO;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.entity.Topic;
 import org.junit.jupiter.api.*;

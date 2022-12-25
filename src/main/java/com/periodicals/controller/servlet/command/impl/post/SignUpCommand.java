@@ -2,7 +2,7 @@ package com.periodicals.controller.servlet.command.impl.post;
 
 import com.periodicals.controller.servlet.command.FrontCommand;
 import com.periodicals.dao.exception.DAOException;
-import com.periodicals.dao.manager.DAOManagerFactory;
+import com.periodicals.dao.manager.DAOManager;
 import com.periodicals.entity.LocaleCustom;
 import com.periodicals.entity.User;
 import com.periodicals.entity.enums.UserRole;
@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class SignUpCommand implements FrontCommand {
     @Override
     public void execute(final HttpServletRequest request, final HttpServletResponse response,
-                        final DAOManagerFactory daoFactory) throws DAOException {
+                        final DAOManager daoFactory) throws DAOException {
 
         LocaleCustom localeObj = (LocaleCustom) request.getSession().getAttribute("locale");
         String firstname = request.getParameter("firstname");

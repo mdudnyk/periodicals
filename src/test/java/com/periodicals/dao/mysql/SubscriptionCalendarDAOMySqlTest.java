@@ -1,7 +1,6 @@
 package com.periodicals.dao.mysql;
 
-import com.periodicals.dao.SubscriptionCalendarDAO;
-import com.periodicals.dao.SubscriptionDAO;
+import com.periodicals.dao.interfacesForDAO.SubscriptionCalendarDAO;
 import com.periodicals.dao.exception.DAOException;
 import com.periodicals.entity.MonthSelector;
 import org.json.simple.JSONArray;
@@ -74,17 +73,13 @@ class SubscriptionCalendarDAOMySqlTest {
             activeMonths.add(true);
         }
         MonthSelector releaseYear2022 = new MonthSelector(2022, activeMonths);
-        assertDoesNotThrow(() -> {
-            subscriptionCalendarDAO.create(2, releaseYear2022, connection);
-        });
+        assertDoesNotThrow(() -> subscriptionCalendarDAO.create(2, releaseYear2022, connection));
 
-        DAOException daoException = assertThrows(DAOException.class, () -> {
-            subscriptionCalendarDAO.create(1, releaseYear2022, connection);
-        });
+        DAOException daoException = assertThrows(DAOException.class,
+                () -> subscriptionCalendarDAO.create(1, releaseYear2022, connection));
         assertThat(daoException.getMessage(), containsString("Can not add new subscription calendar"));
-        daoException = assertThrows(DAOException.class, () -> {
-            subscriptionCalendarDAO.create(5, releaseYear2022, connection);
-        });
+        daoException = assertThrows(DAOException.class,
+                () -> subscriptionCalendarDAO.create(5, releaseYear2022, connection));
         assertThat(daoException.getMessage(), containsString("Can not add new subscription calendar"));
 
         Map<Integer, MonthSelector> calendar = subscriptionCalendarDAO

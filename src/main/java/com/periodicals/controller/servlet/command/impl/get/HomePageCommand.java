@@ -2,7 +2,7 @@ package com.periodicals.controller.servlet.command.impl.get;
 
 import com.periodicals.controller.servlet.command.FrontCommand;
 import com.periodicals.dao.exception.DAOException;
-import com.periodicals.dao.manager.DAOManagerFactory;
+import com.periodicals.dao.manager.DAOManager;
 import com.periodicals.entity.LocaleCustom;
 import com.periodicals.entity.PeriodicalForHomePage;
 import com.periodicals.entity.Topic;
@@ -20,9 +20,8 @@ import java.util.List;
 import java.util.Map;
 
 public class HomePageCommand implements FrontCommand {
-    @Override
     public void execute(final HttpServletRequest request, final HttpServletResponse response,
-                        final DAOManagerFactory daoManager)
+                        final DAOManager daoManager)
             throws DAOException, ServletException, IOException, ServiceException {
         String defaultLocale = request.getSession()
                 .getServletContext()
